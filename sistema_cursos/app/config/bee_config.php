@@ -14,7 +14,7 @@ define('IS_DEMO'      , false);
 // Set para conexión en producción o servidor real
 define('LDB_ENGINE'              , 'mysql');
 define('LDB_HOST'                , 'localhost');
-define('LDB_NAME'                , 'academico2');
+define('LDB_NAME'                , 'sistema-cursos');
 define('LDB_USER'                , 'root');
 define('LDB_PASS'                , '');
 define('LDB_CHARSET'             , 'utf8');
