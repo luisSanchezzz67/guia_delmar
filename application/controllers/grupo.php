@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
-class Jurusan extends CI_Controller
+class Grupo extends CI_Controller
 {
 
 	public function __construct()
@@ -36,7 +36,7 @@ class Jurusan extends CI_Controller
 			'subjudul' => 'Datos de Departamentos'
 		];
 		$this->load->view('_templates/dashboard/_header', $data);
-		$this->load->view('master/jurusan/data');
+		$this->load->view('direccion/grupo/data');
 		$this->load->view('_templates/dashboard/_footer');
 	}
 

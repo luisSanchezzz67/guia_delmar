@@ -40,7 +40,7 @@ $(document).ready(function() {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + "jurusan/data",
+      url: base_url + "grupo/data",
       type: "POST"
       //data: csrf
     },
