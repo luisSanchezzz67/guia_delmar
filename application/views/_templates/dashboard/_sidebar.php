@@ -20,45 +20,45 @@
 			<!-- Optionally, you can add icons to the links -->
 			<?php
 			$page = $this->uri->segment(1);
-			$master = ["jurusan", "kelas", "matkul", "dosen", "mahasiswa"];
+			$master = ["grupo", "clase", "curso", "profesor", "alumno"];
 			$relasi = ["kelasdosen", "jurusanmatkul"];
 			$users = ["users"];
 			?>
 			<li class="<?= $page === 'dashboard' ? "active" : "" ?>"><a href="<?= base_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 			<?php if ($this->ion_auth->is_admin()) : ?>
 				<li class="treeview <?= in_array($page, $master)  ? "active menu-open" : ""  ?>">
-					<a href="#"><i class="fa fa-folder-open"></i> <span>Datos Principales</span>
+					<a href="#"><i class="fa fa-folder-open"></i> <span>Dirección</span>
 						<span class="pull-right-container">
 							<i class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li class="<?= $page === 'jurusan' ? "active" : "" ?>">
-							<a href="<?= base_url('jurusan') ?>">
+						<li class="<?= $page === 'grupo' ? "active" : "" ?>">
+							<a href="<?= base_url('grupo') ?>">
 								<i class="fa fa-bars"></i>
-								Departmento
+								Grupos
 							</a>
 						</li>
-						<li class="<?= $page === 'kelas' ? "active" : "" ?>">
-							<a href="<?= base_url('kelas') ?>">
+						<li class="<?= $page === 'clase' ? "active" : "" ?>">
+							<a href="<?= base_url('clase') ?>">
 								<i class="fa fa-bars"></i>
-								Clase
+								Clases
 							</a>
 						</li>
-						<li class="<?= $page === 'matkul' ? "active" : "" ?>">
-							<a href="<?= base_url('matkul') ?>">
+						<li class="<?= $page === 'curso' ? "active" : "" ?>">
+							<a href="<?= base_url('curso') ?>">
 								<i class="fa fa-bars"></i>
-								Curso
+								Cursos
 							</a>
 						</li>
-						<li class="<?= $page === 'dosen' ? "active" : "" ?>">
-							<a href="<?= base_url('dosen') ?>">
+						<li class="<?= $page === 'profesor' ? "active" : "" ?>">
+							<a href="<?= base_url('profesor') ?>">
 								<i class="fa fa-bars"></i>
 								Profesor
 							</a>
 						</li>
-						<li class="<?= $page === 'mahasiswa' ? "active" : "" ?>">
-							<a href="<?= base_url('mahasiswa') ?>">
+						<li class="<?= $page === 'estudiante' ? "active" : "" ?>">
+							<a href="<?= base_url('estudiante') ?>">
 								<i class="fa fa-bars"></i>
 								Estudiante
 							</a>

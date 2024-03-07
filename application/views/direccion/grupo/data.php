@@ -9,7 +9,7 @@
 	<div class="box-body">
 		<div class="mt-2 mb-4">
 			<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-sm bg-blue btn-flat"><i class="fa fa-plus"></i> Agregar Datos</button>
-			<a href="<?= base_url('jurusan/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Importar</a>
+			<a href="<?= base_url('grupo/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Importar</a>
 			<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
 			<div class="pull-right">
 				<button onclick="bulk_edit()" class="btn btn-sm btn-primary btn-flat" type="button"><i class="fa fa-edit"></i> Editar</button>
