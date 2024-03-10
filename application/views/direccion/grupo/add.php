@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $judul ?></h3>
+        <h3 class="box-title">Formulario <?= $titulo ?></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -11,15 +11,15 @@
             <div class="col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4">
                 <div class="my-4">
                     <div class="form-horizontal form-inline">
-                        <a href="<?= base_url('jurusan') ?>" class="btn btn-default btn-xs">
+                        <a href="<?= base_url('grupo') ?>" class="btn btn-default btn-xs">
                             <i class="fa fa-arrow-left"></i> Cancelar
                         </a>
                         <div class="pull-right">
-                            <span> Monto : </span><label for=""><?= $banyak ?></label>
+                            <span> Monto : </span><label for=""><?= $lote ?></label>
                         </div>
                     </div>
                 </div>
-                <?= form_open('jurusan/save', array('id' => 'jurusan'), array('mode' => 'add')) ?>
+                <?= form_open('grupo/save', array('id' => 'grupo'), array('mode' => 'add')) ?>
                 <table id="form-table" class="table text-center table-condensed">
                     <thead>
                         <tr>
@@ -41,6 +41,6 @@
 
 <script type="text/javascript">
     var inputs = '';
-    var banyak = '<?= $banyak; ?>';
+    var lote = '<?= $lote; ?>';
 </script>
-<script src="<?= base_url() ?>assets/dist/js/app/master/jurusan/add.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/grupo/add.js"></script>

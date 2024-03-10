@@ -3,7 +3,7 @@ var table;
 $(document).ready(function() {
   ajaxcsrf();
 
-  table = $("#jurusan").DataTable({
+  table = $("#grupo").DataTable({
     initComplete: function() {
       var api = this.api();
       $("#jurusan_filter input")
@@ -46,12 +46,12 @@ $(document).ready(function() {
     },
     columns: [
       {
-        data: "id_jurusan",
+        data: "id_grupo",
         orderable: false,
         searchable: false
       },
       {
-        data: "nama_jurusan"
+        data: "nombre_grupo"
       },
       {
         data: "bulk_select",
@@ -78,7 +78,7 @@ $(document).ready(function() {
     .appendTo("#jurusan_wrapper .col-md-6:eq(0)");
 
   $("#myModal").on("shown.modal.bs", function() {
-    $(':input[name="banyak"]').select();
+    $(':input[name="lote"]').select();
   });
 
   $("#select_all").on("click", function() {
@@ -93,9 +93,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#jurusan tbody").on("click", "tr .check", function() {
-    var check = $("#jurusan tbody tr .check").length;
-    var checked = $("#jurusan tbody tr .check:checked").length;
+  $("#grupo tbody").on("click", "tr .check", function() {
+    var check = $("#grupo tbody tr .check").length;
+    var checked = $("#grupo tbody tr .check:checked").length;
     if (check === checked) {
       $("#select_all").prop("checked", true);
     } else {
@@ -104,7 +104,7 @@ $(document).ready(function() {
   });
 
   $("#bulk").on("submit", function(e) {
-    if ($(this).attr("action") == base_url + "jurusan/delete") {
+    if ($(this).attr("action") == base_url + "grupo/delete") {
       e.preventDefault();
       e.stopImmediatePropagation();
 
@@ -141,14 +141,14 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-  if ($("#jurusan tbody tr .check:checked").length == 0) {
+  if ($("#grupo tbody tr .check:checked").length == 0) {
     Swal({
       title: "Failed",
       text: "No data selected",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "jurusan/delete");
+    $("#bulk").attr("action", base_url + "grupo/delete");
     Swal({
       title: "Estás seguro?",
       text: "Los datos serán eliminados!",
@@ -166,14 +166,14 @@ function bulk_delete() {
 }
 
 function bulk_edit() {
-  if ($("#jurusan tbody tr .check:checked").length == 0) {
+  if ($("#grupo tbody tr .check:checked").length == 0) {
     Swal({
       title: "Failed",
       text: "No data selected",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "jurusan/edit");
+    $("#bulk").attr("action", base_url + "grupo/edit");
     $("#bulk").submit();
   }
 }

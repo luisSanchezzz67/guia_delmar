@@ -32,8 +32,8 @@ class Grupo extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Departamentos',
-			'subjudul' => 'Datos de Departamentos'
+			'titulo'	=> 'Grupos',
+			'subtitulo' => 'Datos de los grupos'
 		];
 		$this->load->view('_templates/dashboard/_header', $data);
 		$this->load->view('direccion/grupo/data');
@@ -44,18 +44,18 @@ class Grupo extends CI_Controller
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Agregar Departmento',
-			'subjudul'	=> 'Agregar Datos de Departamento',
-			'banyak'	=> $this->input->post('banyak', true)
+			'titulo'		=> 'Agregar grupo',
+			'subtitulo'	=> 'Agregar Datos de grupo',
+			'lote'	=> $this->input->post('lote', true)
 		];
 		$this->load->view('_templates/dashboard/_header', $data);
-		$this->load->view('master/jurusan/add');
+		$this->load->view('direccion/grupo/add');
 		$this->load->view('_templates/dashboard/_footer');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getDataJurusan(), false);
+		$this->output_json($this->master->getDataGrupo(), false);
 	}
 
 	public function edit()
@@ -72,34 +72,34 @@ class Grupo extends CI_Controller
 				'jurusan'	=> $jurusan
 			];
 			$this->load->view('_templates/dashboard/_header', $data);
-			$this->load->view('master/jurusan/edit');
+			$this->load->view('direccion/grupo/edit');
 			$this->load->view('_templates/dashboard/_footer');
 		}
 	}
 
 	public function save()
 	{
-		$rows = count($this->input->post('nama_jurusan', true));
+		$rows = count($this->input->post('nombre_grupo', true));
 		$mode = $this->input->post('mode', true);
 		for ($i = 1; $i <= $rows; $i++) {
-			$nama_jurusan = 'nama_jurusan[' . $i . ']';
-			$this->form_validation->set_rules($nama_jurusan, 'Dept.', 'required');
+			$nombre_grupo = 'nombre_grupo[' . $i . ']';
+			$this->form_validation->set_rules($nombre_grupo, 'Dept.', 'required');
 			$this->form_validation->set_message('required', '{field} Required');
 
 			if ($this->form_validation->run() === FALSE) {
 				$error[] = [
-					$nama_jurusan => form_error($nama_jurusan)
+					$nombre_grupo => form_error($nombre_grupo)
 				];
 				$status = FALSE;
 			} else {
 				if ($mode == 'add') {
 					$insert[] = [
-						'nama_jurusan' => $this->input->post($nama_jurusan, true)
+						'nombre_grupo' => $this->input->post($nombre_grupo, true)
 					];
 				} else if ($mode == 'edit') {
 					$update[] = array(
-						'id_jurusan'	=> $this->input->post('id_jurusan[' . $i . ']', true),
-						'nama_jurusan' 	=> $this->input->post($nama_jurusan, true)
+						'id_grupo'	=> $this->input->post('id_grupo[' . $i . ']', true),
+						'nombre_grupo' 	=> $this->input->post($nombre_grupo, true)
 					);
 				}
 				$status = TRUE;
@@ -107,10 +107,10 @@ class Grupo extends CI_Controller
 		}
 		if ($status) {
 			if ($mode == 'add') {
-				$this->master->create('jurusan', $insert, true);
+				$this->master->create('grupo', $insert, true);
 				$data['insert']	= $insert;
 			} else if ($mode == 'edit') {
-				$this->master->update('jurusan', $update, 'id_jurusan', null, true);
+				$this->master->update('grupo', $update, 'id_grupo', null, true);
 				$data['update'] = $update;
 			}
 		} else {
@@ -150,7 +150,7 @@ class Grupo extends CI_Controller
 		if ($import_data != null) $data['import'] = $import_data;
 
 		$this->load->view('_templates/dashboard/_header', $data);
-		$this->load->view('master/jurusan/import');
+		$this->load->view('direccion/grupo/import');
 		$this->load->view('_templates/dashboard/_footer');
 	}
 

@@ -35,7 +35,7 @@ class Master_model extends CI_Model
     }
 
     /**
-     * Data Kelas
+     * Data Clases
      */
 
     public function getDataKelas()
@@ -56,22 +56,22 @@ class Master_model extends CI_Model
     }
 
     /**
-     * Data Jurusan
+     * Data grupo
      */
 
-    public function getDataJurusan()
+    public function getDataGrupo()
     {
-        $this->datatables->select('id_jurusan, nama_jurusan');
-        $this->datatables->from('jurusan');
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_jurusan, nama_jurusan');
+        $this->datatables->select('id_grupo, nombre_grupo');
+        $this->datatables->from('grupo');
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_grupo, nombre_grupo');
         return $this->datatables->generate();
     }
 
-    public function getJurusanById($id)
+    public function getgrupoById($id)
     {
-        $this->db->where_in('id_jurusan', $id);
-        $this->db->order_by('nama_jurusan');
-        $query = $this->db->get('jurusan')->result();
+        $this->db->where_in('id_grupo', $id);
+        $this->db->order_by('nombre_grupo');
+        $query = $this->db->get('grupo')->result();
         return $query;
     }
 
@@ -99,38 +99,38 @@ class Master_model extends CI_Model
         return $this->db->get()->row();
     }
 
-    public function getJurusan()
+    public function getGrupo()
     {
-        $this->db->select('id_jurusan, nama_jurusan');
+        $this->db->select('id_grupo, nama_grupo');
         $this->db->from('kelas');
-        $this->db->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->db->order_by('nama_jurusan', 'ASC');
-        $this->db->group_by('id_jurusan');
+        $this->db->join('grupo', 'grupo_id=id_grupo');
+        $this->db->order_by('nama_grupo', 'ASC');
+        $this->db->group_by('id_grupo');
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function getAllJurusan($id = null)
+    public function getAllGrupo($id = null)
     {
         if ($id === null) {
-            $this->db->order_by('nama_jurusan', 'ASC');
-            return $this->db->get('jurusan')->result();
+            $this->db->order_by('nombre_grupo', 'ASC');
+            return $this->db->get('grupo')->result();
         } else {
-            $this->db->select('jurusan_id');
-            $this->db->from('jurusan_matkul');
+            $this->db->select('grupo_id');
+            $this->db->from('grupo_matkul');
             $this->db->where('matkul_id', $id);
-            $jurusan = $this->db->get()->result();
-            $id_jurusan = [];
-            foreach ($jurusan as $j) {
-                $id_jurusan[] = $j->jurusan_id;
+            $grupo = $this->db->get()->result();
+            $id_grupo = [];
+            foreach ($grupo as $j) {
+                $id_grupo[] = $j->grupo_id;
             }
-            if ($id_jurusan === []) {
-                $id_jurusan = null;
+            if ($id_grupo === []) {
+                $id_grupo = null;
             }
             
             $this->db->select('*');
-            $this->db->from('jurusan');
-            $this->db->where_not_in('id_jurusan', $id_jurusan);
+            $this->db->from('grupo');
+            $this->db->where_not_in('id_grupo', $id_grupo);
             $matkul = $this->db->get()->result();
             return $matkul;
         }

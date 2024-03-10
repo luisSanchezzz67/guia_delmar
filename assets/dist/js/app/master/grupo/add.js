@@ -1,19 +1,19 @@
-banyak = Number(banyak);
+lote = Number(lote);
 $(document).ready(function () {
-    if (banyak < 1 || banyak > 50) {
+    if (lote < 1 || lote > 50) {
         alert('Entrada máxima 50');
-        window.location.href = base_url+"jurusan";
+        window.location.href = base_url+"grupo";
     } else {
-        generate(banyak);
+        generate(lote);
     }
 
     $('#inputs input:first').select();
-    $('form#jurusan input').on('change', function () {
+    $('form#grupo input').on('change', function () {
         $(this).parent('.form-group').removeClass('has-error');
         $(this).next('.help-block').text('');
     });
 
-    $('form#jurusan').on('submit', function (e) {
+    $('form#grupo').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -34,7 +34,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'jurusan';
+                            window.location.href = base_url+'grupo';
                         }
                     });
                 } else {
@@ -63,7 +63,7 @@ function generate(n) {
                 <td>${i}</td>
                 <td>
                     <div class="form-group">
-                        <input autocomplete="off" type="text" name="nama_jurusan[${i}]" class="input-sm form-control">
+                        <input autocomplete="off" type="text" name="nombre_grupo[${i}]" class="input-sm form-control">
                         <small class="help-block text-right"></small>
                     </div>
                 </td>
