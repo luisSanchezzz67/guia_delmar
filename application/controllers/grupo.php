@@ -62,14 +62,14 @@ class Grupo extends CI_Controller
 	{
 		$chk = $this->input->post('checked', true);
 		if (!$chk) {
-			redirect('jurusan');
+			redirect('grupo');
 		} else {
-			$jurusan = $this->master->getJurusanById($chk);
+			$grupo = $this->master->getGrupoById($chk);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
-				'judul'		=> 'Editar Departmento',
-				'subjudul'	=> 'Editar Datos de Departamento',
-				'jurusan'	=> $jurusan
+				'titulo'		=> 'Editar Grupo',
+				'subtitulo'	=> 'Editar Datos del Grupo',
+				'grupo'	=> $grupo
 			];
 			$this->load->view('_templates/dashboard/_header', $data);
 			$this->load->view('direccion/grupo/edit');
@@ -78,49 +78,50 @@ class Grupo extends CI_Controller
 	}
 
 	public function save()
-	{
-		$rows = count($this->input->post('nombre_grupo', true));
-		$mode = $this->input->post('mode', true);
-		for ($i = 1; $i <= $rows; $i++) {
-			$nombre_grupo = 'nombre_grupo[' . $i . ']';
-			$this->form_validation->set_rules($nombre_grupo, 'Dept.', 'required');
-			$this->form_validation->set_message('required', '{field} Required');
+{
+    $rows = count($this->input->post('nombre_grupo', true));
+    $mode = $this->input->post('mode', true);
+    $error = array(); // Inicializar el array de errores
+    $status = true; // Establecer el estado predeterminado como verdadero
 
-			if ($this->form_validation->run() === FALSE) {
-				$error[] = [
-					$nombre_grupo => form_error($nombre_grupo)
-				];
-				$status = FALSE;
-			} else {
-				if ($mode == 'add') {
-					$insert[] = [
-						'nombre_grupo' => $this->input->post($nombre_grupo, true)
-					];
-				} else if ($mode == 'edit') {
-					$update[] = array(
-						'id_grupo'	=> $this->input->post('id_grupo[' . $i . ']', true),
-						'nombre_grupo' 	=> $this->input->post($nombre_grupo, true)
-					);
-				}
-				$status = TRUE;
-			}
-		}
-		if ($status) {
-			if ($mode == 'add') {
-				$this->master->create('grupo', $insert, true);
-				$data['insert']	= $insert;
-			} else if ($mode == 'edit') {
-				$this->master->update('grupo', $update, 'id_grupo', null, true);
-				$data['update'] = $update;
-			}
-		} else {
-			if (isset($error)) {
-				$data['errors'] = $error;
-			}
-		}
-		$data['status'] = $status;
-		$this->output_json($data);
-	}
+    for ($i = 1; $i <= $rows; $i++) {
+        $nombre_grupo = 'nombre_grupo[' . $i . ']';
+        $this->form_validation->set_rules($nombre_grupo, 'Dept.', 'required');
+        $this->form_validation->set_message('required', '{field} Required');
+
+        if ($this->form_validation->run() === FALSE) {
+            $error[$nombre_grupo] = form_error($nombre_grupo); // Agregar el error al array
+            $status = false; // Establecer el estado como falso si hay errores
+        } else {
+            if ($mode == 'add') {
+                $insert[] = [
+                    'nombre_grupo' => $this->input->post($nombre_grupo, true)
+                ];
+            } else if ($mode == 'edit') {
+                $update[] = array(
+                    'id_grupo'    => $this->input->post('id_grupo[' . $i . ']', true),
+                    'nombre_grupo'    => $this->input->post($nombre_grupo, true)
+                );
+            }
+        }
+    }
+
+    if ($status) {
+        if ($mode == 'add') {
+            $this->master->create('grupo', $insert, true);
+            $data['insert']    = $insert;
+        } else if ($mode == 'edit') {
+            $this->master->update('grupo', $update, 'id_grupo', null, true);
+            $data['update'] = $update;
+        }
+    } else {
+        $data['errors'] = $error; // Agregar el array de errores a los datos
+    }
+
+    $data['status'] = $status; // Agregar el estado a los datos
+    $this->output_json($data); // Enviar los datos JSON
+}
+
 
 	public function delete()
 	{
@@ -128,7 +129,7 @@ class Grupo extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('jurusan', $chk, 'id_jurusan')) {
+			if ($this->master->delete('grupo', $chk, 'id_grupo')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}
@@ -136,7 +137,7 @@ class Grupo extends CI_Controller
 
 	public function load_jurusan()
 	{
-		$data = $this->master->getJurusan();
+		$data = $this->master->getGrupo();
 		$this->output_json($data);
 	}
 
@@ -144,8 +145,8 @@ class Grupo extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Departmento',
-			'subjudul' => 'Importar Departmento'
+			'titulo'	=> 'Grupos',
+			'subtitulo' => 'Importar Grupos'
 		];
 		if ($import_data != null) $data['import'] = $import_data;
 
@@ -188,31 +189,31 @@ class Grupo extends CI_Controller
 
 			$spreadsheet = $reader->load($file);
 			$sheetData = $spreadsheet->getActiveSheet()->toArray();
-			$jurusan = [];
+			$grupo = [];
 			for ($i = 1; $i < count($sheetData); $i++) {
 				if ($sheetData[$i][0] != null) {
-					$jurusan[] = $sheetData[$i][0];
+					$grupo[] = $sheetData[$i][0];
 				}
 			}
 
 			unlink($file);
 
-			$this->import($jurusan);
+			$this->import($grupo);
 		}
 	}
 	public function do_import()
 	{
-		$data = json_decode($this->input->post('jurusan', true));
-		$jurusan = [];
+		$data = json_decode($this->input->post('grupo', true));
+		$grupo = [];
 		foreach ($data as $j) {
-			$jurusan[] = ['nama_jurusan' => $j];
+			$jurusan[] = ['nombre_grupo' => $j];
 		}
 
-		$save = $this->master->create('jurusan', $jurusan, true);
+		$save = $this->master->create('grupo', $grupo, true);
 		if ($save) {
-			redirect('jurusan');
+			redirect('grupo');
 		} else {
-			redirect('jurusan/import');
+			redirect('grupo/import');
 		}
 	}
 }

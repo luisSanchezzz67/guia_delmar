@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $('form#jurusan input').on('change', function () {
+    $('form#grupo input').on('change', function () {
         $(this).parent('.form-group').removeClass('has-error');
         $(this).next('.help-block').text('');
     });
 
-    $('form#jurusan').on('submit', function (e) {
+    $('form#grupo').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'jurusan';
+                            window.location.href = base_url+'grupo';
                         }
                     });
                 } else {

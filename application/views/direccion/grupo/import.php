@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= $subjudul ?></h3>
+        <h3 class="box-title"><?= $subtitulo ?></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -10,17 +10,17 @@
         <div class="row text-center">
             <div class="col-sm-offset-3 col-sm-6">
                 <div class="alert bg-purple">
-                    <strong>Note!</strong> To import data from an excel file, please download the template first.
+                    <strong>¡Nota!</strong>Para importar datos desde un archivo de Excel, primero descargue la plantilla.
                 </div>
             </div>
         </div>
         <div class="text-center">
-            <a href="<?= base_url('uploads/import/format/jurusan.xlsx') ?>" class="btn-default btn">Download Format</a>
+            <a href="<?= base_url('uploads/import/format/grupos.xlsx') ?>" class="btn-default btn">Descargar Formato</a>
         </div>
         <br>
         <div class="row">
-            <?= form_open_multipart('jurusan/preview'); ?>
-            <label for="file" class="col-sm-offset-1 col-sm-3 text-right">Choose File</label>
+            <?= form_open_multipart('grupo/preview'); ?>
+            <label for="file" class="col-sm-offset-1 col-sm-3 text-right">Elige el archivo</label>
             <div class="col-sm-4">
                 <div class="form-group">
                     <input type="file" name="upload_file">
@@ -44,14 +44,14 @@
                         <tbody>
                             <?php
                             if (empty($import)) {
-                                echo '<tr><td colspan="2" class="text-center">Data kosong! pastikan anda menggunakan format yang telah disediakan.</td></tr>';
+                                echo '<tr><td colspan="2" class="text-center">¡Los datos están vacíos! asegúrese de utilizar el formato proporcionado.</td></tr>';
                             } else {
                                 $no = 1;
-                                foreach ($import as $jurusan) :
+                                foreach ($import as $grupo) :
                             ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><?= $jurusan; ?></td>
+                                        <td><?= $grupo; ?></td>
                                     </tr>
                             <?php
                                 endforeach;
@@ -61,7 +61,7 @@
                     </table>
                     <?php if (!empty($import)) : ?>
 
-                        <?= form_open('jurusan/do_import', null, ['jurusan' => json_encode($import)]); ?>
+                        <?= form_open('grupo/do_import', null, ['grupo' => json_encode($import)]); ?>
                         <button type='submit' class='btn btn-block btn-flat bg-purple'>Importar</button>
                         <?= form_close(); ?>
 
