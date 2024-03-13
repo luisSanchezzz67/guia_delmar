@@ -1,6 +1,6 @@
 <div class="box">
 	<div class="box-header with-border">
-		<h3 class="box-title"><?= $subjudul ?></h3>
+		<h3 class="box-title"><?= $subtitulo ?></h3>
 		<div class="box-tools pull-right">
 			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 			</button>
@@ -9,7 +9,7 @@
 	<div class="box-body">
 		<div class="mt-2 mb-3">
 			<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-flat bg-blue"><i class="fa fa-plus"></i> Agregar Datos</button>
-			<a href="<?= base_url('kelas/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Importar</a>
+			<!-- <a href="<?= base_url('kelas/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Importar</a> -->
 			<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
 			<div class="pull-right">
 				<button onclick="bulk_edit()" class="btn btn-sm btn-flat btn-primary" type="button"><i class="fa fa-edit"></i> Editar</button>
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<?= form_open('', array('id' => 'bulk')) ?>
-		<table id="kelas" class="w-100 table table-striped table-bordered table-hover">
+		<table id="clase" class="w-100 table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -59,4 +59,4 @@
 	<!-- /.modal-dialog -->
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/master/kelas/data.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/clase/data.js"></script>

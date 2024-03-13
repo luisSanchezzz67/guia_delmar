@@ -25,8 +25,8 @@ class Settings extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Configuración',
-			'subjudul' => 'Eliminar Datos',
+			'titulo'	=> 'Configuración',
+			'subtitulo' => 'Eliminar Datos',
 		];
 
 		$this->load->view('_templates/dashboard/_header.php', $data);
@@ -36,7 +36,7 @@ class Settings extends CI_Controller
 
 	public function truncate()
 	{
-		$tables = ['h_ujian', 'm_ujian', 'tb_soal', 'kelas_dosen', 'dosen', 'mahasiswa', 'kelas', 'jurusan_matkul', 'matkul', 'jurusan'];
+		$tables = ['h_ujian', 'm_ujian', 'tb_soal', 'kelas_dosen', 'dosen', 'mahasiswa', 'clase', 'jurusan_matkul', 'matkul', 'grupo'];
 		$this->settings->truncate($tables);
 
 		$this->output_json(['status' => true]);

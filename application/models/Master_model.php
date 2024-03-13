@@ -38,20 +38,20 @@ class Master_model extends CI_Model
      * Data Clases
      */
 
-    public function getDataKelas()
+    public function getDataClase()
     {
-        $this->datatables->select('id_kelas, nama_kelas, id_jurusan, nama_jurusan');
-        $this->datatables->from('kelas');
-        $this->datatables->join('jurusan', 'jurusan_id=id_jurusan','');
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_kelas, nama_kelas, id_jurusan, nama_jurusan');
+        $this->datatables->select('id_clase, nombre_clase, id_grupo, nombre_grupo');
+        $this->datatables->from('clase');
+        $this->datatables->join('grupo', 'id_grupo=id_grupo','');
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_clase, nombre_clase, id_grupo, nombre_grupo');
         return $this->datatables->generate();
     }
 
-    public function getKelasById($id)
+    public function getClaseById($id)
     {
-        $this->db->where_in('id_kelas', $id);
-        $this->db->order_by('nama_kelas');
-        $query = $this->db->get('kelas')->result();
+        $this->db->where_in('id_clase', $id);
+        $this->db->order_by('nombre_clase');
+        $query = $this->db->get('clase')->result();
         return $query;
     }
 

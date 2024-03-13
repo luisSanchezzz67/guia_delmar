@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No se permite el acceso directo al script');
 
-class Kelas extends CI_Controller
+class Clase extends CI_Controller
 {
 
 	public function __construct()
@@ -27,25 +27,25 @@ class Kelas extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Clase',
-			'subjudul' => 'Datos de Clase'
+			'titulo'	=> 'Clase',
+			'subtitulo' => 'Datos de Clase'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/kelas/data');
+		$this->load->view('direccion/clase/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getDataKelas(), false);
+		$this->output_json($this->master->getDataClase(), false);
 	}
 
 	public function add()
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Agregar Clase',
-			'subjudul'	=> 'Agregar Datos de Clase',
+			'titulo'		=> 'Agregar Clase',
+			'subtitulo'	=> 'Agregar Datos de Clase',
 			'banyak'	=> $this->input->post('banyak', true),
 			'jurusan'	=> $this->master->getAllJurusan()
 		];

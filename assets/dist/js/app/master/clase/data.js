@@ -4,7 +4,7 @@ var table;
 $(document).ready(function() {
   ajaxcsrf();
 
-  table = $("#kelas").DataTable({
+  table = $("#clase").DataTable({
     initComplete: function() {
       var api = this.api();
       $("#kelas_filter input")
@@ -41,18 +41,18 @@ $(document).ready(function() {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + "kelas/data",
+      url: base_url + "clase/data",
       type: "POST"
       //data: csrf
     },
     columns: [
       {
-        data: "id_kelas",
+        data: "id_clase",
         orderable: false,
         searchable: false
       },
-      { data: "nama_kelas" },
-      { data: "nama_jurusan" },
+      { data: "nombre_clase" },
+      { data: "nombre_grupo" },
       {
         data: "bulk_select",
         orderable: false,
