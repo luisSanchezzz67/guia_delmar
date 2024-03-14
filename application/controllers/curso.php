@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
-class Matkul extends CI_Controller
+class Curso extends CI_Controller
 {
 
 	public function __construct()
@@ -32,29 +32,29 @@ class Matkul extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Curso',
-			'subjudul' => 'Datos de Curso'
+			'titulo'	=> 'Curso',
+			'subtitulo' => 'Datos de Curso'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/matkul/data');
+		$this->load->view('direccion/curso/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getDataMatkul(), false);
+		$this->output_json($this->master->getDataCurso(), false);
 	}
 
 	public function add()
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Agregar Curso',
-			'subjudul'	=> 'Agregar Datos de Curso',
-			'banyak'	=> $this->input->post('banyak', true)
+			'titulo'		=> 'Agregar Curso',
+			'subtitulo'	=> 'Agregar Datos de Curso',
+			'lote'	=> $this->input->post('lote', true)
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/matkul/add');
+		$this->load->view('direccion/curso/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -62,44 +62,44 @@ class Matkul extends CI_Controller
 	{
 		$chk = $this->input->post('checked', true);
 		if (!$chk) {
-			redirect('matkul');
+			redirect('curso');
 		} else {
-			$matkul = $this->master->getMatkulById($chk);
+			$curso = $this->master->getCursoById($chk);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
-				'judul'		=> 'Editar Curso',
-				'subjudul'	=> 'Editar Datos de Curso',
-				'matkul'	=> $matkul
+				'titulo'		=> 'Editar Curso',
+				'subtitulo'	=> 'Editar Datos de Curso',
+				'curso'	=> $curso
 			];
 			$this->load->view('_templates/dashboard/_header.php', $data);
-			$this->load->view('master/matkul/edit');
+			$this->load->view('direccion/curso/edit');
 			$this->load->view('_templates/dashboard/_footer.php');
 		}
 	}
 
 	public function save()
 	{
-		$rows = count($this->input->post('nama_matkul', true));
+		$rows = count($this->input->post('nombre_curso', true));
 		$mode = $this->input->post('mode', true);
 		for ($i = 1; $i <= $rows; $i++) {
-			$nama_matkul = 'nama_matkul[' . $i . ']';
-			$this->form_validation->set_rules($nama_matkul, 'Course', 'required');
+			$nombre_curso = 'nombre_curso[' . $i . ']';
+			$this->form_validation->set_rules($nombre_curso, 'Course', 'required');
 			$this->form_validation->set_message('required', '{field} Required');
 
 			if ($this->form_validation->run() === FALSE) {
 				$error[] = [
-					$nama_matkul => form_error($nama_matkul)
+					$nombre_curso => form_error($nombre_curso)
 				];
 				$status = FALSE;
 			} else {
 				if ($mode == 'add') {
 					$insert[] = [
-						'nama_matkul' => $this->input->post($nama_matkul, true)
+						'nombre_curso' => $this->input->post($nombre_curso, true)
 					];
 				} else if ($mode == 'edit') {
 					$update[] = array(
-						'id_matkul'	=> $this->input->post('id_matkul[' . $i . ']', true),
-						'nama_matkul' 	=> $this->input->post($nama_matkul, true)
+						'id_curso'	=> $this->input->post('id_curso[' . $i . ']', true),
+						'nombre_curso' 	=> $this->input->post($nombre_curso, true)
 					);
 				}
 				$status = TRUE;
@@ -107,10 +107,10 @@ class Matkul extends CI_Controller
 		}
 		if ($status) {
 			if ($mode == 'add') {
-				$this->master->create('matkul', $insert, true);
+				$this->master->create('curso', $insert, true);
 				$data['insert']	= $insert;
 			} else if ($mode == 'edit') {
-				$this->master->update('matkul', $update, 'id_matkul', null, true);
+				$this->master->update('curso', $update, 'id_curso', null, true);
 				$data['update'] = $update;
 			}
 		} else {
@@ -128,7 +128,7 @@ class Matkul extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('matkul', $chk, 'id_matkul')) {
+			if ($this->master->delete('curso', $chk, 'id_curso')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}

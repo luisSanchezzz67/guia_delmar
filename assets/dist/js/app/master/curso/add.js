@@ -1,16 +1,16 @@
-banyak = Number(banyak);
+lote = Number(lote);
 $(document).ready(function () {
-    if (banyak < 1 || banyak > 50) {
+    if (lote < 1 || lote > 50) {
         alert('Entrada máxima 50');
-        window.location.href = base_url+"matkul";
+        window.location.href = base_url+"curso";
     }
 
-    $('form#matkul input').on('change', function () {
+    $('form#curso input').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error');
         $(this).next().text('');
     });
 
-    $('form#matkul').on('submit', function (e) {
+    $('form#curso').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'matkul';
+                            window.location.href = base_url+'curso';
                         }
                     });
                 } else {

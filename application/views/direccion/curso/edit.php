@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $judul ?></h3>
+        <h3 class="box-title">Formulario <?= $titulo ?></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -11,15 +11,15 @@
             <div class="col-sm-offset-4 col-sm-4">
                 <div class="my-2">
                     <div class="form-horizontal form-inline">
-                        <a href="<?= base_url('matkul') ?>" class="btn btn-default btn-xs">
+                        <a href="<?= base_url('curso') ?>" class="btn btn-default btn-xs">
                             <i class="fa fa-arrow-left"></i> Cancelar
                         </a>
                         <div class="pull-right">
-                            <span> Monto : </span><label for=""><?= count($matkul) ?></label>
+                            <span> Monto : </span><label for=""><?= count($curso) ?></label>
                         </div>
                     </div>
                 </div>
-                <?= form_open('matkul/save', array('id' => 'matkul'), array('mode' => 'edit')) ?>
+                <?= form_open('curso/save', array('id' => 'curso'), array('mode' => 'edit')) ?>
                 <table id="form-table" class="table text-center table-condensed">
                     <thead>
                         <tr>
@@ -30,13 +30,13 @@
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($matkul as $row) : ?>
+                        foreach ($curso as $row) : ?>
                             <tr>
                                 <td><?= $no ?></td>
                                 <td>
                                     <div class="form-group">
-                                        <?= form_hidden('id_matkul[' . $no . ']', $row->id_matkul) ?>
-                                        <input autofocus="autofocus" onfocus="this.select()" autocomplete="off" value="<?= $row->nama_matkul ?>" type="text" name="nama_matkul[<?= $no ?>]" class="input-sm form-control">
+                                        <?= form_hidden('id_curso[' . $no . ']', $row->id_curso) ?>
+                                        <input autofocus="autofocus" onfocus="this.select()" autocomplete="off" value="<?= $row->nombre_curso ?>" type="text" name="nombre_curso[<?= $no ?>]" class="input-sm form-control">
                                         <small class="help-block text-right"></small>
                                     </div>
                                 </td>
@@ -56,4 +56,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/master/matkul/edit.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/curso/edit.js"></script>

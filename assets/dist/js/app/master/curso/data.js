@@ -4,7 +4,7 @@ var table;
 $(document).ready(function() {
   ajaxcsrf();
 
-  table = $("#matkul").DataTable({
+  table = $("#curso").DataTable({
     initComplete: function() {
       var api = this.api();
       $("#matkul_filter input")
@@ -41,22 +41,22 @@ $(document).ready(function() {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + "matkul/data",
+      url: base_url + "curso/data",
       type: "POST"
       //data: csrf
     },
     columns: [
       {
-        data: "id_matkul",
+        data: "id_curso",
         orderable: false,
         searchable: false
       },
-      { data: "nama_matkul" }
+      { data: "nombre_curso" }
     ],
     columnDefs: [
       {
         targets: 2,
-        data: "id_matkul",
+        data: "id_curso",
         render: function(data, type, row, meta) {
           return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
@@ -83,7 +83,7 @@ $(document).ready(function() {
     .appendTo("#matkul_wrapper .col-md-6:eq(0)");
 
   $("#myModal").on("shown.modal.bs", function() {
-    $(':input[name="banyak"]').select();
+    $(':input[name="lote"]').select();
   });
 
   $(".select_all").on("click", function() {
@@ -100,9 +100,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#matkul tbody").on("click", "tr .check", function() {
-    var check = $("#matkul tbody tr .check").length;
-    var checked = $("#matkul tbody tr .check:checked").length;
+  $("#curso tbody").on("click", "tr .check", function() {
+    var check = $("#curso tbody tr .check").length;
+    var checked = $("#curso tbody tr .check:checked").length;
     if (check === checked) {
       $(".select_all").prop("checked", true);
     } else {
@@ -111,7 +111,7 @@ $(document).ready(function() {
   });
 
   $("#bulk").on("submit", function(e) {
-    if ($(this).attr("action") == base_url + "matkul/delete") {
+    if ($(this).attr("action") == base_url + "curso/delete") {
       e.preventDefault();
       e.stopImmediatePropagation();
 
@@ -148,14 +148,14 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-  if ($("#matkul tbody tr .check:checked").length == 0) {
+  if ($("#curso tbody tr .check:checked").length == 0) {
     Swal({
       title: "Proceso Fallido",
       text: "Sin datos seleccionados",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "matkul/delete");
+    $("#bulk").attr("action", base_url + "curso/delete");
     Swal({
       title: "Seguro?",
       text: "Los datos serán borrados definitivamente!",
@@ -173,14 +173,14 @@ function bulk_delete() {
 }
 
 function bulk_edit() {
-  if ($("#matkul tbody tr .check:checked").length == 0) {
+  if ($("#curso tbody tr .check:checked").length == 0) {
     Swal({
       title: "Proceso Fallido",
       text: "Sin datos seleccionados",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "matkul/edit");
+    $("#bulk").attr("action", base_url + "curso/edit");
     $("#bulk").submit();
   }
 }

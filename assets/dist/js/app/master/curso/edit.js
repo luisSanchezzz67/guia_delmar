@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $('form#matkul input').on('change', function () {
+    $('form#curso input').on('change', function () {
         $(this).parent('.form-group').removeClass('has-error');
         $(this).next('.help-block').text('');
     });
 
-    $('form#matkul').on('submit', function (e) {
+    $('form#curso').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'matkul';
+                            window.location.href = base_url+'curso';
                         }
                     });
                 } else {

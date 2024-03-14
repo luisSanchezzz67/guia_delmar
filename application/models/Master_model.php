@@ -161,29 +161,29 @@ class Master_model extends CI_Model
     }
 
     /**
-     * Data Matkul
+     * Data Cursos
      */
 
-    public function getDataMatkul()
+    public function getDataCurso()
     {
-        $this->datatables->select('id_matkul, nama_matkul');
-        $this->datatables->from('matkul');
+        $this->datatables->select('id_curso, nombre_curso');
+        $this->datatables->from('curso');
         return $this->datatables->generate();
     }
 
-    public function getAllMatkul()
+    public function getAllCurso()
     {
-        return $this->db->get('matkul')->result();
+        return $this->db->get('curso')->result();
     }
 
-    public function getMatkulById($id, $single = false)
+    public function getCursoById($id, $single = false)
     {
         if ($single === false) {
-            $this->db->where_in('id_matkul', $id);
-            $this->db->order_by('nama_matkul');
-            $query = $this->db->get('matkul')->result();
+            $this->db->where_in('id_curso', $id);
+            $this->db->order_by('nombre_curso');
+            $query = $this->db->get('curso')->result();
         } else {
-            $query = $this->db->get_where('matkul', array('id_matkul'=>$id))->row();
+            $query = $this->db->get_where('curso', array('id_curso'=>$id))->row();
         }
         return $query;
     }
