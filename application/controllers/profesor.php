@@ -70,46 +70,46 @@ class Profesor extends CI_Controller
 	public function save()
 	{
 		$method 	= $this->input->post('method', true);
-		$id_dosen 	= $this->input->post('id_dosen', true);
+		$id_profesor 	= $this->input->post('id_profesor', true);
 		$nip 		= $this->input->post('nip', true);
-		$nama_dosen = $this->input->post('nama_dosen', true);
+		$nombre_profesor = $this->input->post('nombre_profesor', true);
 		$email 		= $this->input->post('email', true);
-		$matkul 	= $this->input->post('matkul', true);
+		$curso 	= $this->input->post('curso', true);
 		if ($method == 'add') {
-			$u_nip = '|is_unique[dosen.nip]';
-			$u_email = '|is_unique[dosen.email]';
+			$u_nip = '|is_unique[profesor.nip]';
+			$u_email = '|is_unique[profesor.email]';
 		} else {
-			$dbdata 	= $this->master->getDosenById($id_dosen);
-			$u_nip		= $dbdata->nip === $nip ? "" : "|is_unique[dosen.nip]";
-			$u_email	= $dbdata->email === $email ? "" : "|is_unique[dosen.email]";
+			$dbdata 	= $this->master->getProfesorById($id_profesor);
+			$u_nip		= $dbdata->nip === $nip ? "" : "|is_unique[profesor.nip]";
+			$u_email	= $dbdata->email === $email ? "" : "|is_unique[profesor.email]";
 		}
 		$this->form_validation->set_rules('nip', 'NIP', 'required|numeric|trim|min_length[8]|max_length[12]' . $u_nip);
-		$this->form_validation->set_rules('nama_dosen', 'Nama Dosen', 'required|trim|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('nombre_profesor', 'Nama Dosen', 'required|trim|min_length[3]|max_length[50]');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email);
-		$this->form_validation->set_rules('matkul', 'Mata Kuliah', 'required');
+		$this->form_validation->set_rules('curso', 'Mata Kuliah', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = [
 				'status'	=> false,
 				'errors'	=> [
 					'nip' => form_error('nip'),
-					'nama_dosen' => form_error('nama_dosen'),
+					'nombre_profesor' => form_error('nombre_profesor'),
 					'email' => form_error('email'),
-					'matkul' => form_error('matkul'),
+					'curso' => form_error('curso'),
 				]
 			];
 			$this->output_json($data);
 		} else {
 			$input = [
 				'nip'			=> $nip,
-				'nama_dosen' 	=> $nama_dosen,
+				'nombre_profesor' 	=> $nombre_profesor,
 				'email' 		=> $email,
-				'matkul_id' 	=> $matkul
+				'curso_id' 	=> $curso
 			];
 			if ($method === 'add') {
-				$action = $this->master->create('dosen', $input);
+				$action = $this->master->create('profesor', $input);
 			} else if ($method === 'edit') {
-				$action = $this->master->update('dosen', $input, 'id_dosen', $id_dosen);
+				$action = $this->master->update('profesor', $input, 'id_profesor', $id_profesor);
 			}
 
 			if ($action) {
@@ -135,10 +135,10 @@ class Profesor extends CI_Controller
 	public function create_user()
 	{
 		$id = $this->input->get('id', true);
-		$data = $this->master->getDosenById($id);
-		$nama = explode(' ', $data->nama_dosen);
-		$first_name = $nama[0];
-		$last_name = end($nama);
+		$data = $this->master->getProfesorById($id);
+		$nombre = explode(' ', $data->nombre_profesor);
+		$first_name = $nombre[0];
+		$last_name = end($nombre);
 
 		$username = $data->nip;
 		$password = $data->nip;
@@ -147,7 +147,7 @@ class Profesor extends CI_Controller
 			'first_name'	=> $first_name,
 			'last_name'		=> $last_name
 		];
-		$group = array('2'); // Sets user to dosen.
+		$group = array('2'); // Sets user to profesor.
 
 		if ($this->ion_auth->username_check($username)) {
 			$data = [

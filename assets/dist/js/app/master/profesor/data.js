@@ -3,7 +3,7 @@ var table;
 $(document).ready(function() {
     ajaxcsrf();
 
-    table = $("#dosen").DataTable({
+    table = $("#profesor").DataTable({
         initComplete: function() {
             var api = this.api();
             $("#dosen_filter input")
@@ -38,24 +38,24 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: base_url + "dosen/data",
+            url: base_url + "profesor/data",
             type: "POST"
         },
         columns: [{
-                data: "id_dosen",
+                data: "id_profesor",
                 orderable: false,
                 searchable: false
             },
             { data: "nip" },
-            { data: "nama_dosen" },
+            { data: "nombre_profesor" },
             { data: "email" },
-            { data: "nama_matkul" }
+            { data: "nombre_curso" }
         ],
         columnDefs: [{
                 searchable: false,
                 targets: 5,
                 data: {
-                    id_dosen: "id_dosen",
+                    id_profesor: "id_profesor",
                     ada: "ada"
                 },
                 render: function(data, type, row, meta) {
@@ -63,12 +63,12 @@ $(document).ready(function() {
                     if (data.ada > 0) {
                         btn = "";
                     } else {
-                        btn = `<button type="button" class="btn btn-aktif btn-primary btn-xs" data-id="${data.id_dosen}">
+                        btn = `<button onclick="console.log('Hola')" type="button" class="btn btn-aktif btn-primary btn-xs" data-id="${data.id_profesor}">
 								<i class="fa fa-user-plus"></i> Activo
 							</button>`;
                     }
                     return `<div class="text-center">
-							<a href="${base_url}dosen/edit/${data.id_dosen}" class="btn btn-xs btn-primary">
+							<a href="${base_url}profesor/edit/${data.id_profesor}" class="btn btn-xs btn-primary">
 								<i class="fa fa-pencil"></i> Editar
 							</a>
 							${btn}
@@ -77,7 +77,7 @@ $(document).ready(function() {
             },
             {
                 targets: 6,
-                data: "id_dosen",
+                data: "id_profesor",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
@@ -119,9 +119,9 @@ $(document).ready(function() {
         }
     });
 
-    $("#dosen tbody").on("click", "tr .check", function() {
-        var check = $("#dosen tbody tr .check").length;
-        var checked = $("#dosen tbody tr .check:checked").length;
+    $("#profesor tbody").on("click", "tr .check", function() {
+        var check = $("#profesor tbody tr .check").length;
+        var checked = $("#profesor tbody tr .check:checked").length;
         if (check === checked) {
             $(".select_all").prop("checked", true);
         } else {
@@ -163,11 +163,11 @@ $(document).ready(function() {
         });
     });
 
-    $("#dosen").on("click", ".btn-aktif", function() {
+    $("#profesor").on("click", ".btn-aktif", function() {
         let id = $(this).data("id");
 
         $.ajax({
-            url: base_url + "dosen/create_user",
+            url: base_url + "profesor/create_user",
             data: "id=" + id,
             type: "GET",
             success: function(response) {

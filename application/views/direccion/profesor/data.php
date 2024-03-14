@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= $subjudul ?></h3>
+        <h3 class="box-title"><?= $subtitulo ?></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -8,15 +8,15 @@
     </div>
     <div class="box-body">
         <div class="mt-2 mb-4">
-            <a href="<?= base_url('dosen/add') ?>" class="btn btn-sm bg-blue btn-flat"><i class="fa fa-plus"></i> Agregar Datos</a>
-            <a href="<?= base_url('dosen/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Importar</a>
+            <a href="<?= base_url('profesor/add') ?>" class="btn btn-sm bg-blue btn-flat"><i class="fa fa-plus"></i> Agregar Datos</a>
+            <!-- <a href="<?= base_url('profesor/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Importar</a> -->
             <button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-default btn-flat"><i class="fa fa-refresh"></i> Recargar</button>
             <div class="pull-right">
                 <button onclick="bulk_delete()" class="btn btn-sm btn-danger btn-flat" type="button"><i class="fa fa-trash"></i> Eliminar</button>
             </div>
         </div>
-        <?= form_open('dosen/delete', array('id' => 'bulk')) ?>
-        <table id="dosen" class="w-100 table table-striped table-bordered table-hover">
+        <?= form_open('profesor/delete', array('id' => 'bulk')) ?>
+        <table id="profesor" class="w-100 table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -49,4 +49,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/master/dosen/data.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/profesor/data.js"></script>

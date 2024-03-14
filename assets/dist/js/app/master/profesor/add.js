@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#formdosen').on('submit', function (e) {
+    $('#formprofesor').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
         var btn = $('#submit');
@@ -16,7 +16,7 @@ $(document).ready(function () {
                     Swal('Success', 'Datos Guardados Exitosamente', 'success')
                         .then((result) => {
                             if (result.value) {
-                                window.location.href = base_url+'dosen';
+                                window.location.href = base_url+'profesor';
                             }
                         });
                 } else {
@@ -33,7 +33,7 @@ $(document).ready(function () {
         })
     });
 
-    $('#formdosen input, #formdosen select').on('change', function () {
+    $('#formprofesor input, #formprofesor select').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error has-success');
         $(this).nextAll('.help-block').eq(0).text('');
     });
