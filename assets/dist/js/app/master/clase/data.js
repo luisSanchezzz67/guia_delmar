@@ -78,7 +78,7 @@ $(document).ready(function() {
     .appendTo("#kelas_wrapper .col-md-6:eq(0)");
 
   $("#myModal").on("shown.modal.bs", function() {
-    $(':input[name="banyak"]').select();
+    $(':input[name="lote"]').select();
   });
 
   $("#select_all").on("click", function() {
@@ -93,9 +93,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#kelas tbody").on("click", "tr .check", function() {
-    var check = $("#kelas tbody tr .check").length;
-    var checked = $("#kelas tbody tr .check:checked").length;
+  $("#clase tbody").on("click", "tr .check", function() {
+    var check = $("#clase tbody tr .check").length;
+    var checked = $("#clase tbody tr .check:checked").length;
     if (check === checked) {
       $("#select_all").prop("checked", true);
     } else {
@@ -104,7 +104,7 @@ $(document).ready(function() {
   });
 
   $("#bulk").on("submit", function(e) {
-    if ($(this).attr("action") == base_url + "kelas/delete") {
+    if ($(this).attr("action") == base_url + "clase/delete") {
       e.preventDefault();
       e.stopImmediatePropagation();
 
@@ -115,8 +115,8 @@ $(document).ready(function() {
         success: function(respon) {
           if (respon.status) {
             Swal({
-              title: "Successful",
-              text: respon.total + " data deleted successfully",
+              title: "Exito",
+              text: respon.total + " Eliminación exitosa",
               type: "success"
             });
           } else {
@@ -140,21 +140,21 @@ $(document).ready(function() {
   });
 });
 
-function load_jurusan() {
-  var jurusan = $('select[name="nama_jurusan"]');
-  jurusan.children("option:not(:first)").remove();
+function load_grupo() {
+  var grupo = $('select[name="nombre_grupo"]');
+  grupo.children("option:not(:first)").remove();
 
   ajaxcsrf(); // get csrf token
   $.ajax({
-    url: base_url + "jurusan/load_jurusan",
+    url: base_url + "grupo/load_grupo",
     type: "GET",
     success: function(data) {
       //console.log(data);
       if (data.length) {
-        var dataJurusan;
+        var dataGrupo;
         $.each(data, function(key, val) {
-          dataJurusan = `<option value="${val.id_jurusan}">${val.nama_jurusan}</option>`;
-          jurusan.append(dataJurusan);
+          dataGrupo = `<option value="${val.id_grupo}">${val.nombre_grupo}</option>`;
+          grupo.append(dataGrupo);
         });
       }
     }
@@ -162,14 +162,14 @@ function load_jurusan() {
 }
 
 function bulk_delete() {
-  if ($("#kelas tbody tr .check:checked").length == 0) {
+  if ($("#clase tbody tr .check:checked").length == 0) {
     Swal({
       title: "Failed",
       text: "No data selected",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "kelas/delete");
+    $("#bulk").attr("action", base_url + "clase/delete");
     Swal({
       title: "Seguro?",
       text: "Estos datos serán eliminados!",
@@ -187,14 +187,14 @@ function bulk_delete() {
 }
 
 function bulk_edit() {
-  if ($("#kelas tbody tr .check:checked").length == 0) {
+  if ($("#clase tbody tr .check:checked").length == 0) {
     Swal({
       title: "Fallido",
       text: "Sin datos seleccionados",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "kelas/edit");
+    $("#bulk").attr("action", base_url + "clase/edit");
     $("#bulk").submit();
   }
 }

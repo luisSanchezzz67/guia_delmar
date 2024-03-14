@@ -135,7 +135,7 @@ class Grupo extends CI_Controller
 		}
 	}
 
-	public function load_jurusan()
+	public function load_grupo()
 	{
 		$data = $this->master->getGrupo();
 		$this->output_json($data);

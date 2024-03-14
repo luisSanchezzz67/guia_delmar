@@ -1,10 +1,12 @@
 $(document).ready(function () {
-    $('form#kelas input, form#kelas select').on('change', function () {
+    $('form#clase input, form#clase select').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error');
         $(this).next().next().text('');
     });
 
-    $('form#kelas').on('submit', function (e) {
+    console.log('Probando formulariio');
+    $('form#clase').on('submit', function (e) {
+        
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -25,7 +27,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'kelas';
+                            window.location.href = base_url+'clase';
                         }
                     });
                 } else {

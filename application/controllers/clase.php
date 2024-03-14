@@ -46,11 +46,11 @@ class Clase extends CI_Controller
 			'user' 		=> $this->ion_auth->user()->row(),
 			'titulo'		=> 'Agregar Clase',
 			'subtitulo'	=> 'Agregar Datos de Clase',
-			'banyak'	=> $this->input->post('banyak', true),
-			'jurusan'	=> $this->master->getAllJurusan()
+			'lote'	=> $this->input->post('lote', true),
+			'grupo'	=> $this->master->getAllGrupo()
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/kelas/add');
+		$this->load->view('direccion/clase/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -58,50 +58,50 @@ class Clase extends CI_Controller
 	{
 		$chk = $this->input->post('checked', true);
 		if (!$chk) {
-			redirect('admin/kelas');
+			redirect('admin/clase');
 		} else {
-			$kelas = $this->master->getKelasById($chk);
+			$kelas = $this->master->getClaseById($chk);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
-				'judul'		=> 'Editar Clase',
-				'subjudul'	=> 'Editar Datos de Clase',
-				'jurusan'	=> $this->master->getAllJurusan(),
-				'kelas'		=> $kelas
+				'titulo'		=> 'Editar Clase',
+				'subtitulo'	=> 'Editar Datos de Clase',
+				'grupo'	=> $this->master->getAllGrupo(),
+				'clase'		=> $kelas
 			];
 			$this->load->view('_templates/dashboard/_header.php', $data);
-			$this->load->view('master/kelas/edit');
+			$this->load->view('direccion/clase/edit');
 			$this->load->view('_templates/dashboard/_footer.php');
 		}
 	}
 
 	public function save()
 	{
-		$rows = count($this->input->post('nama_kelas', true));
+		$rows = count($this->input->post('nombre_clase', true));
 		$mode = $this->input->post('mode', true);
 		for ($i = 1; $i <= $rows; $i++) {
-			$nama_kelas 	= 'nama_kelas[' . $i . ']';
-			$jurusan_id 	= 'jurusan_id[' . $i . ']';
-			$this->form_validation->set_rules($nama_kelas, 'Class', 'required');
-			$this->form_validation->set_rules($jurusan_id, 'Dept.', 'required');
+			$nombre_clase 	= 'nombre_clase[' . $i . ']';
+			$grupo_id 	= 'grupo_id[' . $i . ']';
+			$this->form_validation->set_rules($nombre_clase, 'Class', 'required');
+			$this->form_validation->set_rules($grupo_id, 'Dept.', 'required');
 			$this->form_validation->set_message('required', '{field} Required');
 
 			if ($this->form_validation->run() === FALSE) {
 				$error[] = [
-					$nama_kelas 	=> form_error($nama_kelas),
-					$jurusan_id 	=> form_error($jurusan_id),
+					$nombre_clase 	=> form_error($nombre_clase),
+					$grupo_id 	=> form_error($grupo_id),
 				];
 				$status = FALSE;
 			} else {
 				if ($mode == 'add') {
 					$insert[] = [
-						'nama_kelas' 	=> $this->input->post($nama_kelas, true),
-						'jurusan_id' 	=> $this->input->post($jurusan_id, true)
+						'nombre_clase' 	=> $this->input->post($nombre_clase, true),
+						'grupo_id' 	=> $this->input->post($grupo_id, true)
 					];
 				} else if ($mode == 'edit') {
 					$update[] = array(
-						'id_kelas'		=> $this->input->post('id_kelas[' . $i . ']', true),
-						'nama_kelas' 	=> $this->input->post($nama_kelas, true),
-						'jurusan_id' 	=> $this->input->post($jurusan_id, true)
+						'id_clase'		=> $this->input->post('id_clase[' . $i . ']', true),
+						'nombre_clase' 	=> $this->input->post($nombre_clase, true),
+						'grupo_id' 	=> $this->input->post($grupo_id, true)
 					);
 				}
 				$status = TRUE;
@@ -109,10 +109,10 @@ class Clase extends CI_Controller
 		}
 		if ($status) {
 			if ($mode == 'add') {
-				$this->master->create('kelas', $insert, true);
+				$this->master->create('clase', $insert, true);
 				$data['insert']	= $insert;
 			} else if ($mode == 'edit') {
-				$this->master->update('kelas', $update, 'id_kelas', null, true);
+				$this->master->update('clase', $update, 'id_clase', null, true);
 				$data['update'] = $update;
 			}
 		} else {
@@ -130,7 +130,7 @@ class Clase extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('kelas', $chk, 'id_kelas')) {
+			if ($this->master->delete('clase', $chk, 'id_clase')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}

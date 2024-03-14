@@ -21,8 +21,8 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Clase</th>
-					<th>Departamento</th>
+					<th>Clases</th>
+					<th>Grupos</th>
 					<th class="text-center">
 						<input type="checkbox" id="select_all">
 					</th>
@@ -41,11 +41,11 @@
 					<span aria-hidden="true">×</span></button>
 				<h4 class="modal-title">Agregar Datos</h4>
 			</div>
-			<?= form_open('kelas/add', array('id', 'tambah')); ?>
+			<?= form_open('clase/add', array('id', 'agregar')); ?>
 			<div class="modal-body">
 				<div class="form-group">
-					<label for="banyak">Número de Datos</label>
-					<input value="1" minlength="1" maxlength="50" min="1" max="50" id="banyakinput" type="number" autocomplete="off" required="required" name="banyak" class="form-control">
+					<label for="lote">Número de Datos</label>
+					<input value="1" minlength="1" maxlength="50" min="1" max="50" id="loteinput" type="number" autocomplete="off" required="required" name="lote" class="form-control">
 					<small class="help-block">Max. 50</small>
 				</div>
 			</div>

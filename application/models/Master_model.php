@@ -42,7 +42,7 @@ class Master_model extends CI_Model
     {
         $this->datatables->select('id_clase, nombre_clase, id_grupo, nombre_grupo');
         $this->datatables->from('clase');
-        $this->datatables->join('grupo', 'id_grupo=id_grupo','');
+        $this->datatables->join('grupo', 'id_grupo=grupo_id','');
         $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_clase, nombre_clase, id_grupo, nombre_grupo');
         return $this->datatables->generate();
     }
@@ -101,10 +101,10 @@ class Master_model extends CI_Model
 
     public function getGrupo()
     {
-        $this->db->select('id_grupo, nama_grupo');
-        $this->db->from('kelas');
+        $this->db->select('id_grupo, nombre_grupo');
+        $this->db->from('clase');
         $this->db->join('grupo', 'grupo_id=id_grupo');
-        $this->db->order_by('nama_grupo', 'ASC');
+        $this->db->order_by('nombre_grupo', 'ASC');
         $this->db->group_by('id_grupo');
         $query = $this->db->get();
         return $query->result();
@@ -117,8 +117,8 @@ class Master_model extends CI_Model
             return $this->db->get('grupo')->result();
         } else {
             $this->db->select('grupo_id');
-            $this->db->from('grupo_matkul');
-            $this->db->where('matkul_id', $id);
+            $this->db->from('grupo_curso');
+            $this->db->where('curso_id', $id);
             $grupo = $this->db->get()->result();
             $id_grupo = [];
             foreach ($grupo as $j) {
@@ -131,8 +131,8 @@ class Master_model extends CI_Model
             $this->db->select('*');
             $this->db->from('grupo');
             $this->db->where_not_in('id_grupo', $id_grupo);
-            $matkul = $this->db->get()->result();
-            return $matkul;
+            $curso = $this->db->get()->result();
+            return $curso;
         }
     }
 

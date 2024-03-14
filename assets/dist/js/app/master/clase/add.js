@@ -1,16 +1,16 @@
-banyak = Number(banyak);
+lote = Number(lote);
 $(document).ready(function () {
-    if (banyak < 1 || banyak > 50) {
+    if (lote < 1 || lote > 50) {
         alert('Entrada máxima 50');
-        window.location = base_url+"kelas";
+        window.location = base_url+"clase";
     }
 
-    $('form#kelas input, form#kelas select').on('change', function () {
+    $('form#clase input, form#clase select').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error');
         $(this).next().next().text('');
     });
 
-    $('form#kelas').on('submit', function (e) {
+    $('form#clase').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'kelas';
+                            window.location.href = base_url+'clase';
                         }
                     });
                 } else {
