@@ -143,20 +143,20 @@ class Master_model extends CI_Model
     }
 
     /**
-     * Data Dosen
+     * Data Profesor
      */
 
-    public function getDataDosen()
+    public function getDataProfesor()
     {
-        $this->datatables->select('a.id_dosen,a.nip, a.nama_dosen, a.email, a.matkul_id, b.nama_matkul, (SELECT COUNT(id) FROM users WHERE username = a.nip OR email = a.email) AS ada');
-        $this->datatables->from('dosen a');
-        $this->datatables->join('matkul b', 'a.matkul_id=b.id_matkul');
+        $this->datatables->select('a.id_profesor,a.nip, a.nombre_profesor, a.email, a.curso_id, b.nombre_curso, (SELECT COUNT(id) FROM users WHERE username = a.nip OR email = a.email) AS ada');
+        $this->datatables->from('profesor a');
+        $this->datatables->join('curso b', 'a.curso_id=b.id_curso');
         return $this->datatables->generate();
     }
 
-    public function getDosenById($id)
+    public function getProfesorById($id)
     {
-        $query = $this->db->get_where('dosen', array('id_dosen'=>$id));
+        $query = $this->db->get_where('profesor', array('id_profesor'=>$id));
         return $query->row();
     }
 

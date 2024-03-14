@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No se permite el acceso directo al script');
 
-class Dosen extends CI_Controller
+class Profesor extends CI_Controller
 {
 
 	public function __construct()
@@ -27,29 +27,29 @@ class Dosen extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Profesor',
-			'subjudul' => 'Datos Profesor'
+			'titulo'	=> 'Profesor',
+			'subtitulo' => 'Datos Profesor'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/dosen/data');
+		$this->load->view('direccion/profesor/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getDataDosen(), false);
+		$this->output_json($this->master->getDataProfesor(), false);
 	}
 
 	public function add()
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Agregar Profesor',
-			'subjudul' => 'Agregar Datos de Profesor',
-			'matkul'	=> $this->master->getAllMatkul()
+			'titulo'	=> 'Agregar Profesor',
+			'subtitulo' => 'Agregar Datos de Profesor',
+			'curso'	=> $this->master->getAllCurso()
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/dosen/add');
+		$this->load->view('direccion/profesor/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -57,13 +57,13 @@ class Dosen extends CI_Controller
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Editar Profesor',
-			'subjudul'	=> 'Editar Datos de Profesor',
-			'matkul'	=> $this->master->getAllMatkul(),
-			'data' 		=> $this->master->getDosenById($id)
+			'titulo'		=> 'Editar Profesor',
+			'subtitulo'	=> 'Editar Datos de Profesor',
+			'curso'	=> $this->master->getAllCurso(),
+			'data' 		=> $this->master->getProfesorById($id)
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/dosen/edit');
+		$this->load->view('direccion/profesor/edit');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -180,7 +180,7 @@ class Dosen extends CI_Controller
 		if ($import_data != null) $data['import'] = $import_data;
 
 		$this->load->view('_templates/dashboard/_header', $data);
-		$this->load->view('master/dosen/import');
+		$this->load->view('direccion/dosen/import');
 		$this->load->view('_templates/dashboard/_footer');
 	}
 	public function preview()
