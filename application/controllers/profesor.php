@@ -126,7 +126,7 @@ class Profesor extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('dosen', $chk, 'id_dosen')) {
+			if ($this->master->delete('profesor', $chk, 'id_profesor')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}

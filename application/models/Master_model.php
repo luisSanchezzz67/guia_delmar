@@ -76,26 +76,26 @@ class Master_model extends CI_Model
     }
 
     /**
-     * Data Mahasiswa
+     * Data Estudiante
      */
 
-    public function getDataMahasiswa()
+    public function getDataEstudiante()
     {
-        $this->datatables->select('a.id_mahasiswa, a.nama, a.nim, a.email, b.nama_kelas, c.nama_jurusan');
+        $this->datatables->select('a.id_estudiante, a.nombre, a.nim, a.email, b.nombre_clase, c.nombre_grupo');
         $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nim) AS ada');
-        $this->datatables->from('mahasiswa a');
-        $this->datatables->join('kelas b', 'a.kelas_id=b.id_kelas');
-        $this->datatables->join('jurusan c', 'b.jurusan_id=c.id_jurusan');
+        $this->datatables->from('estudiante a');
+        $this->datatables->join('clase b', 'a.clase_id=b.id_clase');
+        $this->datatables->join('grupo c', 'b.grupo_id=c.id_grupo');
         return $this->datatables->generate();
     }
 
-    public function getMahasiswaById($id)
+    public function getEstudianteById($id)
     {
         $this->db->select('*');
-        $this->db->from('mahasiswa');
-        $this->db->join('kelas', 'kelas_id=id_kelas');
-        $this->db->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->db->where(['id_mahasiswa' => $id]);
+        $this->db->from('estudiante');
+        $this->db->join('clase', 'clase_id=id_clase');
+        $this->db->join('grupo', 'grupo_id=id_grupo');
+        $this->db->where(['id_estudiante' => $id]);
         return $this->db->get()->row();
     }
 
@@ -136,9 +136,9 @@ class Master_model extends CI_Model
         }
     }
 
-    public function getKelasByJurusan($id)
+    public function getClaseByGrupo($id)
     {
-        $query = $this->db->get_where('kelas', array('jurusan_id'=>$id));
+        $query = $this->db->get_where('clase', array('grupo_id'=>$id));
         return $query->result();
     }
 

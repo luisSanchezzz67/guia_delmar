@@ -1,9 +1,9 @@
-<?= form_open('dosen/save', array('id' => 'formdosen'), array('method' => 'edit', 'id_dosen' => $data->id_dosen)); ?>
+<?= form_open('profesor/save', array('id' => 'formprofesor'), array('method' => 'edit', 'id_profesor' => $data->id_profesor)); ?>
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $subjudul ?></h3>
+        <h3 class="box-title">Formulario <?= $subtitulo ?></h3>
         <div class="box-tools pull-right">
-            <a href="<?= base_url() ?>dosen" class="btn btn-sm btn-flat btn-primary">
+            <a href="<?= base_url() ?>profesor" class="btn btn-sm btn-flat btn-primary">
                 <i class="fa fa-arrow-left"></i> Cancelar
             </a>
         </div>
@@ -17,8 +17,8 @@
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="nama_dosen">Nombre Profesor</label>
-                    <input value="<?= $data->nama_dosen ?>" type="text" class="form-control" name="nama_dosen" placeholder="Nombre Profesor">
+                    <label for="nombre_profesor">Nombre Profesor</label>
+                    <input value="<?= $data->nombre_profesor ?>" type="text" class="form-control" name="nombre_profesor" placeholder="Nombre Profesor">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
@@ -27,11 +27,11 @@
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="matkul">Curso</label>
-                    <select name="matkul" id="matkul" class="form-control select2" style="width: 100%!important">
+                    <label for="curso">Curso</label>
+                    <select name="curso" id="curso" class="form-control select2" style="width: 100%!important">
                         <option value="" disabled selected>Elegir Curso</option>
-                        <?php foreach ($matkul as $row) : ?>
-                            <option <?= $data->matkul_id === $row->id_matkul ? "selected" : "" ?> value="<?= $row->id_matkul ?>"><?= $row->nama_matkul ?></option>
+                        <?php foreach ($curso as $row) : ?>
+                            <option <?= $data->curso_id === $row->id_curso ? "selected" : "" ?> value="<?= $row->id_curso ?>"><?= $row->nombre_curso ?></option>
                         <?php endforeach; ?>
                     </select>
                     <small class="help-block"></small>
@@ -50,4 +50,4 @@
 </div>
 <?= form_close(); ?>
 
-<script src="<?= base_url() ?>assets/dist/js/app/master/dosen/edit.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/profesor/edit.js"></script>

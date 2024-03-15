@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No se permite el acceso directo al script');
 
-class Mahasiswa extends CI_Controller
+class Estudiante extends CI_Controller
 {
 
 	public function __construct()
@@ -27,66 +27,66 @@ class Mahasiswa extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Estudiantes',
-			'subjudul' => 'Datos de Estudiante'
+			'titulo'	=> 'Estudiantes',
+			'subtitulo' => 'Datos de Estudiante'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/mahasiswa/data');
+		$this->load->view('direccion/estudiante/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getDataMahasiswa(), false);
+		$this->output_json($this->master->getDataEstudiante(), false);
 	}
 
 	public function add()
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Estudiante',
-			'subjudul' => 'Agregar Datos de Estudiante'
+			'titulo'	=> 'Estudiante',
+			'subtitulo' => 'Agregar Datos de Estudiante'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/mahasiswa/add');
+		$this->load->view('direccion/estudiante/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function edit($id)
 	{
-		$mhs = $this->master->getMahasiswaById($id);
+		$mhs = $this->master->getEstudianteById($id);
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Estudiante',
-			'subjudul'	=> 'Editar Datos de Estudiante',
-			'jurusan'	=> $this->master->getJurusan(),
-			'kelas'		=> $this->master->getKelasByJurusan($mhs->jurusan_id),
-			'mahasiswa' => $mhs
+			'titulo'		=> 'Estudiante',
+			'subtitulo'	=> 'Editar Datos de Estudiante',
+			'grupo'	=> $this->master->getGrupo(),
+			'clase'		=> $this->master->getClaseByGrupo($mhs->grupo_id),
+			'estudiante' => $mhs
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('master/mahasiswa/edit');
+		$this->load->view('direccion/estudiante/edit');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
-	public function validasi_mahasiswa($method)
+	public function validasi_estudiante($method)
 	{
-		$id_mahasiswa 	= $this->input->post('id_mahasiswa', true);
+		$id_estudiante 	= $this->input->post('id_estudiante', true);
 		$nim 			= $this->input->post('nim', true);
 		$email 			= $this->input->post('email', true);
 		if ($method == 'add') {
-			$u_nim = '|is_unique[mahasiswa.nim]';
-			$u_email = '|is_unique[mahasiswa.email]';
+			$u_nim = '|is_unique[estudiante.nim]';
+			$u_email = '|is_unique[estudiante.email]';
 		} else {
-			$dbdata 	= $this->master->getMahasiswaById($id_mahasiswa);
-			$u_nim		= $dbdata->nim === $nim ? "" : "|is_unique[mahasiswa.nim]";
-			$u_email	= $dbdata->email === $email ? "" : "|is_unique[mahasiswa.email]";
+			$dbdata 	= $this->master->getEstudianteById($id_estudiante);
+			$u_nim		= $dbdata->nim === $nim ? "" : "|is_unique[estudiante.nim]";
+			$u_email	= $dbdata->email === $email ? "" : "|is_unique[estudiante.email]";
 		}
 		$this->form_validation->set_rules('nim', 'NIM', 'required|numeric|trim|min_length[8]|max_length[12]' . $u_nim);
-		$this->form_validation->set_rules('nama', 'Nombre', 'required|trim|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('nombre', 'Nombre', 'required|trim|min_length[3]|max_length[50]');
 		$this->form_validation->set_rules('email', 'Correo', 'required|trim|valid_email' . $u_email);
 		$this->form_validation->set_rules('jenis_kelamin', 'Género', 'required');
-		$this->form_validation->set_rules('jurusan', 'Departamento', 'required');
-		$this->form_validation->set_rules('kelas', 'Clase', 'required');
+		$this->form_validation->set_rules('grupo', 'Departamento', 'required');
+		$this->form_validation->set_rules('clase', 'Clase', 'required');
 
 		$this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
 	}
@@ -94,18 +94,18 @@ class Mahasiswa extends CI_Controller
 	public function save()
 	{
 		$method = $this->input->post('method', true);
-		$this->validasi_mahasiswa($method);
+		$this->validasi_estudiante($method);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = [
 				'status'	=> false,
 				'errors'	=> [
 					'nim' => form_error('nim'),
-					'nama' => form_error('nama'),
+					'nombre' => form_error('nombre'),
 					'email' => form_error('email'),
 					'jenis_kelamin' => form_error('jenis_kelamin'),
-					'jurusan' => form_error('jurusan'),
-					'kelas' => form_error('kelas'),
+					'grupo' => form_error('grupo'),
+					'clase' => form_error('clase'),
 				]
 			];
 			$this->output_json($data);
@@ -113,15 +113,15 @@ class Mahasiswa extends CI_Controller
 			$input = [
 				'nim' 			=> $this->input->post('nim', true),
 				'email' 		=> $this->input->post('email', true),
-				'nama' 			=> $this->input->post('nama', true),
+				'nombre' 			=> $this->input->post('nombre', true),
 				'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
-				'kelas_id' 		=> $this->input->post('kelas', true),
+				'clase_id' 		=> $this->input->post('clase', true),
 			];
 			if ($method === 'add') {
-				$action = $this->master->create('mahasiswa', $input);
+				$action = $this->master->create('estudiante', $input);
 			} else if ($method === 'edit') {
-				$id = $this->input->post('id_mahasiswa', true);
-				$action = $this->master->update('mahasiswa', $input, 'id_mahasiswa', $id);
+				$id = $this->input->post('id_estudiante', true);
+				$action = $this->master->update('estudiante', $input, 'id_estudiante', $id);
 			}
 
 			if ($action) {
@@ -138,7 +138,7 @@ class Mahasiswa extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('mahasiswa', $chk, 'id_mahasiswa')) {
+			if ($this->master->delete('estudiante', $chk, 'id_estudiante')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}
@@ -147,10 +147,10 @@ class Mahasiswa extends CI_Controller
 	public function create_user()
 	{
 		$id = $this->input->get('id', true);
-		$data = $this->master->getMahasiswaById($id);
-		$nama = explode(' ', $data->nama);
-		$first_name = $nama[0];
-		$last_name = end($nama);
+		$data = $this->master->getEstudianteById($id);
+		$nombre = explode(' ', $data->nombre);
+		$first_name = $nombre[0];
+		$last_name = end($nombre);
 
 		$username = $data->nim;
 		$password = $data->nim;

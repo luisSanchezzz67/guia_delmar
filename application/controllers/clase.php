@@ -136,9 +136,9 @@ class Clase extends CI_Controller
 		}
 	}
 
-	public function kelas_by_jurusan($id)
+	public function clase_by_grupo($id)
 	{
-		$data = $this->master->getKelasByJurusan($id);
+		$data = $this->master->getClaseByGrupo($id);
 		$this->output_json($data);
 	}
 

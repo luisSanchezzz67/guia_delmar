@@ -3,7 +3,7 @@ var table;
 $(document).ready(function() {
     ajaxcsrf();
 
-    table = $("#mahasiswa").DataTable({
+    table = $("#estudiante").DataTable({
         initComplete: function() {
             var api = this.api();
             $("#mahasiswa_filter input")
@@ -38,26 +38,26 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: base_url + "mahasiswa/data",
+            url: base_url + "estudiante/data",
             type: "POST"
                 //data: csrf
         },
         columns: [{
-                data: "id_mahasiswa",
+                data: "id_estudiante",
                 orderable: false,
                 searchable: false
             },
             { data: "nim" },
-            { data: "nama" },
+            { data: "nombre" },
             { data: "email" },
-            { data: "nama_kelas" },
-            { data: "nama_jurusan" }
+            { data: "nombre_clase" },
+            { data: "nombre_grupo" }
         ],
         columnDefs: [{
                 searchable: false,
                 targets: 6,
                 data: {
-                    id_mahasiswa: "id_mahasiswa",
+                    id_estudiante: "id_estudiante",
                     ada: "ada"
                 },
                 render: function(data, type, row, meta) {
@@ -65,12 +65,12 @@ $(document).ready(function() {
                     if (data.ada > 0) {
                         btn = "";
                     } else {
-                        btn = `<button data-id="${data.id_mahasiswa}" type="button" class="btn btn-xs btn-primary btn-aktif">
+                        btn = `<button data-id="${data.id_estudiante}" type="button" class="btn btn-xs btn-primary btn-aktif">
 								<i class="fa fa-user-plus"></i>
 							</button>`;
                     }
                     return `<div class="text-center">
-									<a class="btn btn-xs btn-primary" href="${base_url}mahasiswa/edit/${data.id_mahasiswa}">
+									<a class="btn btn-xs btn-primary" href="${base_url}estudiante/edit/${data.id_estudiante}">
 										<i class="fa fa-pencil"></i>
 									</a>
 									${btn}
@@ -79,7 +79,7 @@ $(document).ready(function() {
             },
             {
                 targets: 7,
-                data: "id_mahasiswa",
+                data: "id_estudiante",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
@@ -121,9 +121,9 @@ $(document).ready(function() {
         }
     });
 
-    $("#mahasiswa tbody").on("click", "tr .check", function() {
-        var check = $("#mahasiswa tbody tr .check").length;
-        var checked = $("#mahasiswa tbody tr .check:checked").length;
+    $("#estudiante tbody").on("click", "tr .check", function() {
+        var check = $("#estudiante tbody tr .check").length;
+        var checked = $("#estudiante tbody tr .check:checked").length;
         if (check === checked) {
             $(".select_all").prop("checked", true);
         } else {
@@ -165,11 +165,11 @@ $(document).ready(function() {
         });
     });
 
-    $("#mahasiswa").on("click", ".btn-aktif", function() {
+    $("#estudiante").on("click", ".btn-aktif", function() {
         let id = $(this).data("id");
 
         $.ajax({
-            url: base_url + "mahasiswa/create_user",
+            url: base_url + "estudiante/create_user",
             data: "id=" + id,
             type: "GET",
             success: function(response) {
@@ -189,7 +189,7 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-    if ($("#mahasiswa tbody tr .check:checked").length == 0) {
+    if ($("#estudiante tbody tr .check:checked").length == 0) {
         Swal({
             title: "Proceso Fallido",
             text: "Datos no Seleccionados",

@@ -1,8 +1,8 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $judul ?></h3>
+        <h3 class="box-title">Formulario <?= $titulo ?></h3>
         <div class="box-tools pull-right">
-            <a href="<?= base_url('mahasiswa') ?>" class="btn btn-sm btn-flat btn-primary">
+            <a href="<?= base_url('estudiante') ?>" class="btn btn-sm btn-flat btn-primary">
                 <i class="fa fa-arrow-left"></i> Cancelar
             </a>
         </div>
@@ -10,15 +10,15 @@
     <div class="box-body">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-                <?= form_open('mahasiswa/save', array('id' => 'mahasiswa'), array('method' => 'add')) ?>
+                <?= form_open('estudiante/save', array('id' => 'estudiante'), array('method' => 'add')) ?>
                 <div class="form-group">
                     <label for="nim">NIM</label>
                     <input autofocus="autofocus" onfocus="this.select()" placeholder="Std ID" type="text" name="nim" class="form-control">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="nama">Nombre</label>
-                    <input placeholder="Nombre de Estudiante" type="text" name="nama" class="form-control">
+                    <label for="nombre">Nombre</label>
+                    <input placeholder="Nombre de Estudiante" type="text" name="nombre" class="form-control">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
@@ -36,15 +36,15 @@
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="jurusan">Departmento</label>
-                    <select id="jurusan" name="jurusan" class="form-control select2">
+                    <label for="grupo">Departmento</label>
+                    <select id="grupo" name="grupo" class="form-control select2">
                         <option value="" disabled selected>-- Seleccionar --</option>
                     </select>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="kelas">Clase</label>
-                    <select id="kelas" name="kelas" class="form-control select2">
+                    <label for="clase">Clase</label>
+                    <select id="clase" name="clase" class="form-control select2">
                         <option value="">-- Seleccionar --</option>
                     </select>
                     <small class="help-block"></small>
@@ -59,4 +59,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/master/mahasiswa/add.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/estudiante/add.js"></script>

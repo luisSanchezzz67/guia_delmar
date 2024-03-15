@@ -1,32 +1,32 @@
-function load_jurusan() {
-    $('#jurusan').find('option').not(':first').remove();
+function load_grupo() {
+    $('#grupo').find('option').not(':first').remove();
 
-    $.getJSON(base_url+'jurusan/load_jurusan', function (data) {
+    $.getJSON(base_url+'grupo/load_grupo', function (data) {
         var option = [];
         for (let i = 0; i < data.length; i++) {
             option.push({
-                id: data[i].id_jurusan,
-                text: data[i].nama_jurusan
+                id: data[i].id_grupo,
+                text: data[i].nombre_grupo
             });
         }
-        $('#jurusan').select2({
+        $('#grupo').select2({
             data: option
         })
     });
 }
 
-function load_kelas(id) {
-    $('#kelas').find('option').not(':first').remove();
+function load_clase(id) {
+    $('#clase').find('option').not(':first').remove();
 
-    $.getJSON(base_url+'kelas/kelas_by_jurusan/' + id, function (data) {
+    $.getJSON(base_url+'clase/clase_by_grupo/' + id, function (data) {
         var option = [];
         for (let i = 0; i < data.length; i++) {
             option.push({
-                id: data[i].id_kelas,
-                text: data[i].nama_kelas
+                id: data[i].id_clase,
+                text: data[i].nombre_clase
             });
         }
-        $('#kelas').select2({
+        $('#clase').select2({
             data: option
         });
     });
@@ -36,15 +36,15 @@ $(document).ready(function () {
 
     ajaxcsrf();
 
-    // Load Jurusan
-    load_jurusan();
+    // Load Grupo
+    load_grupo();
 
-    // Load Kelas By Jurusan
-    $('#jurusan').on('change', function () {
-        load_kelas($(this).val());
+    // Load Clase By Grupo
+    $('#grupo').on('change', function () {
+        load_clase($(this).val());
     });
 
-    $('form#mahasiswa input, form#mahasiswa select').on('change', function () {
+    $('form#estudiante input, form#estudiante select').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error has-success');
         $(this).nextAll('.help-block').eq(0).text('');
     });
@@ -53,7 +53,7 @@ $(document).ready(function () {
         $(this).parent().nextAll('.help-block').eq(0).text('');
     });
 
-    $('form#mahasiswa').on('submit', function (e) {
+    $('form#estudiante').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -73,7 +73,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'mahasiswa';
+                            window.location.href = base_url+'estudiante';
                         }
                     });
                 } else {

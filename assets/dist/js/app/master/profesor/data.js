@@ -187,7 +187,7 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-    if ($("#dosen tbody tr .check:checked").length == 0) {
+    if ($("#profesor tbody tr .check:checked").length == 0) {
         Swal({
             title: "Fallo",
             text: "Datos sin seleccionar",
