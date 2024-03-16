@@ -189,16 +189,16 @@ class Master_model extends CI_Model
     }
 
     /**
-     * Data Kelas Dosen
+     * Data Clase Profesor
      */
 
-    public function getKelasDosen()
+    public function getClaseProfesor()
     {
-        $this->datatables->select('kelas_dosen.id, dosen.id_dosen, dosen.nip, dosen.nama_dosen, GROUP_CONCAT(kelas.nama_kelas) as kelas');
-        $this->datatables->from('kelas_dosen');
-        $this->datatables->join('kelas', 'kelas_id=id_kelas');
-        $this->datatables->join('dosen', 'dosen_id=id_dosen');
-        $this->datatables->group_by('dosen.nama_dosen');
+        $this->datatables->select('clase_profesor.id, profesor.id_profesor, profesor.nip, profesor.nombre_profesor, GROUP_CONCAT(clase.nombre_clase) as clase');
+        $this->datatables->from('clase_profesor');
+        $this->datatables->join('clase', 'clase_id=id_clase');
+        $this->datatables->join('profesor', 'profesor_id=id_profesor');
+        $this->datatables->group_by('profesor.nombre_profesor');
         return $this->datatables->generate();
     }
 

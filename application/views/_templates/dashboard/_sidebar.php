@@ -72,16 +72,16 @@
 						</span>
 					</a>
 					<ul class="treeview-menu">
-						<li class="<?= $page === 'kelasdosen' ? "active" : "" ?>">
-							<a href="<?= base_url('kelasdosen') ?>">
+						<li class="<?= $page === 'claseprofesor' ? "active" : "" ?>">
+							<a href="<?= base_url('claseprofesor') ?>">
 								<i class="fa fa-bars"></i>
 								Clase - Profesor
 							</a>
 						</li>
-						<li class="<?= $page === 'jurusanmatkul' ? "active" : "" ?>">
-							<a href="<?= base_url('jurusanmatkul') ?>">
+						<li class="<?= $page === 'grupo-curso' ? "active" : "" ?>">
+							<a href="<?= base_url('grupo-curso') ?>">
 								<i class="fa fa-bars"></i>
-								Departmento - Curso
+								Grupo - Curso
 							</a>
 						</li>
 					</ul>

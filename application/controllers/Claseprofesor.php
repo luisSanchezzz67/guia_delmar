@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class KelasDosen extends CI_Controller
+class ClaseProfesor extends CI_Controller
 {
 
 	public function __construct()
@@ -27,17 +27,17 @@ class KelasDosen extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Clase Profesor',
-			'subjudul' => 'Datos de Clase Profesor'
+			'titulo'	=> 'Clase Profesor',
+			'subtitulo' => 'Datos de Clase Profesor'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('relasi/kelasdosen/data');
+		$this->load->view('relacion/claseprofesor/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getKelasDosen(), false);
+		$this->output_json($this->master->getClaseProfesor(), false);
 	}
 
 	public function add()

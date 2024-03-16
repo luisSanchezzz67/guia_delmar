@@ -4,7 +4,7 @@ var table;
 $(document).ready(function() {
     ajaxcsrf();
 
-    table = $("#kelasdosen").DataTable({
+    table = $("#claseprofesor").DataTable({
         initComplete: function() {
             var api = this.api();
             $("#kelasdosen_filter input")
@@ -39,7 +39,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: base_url + "kelasdosen/data",
+            url: base_url + "Claseprofesor/data",
             type: "POST"
         },
         columns: [{
@@ -48,20 +48,20 @@ $(document).ready(function() {
                 searchable: false
             },
             { data: "nip" },
-            { data: "nama_dosen" }
+            { data: "nombre_profesor" }
         ],
         columnDefs: [{
                 targets: 3,
                 searchable: false,
                 orderable: false,
-                title: "Kelas",
-                data: "kelas",
+                title: "Clase",
+                data: "clase",
                 render: function(data, type, row, meta) {
-                    let kelas = data.split(",");
+                    let clase = data.split(",");
                     let badge = [];
-                    $.each(kelas, function(i, val) {
-                        var newkelas = `<span class="badge bg-green">${val}</span>`;
-                        badge.push(newkelas);
+                    $.each(clase, function(i, val) {
+                        var newclase = `<span class="badge bg-green">${val}</span>`;
+                        badge.push(newclase);
                     });
                     return badge.join(" ");
                 }
@@ -70,10 +70,10 @@ $(document).ready(function() {
                 targets: 4,
                 searchable: false,
                 orderable: false,
-                data: "id_dosen",
+                data: "id_profesor",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
-									<a href="${base_url}kelasdosen/edit/${data}" class="btn btn-primary btn-xs">
+									<a href="${base_url}claseprofesor/edit/${data}" class="btn btn-primary btn-xs">
 										<i class="fa fa-pencil"></i>
 									</a>
 								</div>`;
@@ -83,7 +83,7 @@ $(document).ready(function() {
                 targets: 5,
                 searchable: false,
                 orderable: false,
-                data: "id_dosen",
+                data: "id_profesor",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
