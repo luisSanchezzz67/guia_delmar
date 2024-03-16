@@ -44,13 +44,13 @@ class ClaseProfesor extends CI_Controller
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Agregar Profesor a Clase',
-			'subjudul'	=> 'Agregar Datos de Profesor a Clase',
-			'dosen'		=> $this->master->getAllDosen(),
-			'kelas'	    => $this->master->getAllKelas()
+			'titulo'		=> 'Agregar Profesor a Clase',
+			'subtitulo'	=> 'Agregar Datos de Profesor a Clase',
+			'profesor'		=> $this->master->getAllProfesor(),
+			'clase'	    => $this->master->getAllClase()
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('relasi/kelasdosen/add');
+		$this->load->view('relacion/claseprofesor/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -73,30 +73,30 @@ class ClaseProfesor extends CI_Controller
 	public function save()
 	{
 		$method = $this->input->post('method', true);
-		$this->form_validation->set_rules('dosen_id', 'Lecturer', 'required');
-		$this->form_validation->set_rules('kelas_id[]', 'Class', 'required');
+		$this->form_validation->set_rules('profesor_id', 'Lecturer', 'required');
+		$this->form_validation->set_rules('clase_id[]', 'Class', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = [
 				'status'	=> false,
 				'errors'	=> [
-					'dosen_id' => form_error('dosen_id'),
-					'kelas_id[]' => form_error('kelas_id[]'),
+					'profesor_id' => form_error('profesor_id'),
+					'clase_id[]' => form_error('clase_id[]'),
 				]
 			];
 			$this->output_json($data);
 		} else {
-			$dosen_id = $this->input->post('dosen_id', true);
-			$kelas_id = $this->input->post('kelas_id', true);
+			$profesor_id = $this->input->post('profesor_id', true);
+			$clase_id = $this->input->post('clase_id', true);
 			$input = [];
-			foreach ($kelas_id as $key => $val) {
+			foreach ($clase_id as $key => $val) {
 				$input[] = [
-					'dosen_id'  => $dosen_id,
-					'kelas_id' => $val
+					'profesor_id'  => $profesor_id,
+					'clase_id' => $val
 				];
 			}
 			if ($method === 'add') {
-				$action = $this->master->create('kelas_dosen', $input, true);
+				$action = $this->master->create('clase_profesor', $input, true);
 			} else if ($method === 'edit') {
 				$id = $this->input->post('dosen_id', true);
 				$this->master->delete('kelas_dosen', $id, 'dosen_id');

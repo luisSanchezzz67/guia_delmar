@@ -202,35 +202,35 @@ class Master_model extends CI_Model
         return $this->datatables->generate();
     }
 
-    public function getAllDosen($id = null)
+    public function getAllProfesor($id = null)
     {
-        $this->db->select('dosen_id');
-        $this->db->from('kelas_dosen');
+        $this->db->select('profesor_id');
+        $this->db->from('clase_profesor');
         if ($id !== null) {
-            $this->db->where_not_in('dosen_id', [$id]);
+            $this->db->where_not_in('profesor_id', [$id]);
         }
-        $dosen = $this->db->get()->result();
-        $id_dosen = [];
-        foreach ($dosen as $d) {
-            $id_dosen[] = $d->dosen_id;
+        $profesor = $this->db->get()->result();
+        $id_profesor = [];
+        foreach ($profesor as $d) {
+            $id_profesor[] = $d->profesor_id;
         }
-        if ($id_dosen === []) {
-            $id_dosen = null;
+        if ($id_profesor === []) {
+            $id_profesor = null;
         }
 
-        $this->db->select('id_dosen, nip, nama_dosen');
-        $this->db->from('dosen');
-        $this->db->where_not_in('id_dosen', $id_dosen);
+        $this->db->select('id_profesor, nip, nombre_profesor');
+        $this->db->from('profesor');
+        $this->db->where_not_in('id_profesor', $id_profesor);
         return $this->db->get()->result();
     }
 
     
-    public function getAllKelas()
+    public function getAllClase()
     {
-        $this->db->select('id_kelas, nama_kelas, nama_jurusan');
-        $this->db->from('kelas');
-        $this->db->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->db->order_by('nama_kelas');
+        $this->db->select('id_clase, nombre_clase, nombre_grupo');
+        $this->db->from('clase');
+        $this->db->join('grupo', 'grupo_id=id_grupo');
+        $this->db->order_by('nombre_clase');
         return $this->db->get()->result();
     }
     
