@@ -63,7 +63,7 @@ $(document).ready(function() {
                 render: function(data, type, row, meta) {
                     let btn;
                     if (data.ada > 0) {
-                        btn = "";
+                        btn = ``;
                     } else {
                         btn = `<button data-id="${data.id_estudiante}" type="button" class="btn btn-xs btn-primary btn-aktif">
 								<i class="fa fa-user-plus"></i>

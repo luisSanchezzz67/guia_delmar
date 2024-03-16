@@ -82,7 +82,7 @@ class Master_model extends CI_Model
     public function getDataEstudiante()
     {
         $this->datatables->select('a.id_estudiante, a.nombre, a.nim, a.email, b.nombre_clase, c.nombre_grupo');
-        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nim) AS ada');
+        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nim OR email = a.email) AS ada');
         $this->datatables->from('estudiante a');
         $this->datatables->join('clase b', 'a.clase_id=b.id_clase');
         $this->datatables->join('grupo c', 'b.grupo_id=c.id_grupo');
