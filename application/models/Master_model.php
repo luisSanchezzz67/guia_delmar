@@ -234,12 +234,12 @@ class Master_model extends CI_Model
         return $this->db->get()->result();
     }
     
-    public function getKelasByDosen($id)
+    public function getClaseByProfesor($id)
     {
-        $this->db->select('kelas.id_kelas');
-        $this->db->from('kelas_dosen');
-        $this->db->join('kelas', 'kelas_dosen.kelas_id=kelas.id_kelas');
-        $this->db->where('dosen_id', $id);
+        $this->db->select('clase.id_clase');
+        $this->db->from('clase_profesor');
+        $this->db->join('clase', 'clase_profesor.clase_id=clase.id_clase');
+        $this->db->where('profesor_id', $id);
         $query = $this->db->get()->result();
         return $query;
     }

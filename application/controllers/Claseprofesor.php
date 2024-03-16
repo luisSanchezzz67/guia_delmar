@@ -58,15 +58,15 @@ class ClaseProfesor extends CI_Controller
 	{
 		$data = [
 			'user' 			=> $this->ion_auth->user()->row(),
-			'judul'			=> 'Editar Clase de Profesor',
-			'subjudul'		=> 'Editar datos de clase del profesor',
-			'dosen'			=> $this->master->getDosenById($id),
-			'id_dosen'		=> $id,
-			'all_kelas'	    => $this->master->getAllKelas(),
-			'kelas'		    => $this->master->getKelasByDosen($id)
+			'titulo'			=> 'Editar Clase de Profesor',
+			'subtitulo'		=> 'Editar datos de clase del profesor',
+			'profesor'			=> $this->master->getProfesorById($id),
+			'id_profesor'		=> $id,
+			'all_clase'	    => $this->master->getAllClase(),
+			'clase'		    => $this->master->getClaseByProfesor($id)
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('relasi/kelasdosen/edit');
+		$this->load->view('relacion/claseprofesor/edit');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -98,9 +98,9 @@ class ClaseProfesor extends CI_Controller
 			if ($method === 'add') {
 				$action = $this->master->create('clase_profesor', $input, true);
 			} else if ($method === 'edit') {
-				$id = $this->input->post('dosen_id', true);
-				$this->master->delete('kelas_dosen', $id, 'dosen_id');
-				$action = $this->master->create('kelas_dosen', $input, true);
+				$id = $this->input->post('profesor_id', true);
+				$this->master->delete('clase_profesor', $id, 'profesor_id');
+				$action = $this->master->create('clase_profesor', $input, true);
 			}
 			$data['status'] = $action ? TRUE : FALSE;
 		}

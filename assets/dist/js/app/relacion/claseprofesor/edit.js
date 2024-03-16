@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
-    $('form#kelasdosen select').on('change', function () {
+    $('form#claseprofesor select').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error');
         $(this).nextAll('.help-block').eq(0).text('');
     });
 
-    $('form#kelasdosen').on('submit', function (e) {
+    $('form#claseprofesor').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -26,14 +26,14 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'kelasdosen';
+                            window.location.href = base_url+'claseprofesor';
                         }
                     });
                 } else {
                     if (data.errors) {
                         let j;
                         $.each(data.errors, function (key, val) {
-                            j = key.substring(0, 6) == 'matkul' ? $('[name="' + key + '[]"]') : $('[name="' + key + '"]');
+                            j = key.substring(0, 6) == 'curso' ? $('[name="' + key + '[]"]') : $('[name="' + key + '"]');
                             j.closest('.form-group').addClass('has-error');
                             j.nextAll('.help-block').eq(0).text(val);
                             if (val == '') {

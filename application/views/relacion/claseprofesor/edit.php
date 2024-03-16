@@ -1,8 +1,8 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $judul ?></h3>
+        <h3 class="box-title">Formulario <?= $titulo ?></h3>
         <div class="box-tools pull-right">
-            <a href="<?= base_url() ?>kelasdosen" class="btn btn-primary btn-flat btn-sm">
+            <a href="<?= base_url() ?>claseprofesor" class="btn btn-primary btn-flat btn-sm">
                 <i class="fa fa-arrow-left"></i> Cancelar
             </a>
         </div>
@@ -10,22 +10,22 @@
     <div class="box-body">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-                <?= form_open('kelasdosen/save', array('id' => 'kelasdosen'), array('method' => 'edit', 'dosen_id' => $id_dosen)) ?>
+                <?= form_open('Claseprofesor/save', array('id' => 'claseprofesor'), array('method' => 'edit', 'profesor_id' => $id_profesor)) ?>
                 <div class="form-group">
                     <label>Profesor</label>
-                    <input type="text" readonly="readonly" value="<?= $dosen->nama_dosen ?>" class="form-control">
+                    <input type="text" readonly="readonly" value="<?= $profesor->nombre_profesor ?>" class="form-control">
                     <small class="help-block text-right"></small>
                 </div>
                 <div class="form-group">
                     <label>Clase</label>
-                    <select id="kelas" multiple="multiple" name="kelas_id[]" class="form-control select2" style="width: 100%!important">
+                    <select id="clase" multiple="multiple" name="clase_id[]" class="form-control select2" style="width: 100%!important">
                         <?php
                         $sk = [];
-                        foreach ($kelas as $key => $val) {
-                            $sk[] = $val->id_kelas;
+                        foreach ($clase as $key => $val) {
+                            $sk[] = $val->id_clase;
                         }
-                        foreach ($all_kelas as $m) : ?>
-                            <option <?= in_array($m->id_kelas, $sk) ? "selected" : "" ?> value="<?= $m->id_kelas ?>"><?= $m->nama_kelas ?> - <?= $m->nama_jurusan ?></option>
+                        foreach ($all_clase as $m) : ?>
+                            <option <?= in_array($m->id_clase, $sk) ? "selected" : "" ?> value="<?= $m->id_clase ?>"><?= $m->nombre_clase ?> - <?= $m->nombre_grupo ?></option>
                         <?php endforeach; ?>
                     </select>
                     <small class="help-block text-right"></small>
@@ -44,4 +44,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/relasi/kelasdosen/edit.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/relacion/claseprofesor/edit.js"></script>
