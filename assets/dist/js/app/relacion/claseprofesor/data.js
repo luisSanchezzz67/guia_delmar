@@ -125,9 +125,9 @@ $(document).ready(function() {
         }
     });
 
-    $("#kelasdosen tbody").on("click", "tr .check", function() {
-        var check = $("#kelasdosen tbody tr .check").length;
-        var checked = $("#kelasdosen tbody tr .check:checked").length;
+    $("#claseprofesor tbody").on("click", "tr .check", function() {
+        var check = $("#claseprofesor tbody tr .check").length;
+        var checked = $("#claseprofesor tbody tr .check:checked").length;
         if (check === checked) {
             $(".select_all").prop("checked", true);
         } else {
@@ -136,7 +136,7 @@ $(document).ready(function() {
     });
 
     $("#bulk").on("submit", function(e) {
-        if ($(this).attr("action") == base_url + "kelasdosen/delete") {
+        if ($(this).attr("action") == base_url + "Claseprofesor/delete") {
             e.preventDefault();
             e.stopImmediatePropagation();
 
@@ -173,14 +173,14 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-    if ($("#kelasdosen tbody tr .check:checked").length == 0) {
+    if ($("#claseprofesor tbody tr .check:checked").length == 0) {
         Swal({
             title: "Procesos Fallidos",
             text: "Sin datos seleccionados",
             type: "error"
         });
     } else {
-        $("#bulk").attr("action", base_url + "kelasdosen/delete");
+        $("#bulk").attr("action", base_url + "Claseprofesor/delete");
         Swal({
             title: "Seguro?",
             text: "Los datos serán borrados!",
