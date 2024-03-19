@@ -38,8 +38,8 @@ class Banco_preguntas extends CI_Controller
             //Jika admin maka tampilkan semua matkul
             $data['curso'] = $this->master->getAllCurso();
         } else {
-            //Jika bukan maka Curso dipilih otomatis sesuai Curso dosen
-            $data['curso'] = $this->banco_preguntas->getCursoDosen($user->username);
+            //Jika bukan maka Curso dipilih otomatis sesuai Curso profesor
+            $data['curso'] = $this->banco_preguntas->getCursoProfesor($user->username);
         }
 
         $this->load->view('_templates/dashboard/_header.php', $data);
@@ -67,8 +67,8 @@ class Banco_preguntas extends CI_Controller
         $user = $this->ion_auth->user()->row();
         $data = [
             'user'      => $user,
-            'judul'        => 'Preguntas',
-            'subjudul'  => 'Crear Preguntas'
+            'titulo'        => 'Preguntas',
+            'subtitulo'  => 'Crear Preguntas'
         ];
 
         if ($this->ion_auth->is_admin()) {
@@ -107,15 +107,15 @@ class Banco_preguntas extends CI_Controller
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
-    public function data($id = null, $dosen = null)
+    public function data($id = null, $profesor = null)
     {
-        $this->output_json($this->banco_preguntas->getDataBanco_preguntas($id, $dosen), false);
+        $this->output_json($this->banco_preguntas->getDataBanco_preguntas($id, $profesor), false);
     }
 
     public function validasi()
     {
         if ($this->ion_auth->is_admin()) {
-            $this->form_validation->set_rules('dosen_id', 'Lecturer', 'required');
+            $this->form_validation->set_rules('profesor_id', 'Lecturer', 'required');
         }
         // $this->form_validation->set_rules('soal', 'Soal', 'required');
         // $this->form_validation->set_rules('jawaban_a', 'Jawaban A', 'required');
@@ -123,8 +123,8 @@ class Banco_preguntas extends CI_Controller
         // $this->form_validation->set_rules('jawaban_c', 'Jawaban C', 'required');
         // $this->form_validation->set_rules('jawaban_d', 'Jawaban D', 'required');
         // $this->form_validation->set_rules('jawaban_e', 'Jawaban E', 'required');
-        $this->form_validation->set_rules('jawaban', 'Answer key', 'required');
-        $this->form_validation->set_rules('bobot', 'Question Weight', 'required|max_length[2]');
+        $this->form_validation->set_rules('respuesta', 'Answer key', 'required');
+        $this->form_validation->set_rules('peso', 'Question Weight', 'required|max_length[2]');
     }
 
     public function file_config()
@@ -153,34 +153,34 @@ class Banco_preguntas extends CI_Controller
             $method === 'add' ? $this->add() : $this->edit();
         } else {
             $data = [
-                'soal'      => $this->input->post('soal', true),
-                'jawaban'   => $this->input->post('jawaban', true),
-                'bobot'     => $this->input->post('bobot', true),
+                'banco_preguntas'      => $this->input->post('banco_preguntas', true),
+                'respuesta'   => $this->input->post('respuesta', true),
+                'peso'     => $this->input->post('peso', true),
             ];
 
             $abjad = ['a', 'b', 'c', 'd', 'e'];
 
             // Inputan Opsi
             foreach ($abjad as $abj) {
-                $data['opsi_' . $abj]    = $this->input->post('jawaban_' . $abj, true);
+                $data['opsi_' . $abj]    = $this->input->post('respuesta_' . $abj, true);
             }
 
             $i = 0;
             foreach ($_FILES as $key => $val) {
                 $img_src = FCPATH . 'uploads/bank_soal/';
-                $getsoal = $this->banco_preguntas->getSoalById($this->input->post('id_soal', true));
+                $getbanco_preguntas = $this->banco_preguntas->getBanco_preguntasById($this->input->post('id_banco_preguntas', true));
 
                 $error = '';
-                if ($key === 'file_soal') {
-                    if (!empty($_FILES['file_soal']['tmp_name'])) {
-                        if (!$this->upload->do_upload('file_soal')) {
+                if ($key === 'file_banco_preguntas') {
+                    if (!empty($_FILES['file_banco_preguntas']['tmp_name'])) {
+                        if (!$this->upload->do_upload('file_banco_preguntas')) {
                             $error = $this->upload->display_errors();
-                            show_error($error, 500, 'File Ques. Error');
+                            show_error($error, 500, 'File Ques. Error'); 
                             exit();
                         } else {
                             if ($method === 'edit') {
-                                if (!unlink($img_src . $getsoal->file)) {
-                                    show_error('Error when deleting image <br/>' . var_dump($getsoal), 500, 'Image Editing Error');
+                                if (!unlink($img_src . $getbanco_preguntas->file)) {
+                                    show_error('Error when deleting image <br/>' . var_dump($getbanco_preguntas), 500, 'Image Editing Error');
                                     exit();
                                 }
                             }
@@ -198,7 +198,7 @@ class Banco_preguntas extends CI_Controller
                             exit();
                         } else {
                             if ($method === 'edit') {
-                                if (!empty($getsoal->$file_abj) && !unlink($img_src . $getsoal->$file_abj)) {
+                                if (!empty($getbanco_preguntas->$file_abj) && !unlink($img_src . $getbanco_preguntas->$file_abj)) {
                                     show_error('Error when deleting image', 500, 'Image Editing Error');
                                     exit();
                                 }
@@ -211,13 +211,13 @@ class Banco_preguntas extends CI_Controller
             }
 
             if ($this->ion_auth->is_admin()) {
-                $pecah = $this->input->post('dosen_id', true);
+                $pecah = $this->input->post('profesor_id', true);
                 $pecah = explode(':', $pecah);
-                $data['dosen_id'] = $pecah[0];
-                $data['matkul_id'] = end($pecah);
+                $data['profesor_id'] = $pecah[0];
+                $data['curso_id'] = end($pecah);
             } else {
-                $data['dosen_id'] = $this->input->post('dosen_id', true);
-                $data['matkul_id'] = $this->input->post('matkul_id', true);
+                $data['profesor_id'] = $this->input->post('profesor_id', true);
+                $data['curso_id'] = $this->input->post('curso_id', true);
             }
 
             if ($method === 'add') {
@@ -225,18 +225,18 @@ class Banco_preguntas extends CI_Controller
                 $data['created_on'] = time();
                 $data['updated_on'] = time();
                 //insert data
-                $this->master->create('tb_soal', $data);
+                $this->master->create('tb_banco_preguntas', $data);
             } else if ($method === 'edit') {
                 //push array
                 $data['updated_on'] = time();
                 //update data
-                $id_soal = $this->input->post('id_soal', true);
-                $this->master->update('tb_soal', $data, 'id_soal', $id_soal);
-                redirect('soal/detail/' . $id_soal);
+                $id_banco_preguntas = $this->input->post('id_banco_preguntas', true);
+                $this->master->update('tb_banco_preguntas', $data, 'id_banco_preguntas', $id_banco_preguntas);
+                redirect('banco_preguntas/detail/' . $id_banco_preguntas);
             } else {
                 show_error('Method unknown', 404);
             }
-            redirect('soal');
+            redirect('banco_preguntas');
         }
     }
 

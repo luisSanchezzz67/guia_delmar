@@ -6,7 +6,7 @@ $(document).ready(function() {
     table = $("#banco_preguntas").DataTable({
         initComplete: function() {
             var api = this.api();
-            $("#soal_filter input")
+            $("#banco_preguntas_filter input")
                 .off(".DT")
                 .on("keyup.DT", function(e) {
                     api.search(this.value).draw();
@@ -98,7 +98,7 @@ $(document).ready(function() {
     table
         .buttons()
         .container()
-        .appendTo("#soal_wrapper .col-md-6:eq(0)");
+        .appendTo("#banco_preguntas_wrapper .col-md-6:eq(0)");
 
     $(".select_all").on("click", function() {
         if (this.checked) {
