@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Soal extends CI_Controller
+class Banco_preguntas extends CI_Controller
 {
 
     public function __construct()
@@ -15,7 +15,7 @@ class Soal extends CI_Controller
         $this->load->library(['datatables', 'form_validation']); // Load Library Ignited-Datatables
         $this->load->helper('my'); // Load Library Ignited-Datatables
         $this->load->model('Master_model', 'master');
-        $this->load->model('Soal_model', 'soal');
+        $this->load->model('Banco_preguntas_model', 'banco_preguntas');
         $this->form_validation->set_error_delimiters('', '');
     }
 
@@ -30,20 +30,20 @@ class Soal extends CI_Controller
         $user = $this->ion_auth->user()->row();
         $data = [
             'user' => $user,
-            'judul'    => 'Pregunta',
-            'subjudul' => 'Banco de Preguntas'
+            'titulo'    => 'Pregunta',
+            'subtitulo' => 'Banco de Preguntas'
         ];
 
         if ($this->ion_auth->is_admin()) {
             //Jika admin maka tampilkan semua matkul
-            $data['matkul'] = $this->master->getAllMatkul();
+            $data['curso'] = $this->master->getAllCurso();
         } else {
-            //Jika bukan maka matkul dipilih otomatis sesuai matkul dosen
-            $data['matkul'] = $this->soal->getMatkulDosen($user->username);
+            //Jika bukan maka Curso dipilih otomatis sesuai Curso dosen
+            $data['curso'] = $this->banco_preguntas->getCursoDosen($user->username);
         }
 
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('soal/data');
+        $this->load->view('banco_preguntas/data');
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
@@ -52,13 +52,13 @@ class Soal extends CI_Controller
         $user = $this->ion_auth->user()->row();
         $data = [
             'user'      => $user,
-            'judul'        => 'Preguntas',
-            'subjudul'  => 'Editar Preguntas',
-            'soal'      => $this->soal->getSoalById($id),
+            'titulo'        => 'Preguntas',
+            'subtitulo'  => 'Editar Preguntas',
+            'banco_preguntas'      => $this->banco_preguntas->getBanco_preguntasById($id),
         ];
 
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('soal/detail');
+        $this->load->view('banco_preguntas/detail');
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
@@ -72,15 +72,15 @@ class Soal extends CI_Controller
         ];
 
         if ($this->ion_auth->is_admin()) {
-            //Jika admin maka tampilkan semua matkul
-            $data['dosen'] = $this->soal->getAllDosen();
+            //Jika admin maka tampilkan semua curso
+            $data['profesor'] = $this->banco_preguntas->getAllProfesor();
         } else {
-            //Jika bukan maka matkul dipilih otomatis sesuai matkul dosen
-            $data['dosen'] = $this->soal->getMatkulDosen($user->username);
+            //Jika bukan maka curso dipilih otomatis sesuai curso Profesor
+            $data['profesor'] = $this->banco_preguntas->getCursoProfesor($user->username);
         }
 
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('soal/add');
+        $this->load->view('banco_preguntas/add');
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
@@ -91,15 +91,15 @@ class Soal extends CI_Controller
             'user'      => $user,
             'judul'        => 'Preguntas',
             'subjudul'  => 'Editar Preguntas',
-            'soal'      => $this->soal->getSoalById($id),
+            'banco_preguntas'      => $this->banco_preguntas->getSoalById($id),
         ];
 
         if ($this->ion_auth->is_admin()) {
             //Jika admin maka tampilkan semua matkul
-            $data['dosen'] = $this->soal->getAllDosen();
+            $data['dosen'] = $this->banco_preguntas->getAllDosen();
         } else {
             //Jika bukan maka matkul dipilih otomatis sesuai matkul dosen
-            $data['dosen'] = $this->soal->getMatkulDosen($user->username);
+            $data['dosen'] = $this->banco_preguntas->getMatkulDosen($user->username);
         }
 
         $this->load->view('_templates/dashboard/_header.php', $data);
@@ -109,7 +109,7 @@ class Soal extends CI_Controller
 
     public function data($id = null, $dosen = null)
     {
-        $this->output_json($this->soal->getDataSoal($id, $dosen), false);
+        $this->output_json($this->banco_preguntas->getDataBanco_preguntas($id, $dosen), false);
     }
 
     public function validasi()
@@ -168,7 +168,7 @@ class Soal extends CI_Controller
             $i = 0;
             foreach ($_FILES as $key => $val) {
                 $img_src = FCPATH . 'uploads/bank_soal/';
-                $getsoal = $this->soal->getSoalById($this->input->post('id_soal', true));
+                $getsoal = $this->banco_preguntas->getSoalById($this->input->post('id_soal', true));
 
                 $error = '';
                 if ($key === 'file_soal') {
@@ -248,7 +248,7 @@ class Soal extends CI_Controller
         foreach ($chk as $id) {
             $abjad = ['a', 'b', 'c', 'd', 'e'];
             $path = FCPATH . 'uploads/bank_soal/';
-            $soal = $this->soal->getSoalById($id);
+            $soal = $this->banco_preguntas->getSoalById($id);
             // Hapus File Soal
             if (!empty($soal->file)) {
                 if (file_exists($path . $soal->file)) {

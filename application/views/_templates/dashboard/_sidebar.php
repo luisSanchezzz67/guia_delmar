@@ -88,8 +88,8 @@
 				</li>
 			<?php endif; ?>
 			<?php if ($this->ion_auth->is_admin() || $this->ion_auth->in_group('Lecturer')) : ?>
-				<li class="<?= $page === 'soal' ? "active" : "" ?>">
-					<a href="<?= base_url('soal') ?>" rel="noopener noreferrer">
+				<li class="<?= $page === 'banco_preguntas' ? "active" : "" ?>">
+					<a href="<?= base_url('banco_preguntas') ?>" rel="noopener noreferrer">
 						<i class="fa fa-file-text"></i> <span>Banco de Preguntas</span>
 					</a>
 				</li>

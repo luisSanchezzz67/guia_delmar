@@ -15,26 +15,26 @@
 				<?php if ($this->ion_auth->is_admin()) : ?>
 					<select id="matkul_filter" class="form-control select2" style="width:100% !important">
 						<option value="all">Todos los Cursos</option>
-						<?php foreach ($matkul as $m) : ?>
-							<option value="<?= $m->id_matkul ?>"><?= $m->nama_matkul ?></option>
+						<?php foreach ($curso as $m) : ?>
+							<option value="<?= $m->id_curso ?>"><?= $m->nombre_curso ?></option>
 						<?php endforeach; ?>
 					</select>
 				<?php endif; ?>
 				<?php if ($this->ion_auth->in_group('Lecturer')) : ?>
-					<input id="matkul_id" value="<?= $matkul->nama_matkul; ?>" type="text" readonly="readonly" class="form-control">
+					<input id="curso_id" value="<?= $curso->nombre_curso; ?>" type="text" readonly="readonly" class="form-control">
 				<?php endif; ?>
 			</div>
 			<div class="col-sm-4">
 				<div class="pull-right">
-					<a href="<?= base_url('soal/add') ?>" class="btn bg-blue btn-flat btn-sm"><i class="fa fa-plus"></i> Crear Preguntas</a>
+					<a href="<?= base_url('banco_preguntas/add') ?>" class="btn bg-blue btn-flat btn-sm"><i class="fa fa-plus"></i> Crear Preguntas</a>
 					<button type="button" onclick="reload_ajax()" class="btn btn-flat btn-sm bg-maroon"><i class="fa fa-refresh"></i> Recargar</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<?= form_open('soal/delete', array('id' => 'bulk')) ?>
+	<?= form_open('banco_preguntas/delete', array('id' => 'bulk')) ?>
 	<div class="table-responsive px-4 pb-3" style="border: 0">
-		<table id="soal" class="w-100 table table-striped table-bordered table-hover">
+		<table id="banco_preguntas" class="w-100 table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th class="text-center">
@@ -66,18 +66,18 @@
 	<?= form_close(); ?>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/soal/data.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/banco_preguntas/data.js"></script>
 
 <?php if ($this->ion_auth->is_admin()) : ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#matkul_filter').on('change', function() {
-				let id_matkul = $(this).val();
-				let src = '<?= base_url() ?>soal/data';
+				let id_curso = $(this).val();
+				let src = '<?= base_url() ?>banco_preguntas/data';
 				let url;
 
-				if (id_matkul !== 'all') {
-					let src2 = src + '/' + id_matkul;
+				if (id_curso !== 'all') {
+					let src2 = src + '/' + id_curso;
 					url = $(this).prop('checked') === true ? src : src2;
 				} else {
 					url = src;
@@ -90,10 +90,10 @@
 <?php if ($this->ion_auth->in_group('Lecturer')) : ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			let id_matkul = '<?= $matkul->matkul_id ?>';
-			let id_dosen = '<?= $matkul->id_dosen ?>';
-			let src = '<?= base_url() ?>soal/data';
-			let url = src + '/' + id_matkul + '/' + id_dosen;
+			let id_curso = '<?= $curso->curso_id ?>';
+			let id_profesor = '<?= $curso->id_profesor ?>';
+			let src = '<?= base_url() ?>banco_preguntas/data';
+			let url = src + '/' + id_curso + '/' + id_profesor;
 
 			table.ajax.url(url).load();
 		});

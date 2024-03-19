@@ -3,7 +3,7 @@ var table;
 $(document).ready(function() {
     ajaxcsrf();
 
-    table = $("#soal").DataTable({
+    table = $("#banco_preguntas").DataTable({
         initComplete: function() {
             var api = this.api();
             $("#soal_filter input")
@@ -38,27 +38,27 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: base_url + "soal/data",
+            url: base_url + "banco_preguntas/data",
             type: "POST"
         },
         columns: [{
-                data: "id_soal",
+                data: "id_banco_preguntas",
                 orderable: false,
                 searchable: false
             },
             {
-                data: "id_soal",
+                data: "id_banco_preguntas",
                 orderable: false,
                 searchable: false
             },
-            { data: "nama_dosen" },
-            { data: "nama_matkul" },
-            { data: "soal" },
+            { data: "nombre_profesor" },
+            { data: "nombre_curso" },
+            { data: "banco_preguntas" },
             { data: "created_on" }
         ],
         columnDefs: [{
                 targets: 0,
-                data: "id_soal",
+                data: "id_banco_preguntas",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
@@ -67,13 +67,13 @@ $(document).ready(function() {
             },
             {
                 targets: 6,
-                data: "id_soal",
+                data: "id_banco_preguntas",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
-                                <a href="${base_url}soal/detail/${data}" class="btn btn-xs btn-success">
+                                <a href="${base_url}banco_preguntas/detail/${data}" class="btn btn-xs btn-success">
                                     <i class="fa fa-eye"></i> Información
                                 </a>
-                                <a href="${base_url}soal/edit/${data}" class="btn btn-xs btn-primary">
+                                <a href="${base_url}banco_preguntas/edit/${data}" class="btn btn-xs btn-primary">
                                     <i class="fa fa-edit"></i> Editar
                                 </a>
                             </div>`;
@@ -114,9 +114,9 @@ $(document).ready(function() {
         }
     });
 
-    $("#soal tbody").on("click", "tr .check", function() {
-        var check = $("#soal tbody tr .check").length;
-        var checked = $("#soal tbody tr .check:checked").length;
+    $("#banco_preguntas tbody").on("click", "tr .check", function() {
+        var check = $("#banco_preguntas tbody tr .check").length;
+        var checked = $("#banco_preguntas tbody tr .check:checked").length;
         if (check === checked) {
             $(".select_all").prop("checked", true);
         } else {
@@ -160,7 +160,7 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-    if ($("#soal tbody tr .check:checked").length == 0) {
+    if ($("#banco_preguntas tbody tr .check:checked").length == 0) {
         Swal({
             title: "Proceso fallido",
             text: "Sin datos seleccionados",
