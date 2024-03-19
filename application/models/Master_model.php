@@ -244,47 +244,47 @@ class Master_model extends CI_Model
         return $query;
     }
     /**
-     * Data Jurusan Matkul
+     * Data Grupo Curso
      */
 
-    public function getJurusanMatkul()
+    public function getGrupoCurso()
     {
-        $this->datatables->select('jurusan_matkul.id, matkul.id_matkul, matkul.nama_matkul, jurusan.id_jurusan, GROUP_CONCAT(jurusan.nama_jurusan) as nama_jurusan');
-        $this->datatables->from('jurusan_matkul');
-        $this->datatables->join('matkul', 'matkul_id=id_matkul');
-        $this->datatables->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->datatables->group_by('matkul.nama_matkul');
+        $this->datatables->select('grupo_curso.id, curso.id_curso, curso.nombre_curso, grupo.id_grupo, GROUP_CONCAT(grupo.nombre_grupo) as nombre_grupo');
+        $this->datatables->from('grupo_curso');
+        $this->datatables->join('curso', 'curso_id=id_curso');
+        $this->datatables->join('grupo', 'grupo_id=id_grupo');
+        $this->datatables->group_by('curso.nombre_curso');
         return $this->datatables->generate();
     }
 
-    public function getMatkul($id = null)
+    public function getCurso($id = null)
     {
-        $this->db->select('matkul_id');
-        $this->db->from('jurusan_matkul');
+        $this->db->select('curso_id');
+        $this->db->from('grupo_curso');
         if ($id !== null) {
-            $this->db->where_not_in('matkul_id', [$id]);
+            $this->db->where_not_in('curso_id', [$id]);
         }
-        $matkul = $this->db->get()->result();
-        $id_matkul = [];
-        foreach ($matkul as $d) {
-            $id_matkul[] = $d->matkul_id;
+        $curso = $this->db->get()->result();
+        $id_curso = [];
+        foreach ($curso as $d) {
+            $id_curso[] = $d->curso_id;
         }
-        if ($id_matkul === []) {
-            $id_matkul = null;
+        if ($id_curso === []) {
+            $id_curso = null;
         }
 
-        $this->db->select('id_matkul, nama_matkul');
-        $this->db->from('matkul');
-        $this->db->where_not_in('id_matkul', $id_matkul);
+        $this->db->select('id_curso, nombre_curso');
+        $this->db->from('curso');
+        $this->db->where_not_in('id_curso', $id_curso);
         return $this->db->get()->result();
     }
 
-    public function getJurusanByIdMatkul($id)
+    public function getGrupoByIdCurso($id)
     {
-        $this->db->select('jurusan.id_jurusan');
-        $this->db->from('jurusan_matkul');
-        $this->db->join('jurusan', 'jurusan_matkul.jurusan_id=jurusan.id_jurusan');
-        $this->db->where('matkul_id', $id);
+        $this->db->select('grupo.id_grupo');
+        $this->db->from('grupo_curso');
+        $this->db->join('grupo', 'grupo_curso.grupo_id=grupo.id_grupo');
+        $this->db->where('curso_id', $id);
         $query = $this->db->get()->result();
         return $query;
     }

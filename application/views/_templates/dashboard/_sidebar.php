@@ -21,7 +21,7 @@
 			<?php
 			$page = $this->uri->segment(1);
 			$master = ["grupo", "clase", "curso", "profesor", "alumno"];
-			$relasi = ["kelasdosen", "jurusanmatkul"];
+			$relasi = ["claseprofesor", "grupocurso"];
 			$users = ["users"];
 			?>
 			<li class="<?= $page === 'dashboard' ? "active" : "" ?>"><a href="<?= base_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
@@ -78,8 +78,8 @@
 								Clase - Profesor
 							</a>
 						</li>
-						<li class="<?= $page === 'grupo-curso' ? "active" : "" ?>">
-							<a href="<?= base_url('grupo-curso') ?>">
+						<li class="<?= $page === 'grupocurso' ? "active" : "" ?>">
+							<a href="<?= base_url('grupocurso') ?>">
 								<i class="fa fa-bars"></i>
 								Grupo - Curso
 							</a>

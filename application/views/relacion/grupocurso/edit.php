@@ -1,8 +1,8 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $judul ?></h3>
+        <h3 class="box-title">Formulario <?= $titulo ?></h3>
         <div class="box-tools pull-right">
-            <a href="<?= base_url() ?>jurusanmatkul" class="btn btn-primary btn-flat btn-sm">
+            <a href="<?= base_url() ?>grupocurso" class="btn btn-primary btn-flat btn-sm">
                 <i class="fa fa-arrow-left"></i> Cancelar
             </a>
         </div>
@@ -10,22 +10,22 @@
     <div class="box-body">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-                <?= form_open('jurusanmatkul/save', array('id' => 'jurusanmatkul'), array('method' => 'edit', 'matkul_id' => $id_matkul)) ?>
+                <?= form_open('grupocurso/save', array('id' => 'grupocurso'), array('method' => 'edit', 'curso_id' => $id_curso)) ?>
                 <div class="form-group">
                     <label>Curso</label>
-                    <input type="text" readonly="readonly" value="<?= $matkul->nama_matkul ?>" class="form-control">
+                    <input type="text" readonly="readonly" value="<?= $curso->nombre_curso ?>" class="form-control">
                     <small class="help-block text-right"></small>
                 </div>
                 <div class="form-group">
-                    <label>Departmento</label>
-                    <select id="jurusan" multiple="multiple" name="jurusan_id[]" class="form-control select2" style="width: 100%!important">
+                    <label>Grupo</label>
+                    <select id="grupo" multiple="multiple" name="grupo_id[]" class="form-control select2" style="width: 100%!important">
                         <?php
                         $sj = [];
-                        foreach ($jurusan as $key => $val) {
-                            $sj[] = $val->id_jurusan;
+                        foreach ($grupo as $key => $val) {
+                            $sj[] = $val->id_grupo;
                         }
-                        foreach ($all_jurusan as $m) : ?>
-                            <option <?= in_array($m->id_jurusan, $sj) ? "selected" : "" ?> value="<?= $m->id_jurusan ?>"><?= $m->nama_jurusan ?></option>
+                        foreach ($all_grupo as $m) : ?>
+                            <option <?= in_array($m->id_grupo, $sj) ? "selected" : "" ?> value="<?= $m->id_grupo ?>"><?= $m->nombre_grupo ?></option>
                         <?php endforeach; ?>
                     </select>
                     <small class="help-block text-right"></small>
@@ -44,4 +44,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/relasi/jurusanmatkul/edit.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/relacion/grupocurso/edit.js"></script>

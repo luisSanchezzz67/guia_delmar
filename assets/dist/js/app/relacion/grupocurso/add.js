@@ -1,28 +1,28 @@
-function loadJurusan(id) {
-    $('#jurusan option').remove();
-    $.getJSON(base_url+'jurusanmatkul/getJurusanId/' + id, function (data) {
+function loadGrupo(id) {
+    $('#grupo option').remove();
+    $.getJSON(base_url+'grupocurso/getGrupoId/' + id, function (data) {
         console.log(data);
         let opsi;
         $.each(data, function (key, val) {
             opsi = `
-                    <option value="${val.id_jurusan}">${val.nama_jurusan}</option>
+                    <option value="${val.id_grupo}">${val.nombre_grupo}</option>
                 `;
-            $('#jurusan').append(opsi);
+            $('#grupo').append(opsi);
         });
     });
 }
 
 $(document).ready(function () {
-    $('[name="matkul_id"]').on('change', function () {
-        loadJurusan($(this).val());
+    $('[name="curso_id"]').on('change', function () {
+        loadGrupo($(this).val());
     });
 
-    $('form#jurusanmatkul select').on('change', function () {
+    $('form#grupocurso select').on('change', function () {
         $(this).closest('.form-group').removeClass('has-error');
         $(this).nextAll('.help-block').eq(0).text('');
     });
 
-    $('form#jurusanmatkul').on('submit', function (e) {
+    $('form#grupocurso').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -43,7 +43,7 @@ $(document).ready(function () {
                         "type": "success"
                     }).then((result) => {
                         if (result.value) {
-                            window.location.href = base_url+'jurusanmatkul';
+                            window.location.href = base_url+'grupocurso';
                         }
                     });
                 } else {

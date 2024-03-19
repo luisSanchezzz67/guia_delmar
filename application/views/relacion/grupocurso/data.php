@@ -1,6 +1,6 @@
 <div class="box">
 	<div class="box-header with-border">
-		<h3 class="box-title">Relación <?= $subjudul ?></h3>
+		<h3 class="box-title">Relación <?= $subtitulo ?></h3>
 		<div class="box-tools pull-right">
 			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 			</button>
@@ -8,7 +8,7 @@
 	</div>
 	<div class="box-body">
 		<div class="mt-2 mb-3">
-			<a href="<?= base_url('jurusanmatkul/add') ?>" class="btn btn-sm btn-flat bg-blue"><i class="fa fa-plus"></i> Agregar Datos</a>
+			<a href="<?= base_url('grupocurso/add') ?>" class="btn btn-sm btn-flat bg-blue"><i class="fa fa-plus"></i> Agregar Datos</a>
 			<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
 			<div class="pull-right">
 				<button onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger" type="button"><i class="fa fa-trash"></i> Eliminar</button>
@@ -17,12 +17,12 @@
 	</div>
 	<?= form_open('', array('id' => 'bulk')) ?>
 	<div class="table-responsive px-4 pb-3" style="border:0">
-		<table id="jurusanmatkul" class="w-100 table table-striped table-bordered table-hover">
+		<table id="grupocurso" class="w-100 table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>#</th>
 					<th>Curso</th>
-					<th>Departamento</th>
+					<th>Grupo</th>
 					<th class="text-center">Editar</th>
 					<th class="text-center">
 						<input type="checkbox" class="select_all">
@@ -45,4 +45,4 @@
 	<?= form_close() ?>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/relasi/jurusanmatkul/data.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/relacion/grupocurso/data.js"></script>

@@ -4,7 +4,7 @@ var table;
 $(document).ready(function() {
     ajaxcsrf();
 
-    table = $("#jurusanmatkul").DataTable({
+    table = $("#grupocurso").DataTable({
         initComplete: function() {
             var api = this.api();
             $("#jurusanmatkul_filter input")
@@ -39,7 +39,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: base_url + "jurusanmatkul/data",
+            url: base_url + "grupocurso/data",
             type: "POST"
         },
         columns: [{
@@ -47,20 +47,20 @@ $(document).ready(function() {
                 orderable: false,
                 searchable: false
             },
-            { data: "nama_matkul" }
+            { data: "nombre_curso" }
         ],
         columnDefs: [{
                 targets: 2,
                 searchable: false,
                 orderable: false,
-                title: "Jurusan",
-                data: "nama_jurusan",
+                title: "Grupo",
+                data: "nombre_grupo",
                 render: function(data, type, row, meta) {
-                    let matkul = data.split(",");
+                    let curso = data.split(",");
                     let badge = [];
-                    $.each(matkul, function(i, val) {
-                        var newmatkul = `<span class="badge bg-green">${val}</span>`;
-                        badge.push(newmatkul);
+                    $.each(curso, function(i, val) {
+                        var newcurso = `<span class="badge bg-green">${val}</span>`;
+                        badge.push(newcurso);
                     });
                     return badge.join(" ");
                 }
@@ -69,10 +69,10 @@ $(document).ready(function() {
                 targets: 3,
                 searchable: false,
                 orderable: false,
-                data: "id_matkul",
+                data: "id_curso",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
-									<a href="${base_url}jurusanmatkul/edit/${data}" class="btn btn-primary btn-xs">
+									<a href="${base_url}grupocurso/edit/${data}" class="btn btn-primary btn-xs">
 										<i class="fa fa-pencil"></i>
 									</a>
 								</div>`;
@@ -80,7 +80,7 @@ $(document).ready(function() {
             },
             {
                 targets: 4,
-                data: "id_matkul",
+                data: "id_curso",
                 render: function(data, type, row, meta) {
                     return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
@@ -126,9 +126,9 @@ $(document).ready(function() {
         }
     });
 
-    $("#jurusanmatkul tbody").on("click", "tr .check", function() {
-        var check = $("#jurusanmatkul tbody tr .check").length;
-        var checked = $("#jurusanmatkul tbody tr .check:checked").length;
+    $("#grupocurso tbody").on("click", "tr .check", function() {
+        var check = $("#grupocurso tbody tr .check").length;
+        var checked = $("#grupocurso tbody tr .check:checked").length;
         if (check === checked) {
             $(".select_all").prop("checked", true);
         } else {
@@ -137,7 +137,7 @@ $(document).ready(function() {
     });
 
     $("#bulk").on("submit", function(e) {
-        if ($(this).attr("action") == base_url + "jurusanmatkul/delete") {
+        if ($(this).attr("action") == base_url + "grupocurso/delete") {
             e.preventDefault();
             e.stopImmediatePropagation();
 
@@ -174,14 +174,14 @@ $(document).ready(function() {
 });
 
 function bulk_delete() {
-    if ($("#jurusanmatkul tbody tr .check:checked").length == 0) {
+    if ($("#grupocurso tbody tr .check:checked").length == 0) {
         Swal({
             title: "Proceso Fallido",
             text: "Sin datos seleccionados",
             type: "error"
         });
     } else {
-        $("#bulk").attr("action", base_url + "jurusanmatkul/delete");
+        $("#bulk").attr("action", base_url + "grupocurso/delete");
         Swal({
             title: "Seguro?",
             text: "Estos datos serán eliminados!",

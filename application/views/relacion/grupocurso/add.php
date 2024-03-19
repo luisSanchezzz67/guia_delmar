@@ -1,8 +1,8 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Formulario <?= $judul ?></h3>
+        <h3 class="box-title">Formulario <?= $titulo ?></h3>
         <div class="box-tools pull-right">
-            <a href="<?= base_url() ?>jurusanmatkul" class="btn btn-primary btn-flat btn-sm">
+            <a href="<?= base_url() ?>grupocurso" class="btn btn-primary btn-flat btn-sm">
                 <i class="fa fa-arrow-left"></i> Cancelar
             </a>
         </div>
@@ -16,25 +16,25 @@
                     <br><br>
                     <ol class="pl-4">
                         <li>No ha agregado datos del curso principal (el curso principal está vacío/sin datos).</li>
-                        <li>Se han agregado cursos, por lo que no necesita agregar más. Solo necesita editar los datos para el departamento del curso.</li>
+                        <li>Se han agregado cursos, por lo que no necesita agregar más. Solo necesita editar los datos para el grupo del curso.</li>
                     </ol>
                 </div>
             </div>
             <div class="col-sm-4">
-                <?= form_open('jurusanmatkul/save', array('id' => 'jurusanmatkul'), array('method' => 'add')) ?>
+                <?= form_open('Grupocurso/save', array('id' => 'grupocurso'), array('method' => 'add')) ?>
                 <div class="form-group">
                     <label>Curso</label>
-                    <select name="matkul_id" class="form-control select2" style="width: 100%!important">
+                    <select name="curso_id" class="form-control select2" style="width: 100%!important">
                         <option value="" disabled selected></option>
-                        <?php foreach ($matkul as $m) : ?>
-                            <option value="<?= $m->id_matkul ?>"><?= $m->nama_matkul ?></option>
+                        <?php foreach ($curso as $m) : ?>
+                            <option value="<?= $m->id_curso ?>"><?= $m->nombre_curso ?></option>
                         <?php endforeach; ?>
                     </select>
                     <small class="help-block text-right"></small>
                 </div>
                 <div class="form-group">
-                    <label>Departmento</label>
-                    <select id="jurusan" multiple="multiple" name="jurusan_id[]" class="form-control select2" style="width: 100%!important">
+                    <label>Grupo</label>
+                    <select id="grupo" multiple="multiple" name="grupo_id[]" class="form-control select2" style="width: 100%!important">
                     </select>
                     <small class="help-block text-right"></small>
                 </div>
@@ -52,4 +52,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/relasi/jurusanmatkul/add.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/relacion/grupocurso/add.js"></script>

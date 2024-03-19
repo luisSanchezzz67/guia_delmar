@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class JurusanMatkul extends CI_Controller
+class GrupoCurso extends CI_Controller
 {
 
 	public function __construct()
@@ -27,34 +27,34 @@ class JurusanMatkul extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Course Department',
-			'subjudul' => 'Data Course Department'
+			'titulo'	=> 'Grupo - Curso',
+			'subtitulo' => 'Un Grupo con un Curso'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('relasi/jurusanmatkul/data');
+		$this->load->view('relacion/grupocurso/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function data()
 	{
-		$this->output_json($this->master->getJurusanMatkul(), false);
+		$this->output_json($this->master->getGrupoCurso(), false);
 	}
 
-	public function getJurusanId($id)
+	public function getGrupoId($id)
 	{
-		$this->output_json($this->master->getAllJurusan($id));
+		$this->output_json($this->master->getAllGrupo($id));
 	}
 
 	public function add()
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Agregar Curso a Departamento',
-			'subjudul'	=> 'Agregar Datos de Curso a Departamento',
-			'matkul'	=> $this->master->getMatkul()
+			'titulo'		=> 'Agregar Curso a Grupo',
+			'subtitulo'	=> 'Agregar Datos de Curso a Grupo',
+			'curso'	=> $this->master->getCurso()
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('relasi/jurusanmatkul/add');
+		$this->load->view('relacion/grupocurso/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -62,49 +62,49 @@ class JurusanMatkul extends CI_Controller
 	{
 		$data = [
 			'user' 			=> $this->ion_auth->user()->row(),
-			'judul'			=> 'Editar Curso de Departamento',
-			'subjudul'		=> 'Edit Datos de Curso de Departamento.',
-			'matkul'		=> $this->master->getMatkulById($id, true),
-			'id_matkul'		=> $id,
-			'all_jurusan'	=> $this->master->getAllJurusan(),
-			'jurusan'		=> $this->master->getJurusanByIdMatkul($id)
+			'titulo'			=> 'Editar Curso de Grupo',
+			'subtitulo'		=> 'Editar Datos de Curso de Grupo.',
+			'curso'		=> $this->master->getCursoById($id, true),
+			'id_curso'		=> $id,
+			'all_grupo'	=> $this->master->getAllGrupo(),
+			'grupo'		=> $this->master->getGrupoByIdCurso($id)
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('relasi/jurusanmatkul/edit');
+		$this->load->view('relacion/grupocurso/edit');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function save()
 	{
 		$method = $this->input->post('method', true);
-		$this->form_validation->set_rules('matkul_id', 'Course', 'required');
-		$this->form_validation->set_rules('jurusan_id[]', 'Department', 'required');
+		$this->form_validation->set_rules('curso_id', 'Course', 'required');
+		$this->form_validation->set_rules('grupo_id[]', 'Department', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = [
 				'status'	=> false,
 				'errors'	=> [
-					'matkul_id' => form_error('matkul_id'),
-					'jurusan_id[]' => form_error('jurusan_id[]'),
+					'curso_id' => form_error('curso_id'),
+					'grupo_id[]' => form_error('grupo_id[]'),
 				]
 			];
 			$this->output_json($data);
 		} else {
-			$matkul_id 	= $this->input->post('matkul_id', true);
-			$jurusan_id = $this->input->post('jurusan_id', true);
+			$curso_id 	= $this->input->post('curso_id', true);
+			$grupo_id = $this->input->post('grupo_id', true);
 			$input = [];
-			foreach ($jurusan_id as $key => $val) {
+			foreach ($grupo_id as $key => $val) {
 				$input[] = [
-					'matkul_id' 	=> $matkul_id,
-					'jurusan_id'  	=> $val
+					'curso_id' 	=> $curso_id,
+					'grupo_id'  	=> $val
 				];
 			}
 			if ($method === 'add') {
-				$action = $this->master->create('jurusan_matkul', $input, true);
+				$action = $this->master->create('grupo_curso', $input, true);
 			} else if ($method === 'edit') {
-				$id = $this->input->post('matkul_id', true);
-				$this->master->delete('jurusan_matkul', $id, 'matkul_id');
-				$action = $this->master->create('jurusan_matkul', $input, true);
+				$id = $this->input->post('curso_id', true);
+				$this->master->delete('grupo_curso', $id, 'curso_id');
+				$action = $this->master->create('grupo_curso', $input, true);
 			}
 			$data['status'] = $action ? TRUE : FALSE;
 		}
@@ -117,7 +117,7 @@ class JurusanMatkul extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('jurusan_matkul', $chk, 'matkul_id')) {
+			if ($this->master->delete('grupo_curso', $chk, 'curso_id')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}

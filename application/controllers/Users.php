@@ -41,8 +41,8 @@ class Users extends CI_Controller
 		$this->is_admin();
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Gestión de Usuario',
-			'subjudul' => 'Datos de Usuario'
+			'titulo'	=> 'Gestión de Usuario',
+			'subtitulo' => 'Datos de Usuario'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
 		$this->load->view('users/data');
@@ -54,8 +54,8 @@ class Users extends CI_Controller
 		$level = $this->ion_auth->get_users_groups($id)->result();
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Gestiones de Usuario',
-			'subjudul'	=> 'Editar Datos de Usuario',
+			'titulo'		=> 'Gestiones de Usuario',
+			'subtitulo'	=> 'Editar Datos de Usuario',
 			'users' 	=> $this->ion_auth->user($id)->row(),
 			'groups'	=> $this->ion_auth->groups()->result(),
 			'level'		=> $level[0]
