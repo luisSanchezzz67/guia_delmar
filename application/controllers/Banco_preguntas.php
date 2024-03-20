@@ -89,21 +89,21 @@ class Banco_preguntas extends CI_Controller
         $user = $this->ion_auth->user()->row();
         $data = [
             'user'      => $user,
-            'judul'        => 'Preguntas',
-            'subjudul'  => 'Editar Preguntas',
-            'banco_preguntas'      => $this->banco_preguntas->getSoalById($id),
+            'titulo'        => 'Preguntas',
+            'subtitulo'  => 'Editar Preguntas',
+            'banco_preguntas'      => $this->banco_preguntas->getBanco_preguntasById($id),
         ];
 
         if ($this->ion_auth->is_admin()) {
-            //Jika admin maka tampilkan semua matkul
-            $data['dosen'] = $this->banco_preguntas->getAllDosen();
+            //Jika admin maka tampilkan semua curso
+            $data['profesor'] = $this->banco_preguntas->getAllProfesor();
         } else {
-            //Jika bukan maka matkul dipilih otomatis sesuai matkul dosen
-            $data['dosen'] = $this->banco_preguntas->getMatkulDosen($user->username);
+            //Jika bukan maka curso dipilih otomatis sesuai curso profesor
+            $data['profesor'] = $this->banco_preguntas->getCursoProfesor($user->username);
         }
 
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('soal/edit');
+        $this->load->view('banco_preguntas/edit');
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
@@ -134,7 +134,7 @@ class Banco_preguntas extends CI_Controller
             "audio/mpeg", "audio/mpg", "audio/mpeg3", "audio/mp3", "audio/x-wav", "audio/wave", "audio/wav",
             "video/mp4", "application/octet-stream"
         ];
-        $config['upload_path']      = FCPATH . 'uploads/bank_soal/';
+        $config['upload_path']      = FCPATH . 'uploads/banco_preguntas/';
         $config['allowed_types']    = 'jpeg|jpg|png|gif|mpeg|mpg|mpeg3|mp3|wav|wave|mp4';
         $config['encrypt_name']     = TRUE;
 
@@ -167,7 +167,7 @@ class Banco_preguntas extends CI_Controller
 
             $i = 0;
             foreach ($_FILES as $key => $val) {
-                $img_src = FCPATH . 'uploads/bank_soal/';
+                $img_src = FCPATH . 'uploads/banco_preguntas/';
                 $getbanco_preguntas = $this->banco_preguntas->getBanco_preguntasById($this->input->post('id_banco_preguntas', true));
 
                 $error = '';
@@ -247,7 +247,7 @@ class Banco_preguntas extends CI_Controller
         // Delete File
         foreach ($chk as $id) {
             $abjad = ['a', 'b', 'c', 'd', 'e'];
-            $path = FCPATH . 'uploads/bank_soal/';
+            $path = FCPATH . 'uploads/banco_preguntas/';
             $soal = $this->banco_preguntas->getSoalById($id);
             // Hapus File Soal
             if (!empty($soal->file)) {

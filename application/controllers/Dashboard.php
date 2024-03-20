@@ -54,8 +54,8 @@ class Dashboard extends CI_Controller
 			],
 			[
 				'box' 		=> 'aqua',
-				'total' 	=> $this->dashboard->total('tb_soal'),
-				'title'		=> 'soal',
+				'total' 	=> $this->dashboard->total('tb_banco_preguntas'),
+				'title'		=> 'banco_preguntas',
 				'text'      => 'Preguntas',
 				'icon'		=> 'file-text'
 			],
