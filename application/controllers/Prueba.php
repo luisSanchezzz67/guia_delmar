@@ -67,7 +67,7 @@ class Prueba extends CI_Controller
 
 	public function add()
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 
 		$user = $this->ion_auth->user()->row();
 
@@ -75,8 +75,8 @@ class Prueba extends CI_Controller
 			'user' 		=> $user,
 			'titulo'		=> 'Exam',
 			'subtitulo'	=> 'Add Exam',
-			'matkul'	=> $this->soal->getMatkulDosen($user->username),
-			'dosen'		=> $this->prueba->getIdDosen($user->username),
+			'curso'	=> $this->banco_preguntas->getCursoProfesor($user->username),
+			'profesor'		=> $this->prueba->getIdProfesor($user->username),
 		];
 
 		$this->load->view('_templates/dashboard/_header.php', $data);
@@ -106,25 +106,25 @@ class Prueba extends CI_Controller
 
 	public function convert_tgl($tgl)
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 		return date('Y-m-d H:i:s', strtotime($tgl));
 	}
 
 	public function validasi()
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 
 		$user 	= $this->ion_auth->user()->row();
-		$dosen 	= $this->prueba->getIdDosen($user->username);
-		$jml 	= $this->prueba->getJumlahSoal($dosen->id_dosen)->jml_soal;
+		$profesor 	= $this->prueba->getIdProfesor($user->username);
+		$jml 	= $this->prueba->getCantidadBanco_preguntas($profesor->id_profesor)->jml_banco_preguntas;
 		$jml_a 	= $jml + 1; // If you don't understand, please read the user_guide codeigniter about form_validation in the less_than section
 
-		$this->form_validation->set_rules('nama_prueba', 'Exam Name', 'required|alpha_numeric_spaces|max_length[50]');
-		$this->form_validation->set_rules('jumlah_soal', 'Number of Questions', "required|integer|less_than[{$jml_a}]|greater_than[0]", ['less_than' => "Soal tidak cukup, anda hanya punya {$jml} soal"]);
-		$this->form_validation->set_rules('tgl_mulai', 'Start Date', 'required');
-		$this->form_validation->set_rules('tgl_selesai', 'Completion Date', 'required');
-		$this->form_validation->set_rules('waktu', 'Time', 'required|integer|max_length[4]|greater_than[0]');
-		$this->form_validation->set_rules('jenis', 'Random Question', 'required|in_list[Random,Sort]');
+		$this->form_validation->set_rules('nombre_prueba', 'Exam Name', 'required|alpha_numeric_spaces|max_length[50]');
+		$this->form_validation->set_rules('cantidad_banco_preguntas', 'Number of Questions', "required|integer|less_than[{$jml_a}]|greater_than[0]", ['less_than' => "banco_preguntas tidak cukup, anda hanya punya {$jml} banco_preguntas"]);
+		$this->form_validation->set_rules('fecha_inicio', 'Start Date', 'required');
+		$this->form_validation->set_rules('fecha_terminacion', 'Completion Date', 'required');
+		$this->form_validation->set_rules('tiempo', 'Time', 'required|integer|max_length[4]|greater_than[0]');
+		$this->form_validation->set_rules('tipo', 'Random Question', 'required|in_list[Random,Sort]');
 	}
 
 
@@ -135,7 +135,7 @@ class Prueba extends CI_Controller
 			"audio/mpeg", "audio/mpg", "audio/mpeg3", "audio/mp3", "audio/x-wav", "audio/wave", "audio/wav",
 			"video/mp4", "application/octet-stream"
 		];
-		$config['upload_path']      = FCPATH . 'uploads/bank_soal/';
+		$config['upload_path']      = FCPATH . 'uploads/banco_preguntas/';
 		$config['allowed_types']    = 'jpeg|jpg|png|gif|mpeg|mpg|mpeg3|mp3|wav|wave|mp4';
 		$config['encrypt_name']     = TRUE;
 
@@ -150,39 +150,39 @@ class Prueba extends CI_Controller
 
 
 		$method 		= $this->input->post('method', true);
-		$dosen_id 		= $this->input->post('dosen_id', true);
-		$matkul_id 		= $this->input->post('matkul_id', true);
-		$nama_prueba 	= $this->input->post('nama_ujian', true);
-		$jumlah_soal 	= $this->input->post('jumlah_soal', true);
-		$tgl_mulai 		= $this->convert_tgl($this->input->post('tgl_mulai', 	true));
-		$tgl_selesai	= $this->convert_tgl($this->input->post('tgl_selesai', true));
-		$waktu			= $this->input->post('waktu', true);
-		$jenis			= $this->input->post('jenis', true);
-		$soal_text			= $this->input->post('soal', true);
+		$profesor_id 		= $this->input->post('profesor_id', true);
+		$curso_id 		= $this->input->post('curso_id', true);
+		$nombre_prueba 	= $this->input->post('nombre_prueba', true);
+		$cantidad_banco_preguntas 	= $this->input->post('cantidad_banco_preguntas', true);
+		$fecha_inicio 		= $this->convert_tgl($this->input->post('fecha_inicio', 	true));
+		$fecha_terminacion	= $this->convert_tgl($this->input->post('fecha_terminacion', true));
+		$tiempo			= $this->input->post('tiempo', true);
+		$tipo			= $this->input->post('tipo', true);
+		$banco_preguntas_text			= $this->input->post('banco_preguntas', true);
 		$enlace			= $this->input->post('enlace', true);
-		// $file_soal			= $this->input->post('file_soal', true);
+		// $file_banco_preguntas			= $this->input->post('file_banco_preguntas', true);
 		$token 			= strtoupper(random_string('alpha', 5));
 
 		if ($this->form_validation->run() === FALSE) {
 			$data['status'] = false;
 			$data['errors'] = [
-				'nama_ujian' 	=> form_error('nama_ujian'),
-				'jumlah_soal' 	=> form_error('jumlah_soal'),
-				'tgl_mulai' 	=> form_error('tgl_mulai'),
-				'tgl_selesai' 	=> form_error('tgl_selesai'),
-				'waktu' 		=> form_error('waktu'),
-				'jenis' 		=> form_error('jenis'),
-				'soal' 		=> form_error('soal'),
+				'nombre_prueba' 	=> form_error('nombre_prueba'),
+				'cantidad_banco_preguntas' 	=> form_error('cantidad_banco_preguntas'),
+				'fecha_inicio' 	=> form_error('fecha_inicio'),
+				'fecha_terminacion' 	=> form_error('fecha_terminacion'),
+				'tiempo' 		=> form_error('tiempo'),
+				'tipo' 		=> form_error('tipo'),
+				'banco_preguntas' 		=> form_error('banco_preguntas'),
 				'enlace' 		=> form_error('enlace'),
 			];
 		} else {
 			// // Subir el archivo
-			// if ($this->upload->do_upload('file_soal')) {
+			// if ($this->upload->do_upload('file_banco_preguntas')) {
 			// 	$upload_data = $this->upload->data();
-			// 	$file_soal = $upload_data['file_name']; // Nombre del archivo subido
+			// 	$file_banco_preguntas = $upload_data['file_name']; // Nombre del archivo subido
 		
 			// 	// Guardar el nombre del archivo en la base de datos
-			// 	$input['file_soal'] = $file_soal;
+			// 	$input['file_banco_preguntas'] = $file_banco_preguntas;
 				
 			// 	// Continuar con la inserción en la base de datos
 			// 	// ...
@@ -194,26 +194,26 @@ class Prueba extends CI_Controller
 			// }
 
 			$input = [
-				'nama_ujian' 	=> $nama_ujian,
-				'jumlah_soal' 	=> $jumlah_soal,
-				'tgl_mulai' 	=> $tgl_mulai,
-				'terlambat' 	=> $tgl_selesai,
-				'waktu' 		=> $waktu,
-				'jenis' 		=> $jenis,
-				'soal' 		=> $soal_text,
+				'nombre_prueba' 	=> $nombre_prueba,
+				'cantidad_banco_preguntas' 	=> $cantidad_banco_preguntas,
+				'fecha_inicio' 	=> $fecha_inicio,
+				'tarde' 	=> $fecha_terminacion,
+				'tiempo' 		=> $tiempo,
+				'tipo' 		=> $tipo,
+				'banco_preguntas' 		=> $banco_preguntas_text,
 				'enlace' 		=> $enlace,
 			];
 
 			
 
 			if ($method === 'add') {
-				$input['dosen_id']	= $dosen_id;
-				$input['matkul_id'] = $matkul_id;
+				$input['profesor_id']	= $profesor_id;
+				$input['curso_id'] = $curso_id;
 				$input['token']		= $token;
-				$action = $this->master->create('m_ujian', $input);
+				$action = $this->master->create('m_prueba', $input);
 			} else if ($method === 'edit') {
-				$id_ujian = $this->input->post('id_ujian', true);
-				$action = $this->master->update('m_ujian', $input, 'id_ujian', $id_ujian);
+				$id_prueba = $this->input->post('id_prueba', true);
+				$action = $this->master->update('m_prueba', $input, 'id_prueba', $id_prueba);
 			}
 
 			

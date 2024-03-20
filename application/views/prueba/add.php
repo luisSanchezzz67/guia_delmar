@@ -1,8 +1,8 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= $subjudul ?></h3>
+        <h3 class="box-title"><?= $subtitulo ?></h3>
         <div class="box-tools pull-right">
-            <a href="<?= base_url() ?>ujian/master" class="btn btn-sm btn-flat btn-primary">
+            <a href="<?= base_url() ?>prueba/master" class="btn btn-sm btn-flat btn-primary">
                 <i class="fa fa-arrow-left"></i> Cancelar
             </a>
         </div>
@@ -12,43 +12,43 @@
             <div class="col-sm-4">
                 <div class="alert bg-purple">
                     <h4>Curso <i class="fa fa-book pull-right"></i></h4>
-                    <p><?= $matkul->nama_matkul ?></p>
+                    <p><?= $curso->nombre_curso ?></p>
                 </div>
                 <div class="alert bg-purple">
                     <h4>Profesor <i class="fa fa-address-book-o pull-right"></i></h4>
-                    <p><?= $dosen->nama_dosen ?></p>
+                    <p><?= $profesor->nombre_profesor ?></p>
                 </div>
             </div>
             <div class="col-sm-4">
-                <?= form_open('ujian/save', array('id' => 'formujian'), array('method' => 'add', 'dosen_id' => $dosen->id_dosen, 'matkul_id' => $matkul->matkul_id)) ?>
+                <?= form_open('prueba/save', array('id' => 'formprueba'), array('method' => 'add', 'profesor_id' => $profesor->id_profesor, 'curso_id' => $curso->curso_id)) ?>
                 <div class="form-group">
-                    <label for="nama_ujian">Nombre de Examen</label>
-                    <input autofocus="autofocus" onfocus="this.select()" placeholder="Nombre de Examen" type="text" class="form-control" name="nama_ujian">
+                    <label for="nombre_prueba">Nombre de Examen</label>
+                    <input autofocus="autofocus" onfocus="this.select()" placeholder="Nombre de Examen" type="text" class="form-control" name="nombre_prueba">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="jumlah_soal">Número de Preguntas</label>
-                    <input placeholder="Número de Preguntas" type="number" class="form-control" name="jumlah_soal">
+                    <label for="cantidad_banco_preguntas">Número de Preguntas</label>
+                    <input placeholder="Número de Preguntas" type="number" class="form-control" name="cantidad_banco_preguntas">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="tgl_mulai">Fecha de Inicio</label>
-                    <input name="tgl_mulai" type="text" class="datetimepicker form-control" placeholder="Fecha de Inicio">
+                    <label for="fecha_inicio">Fecha de Inicio</label>
+                    <input name="fecha_inicio" type="text" class="datetimepicker form-control" placeholder="Fecha de Inicio">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="tgl_selesai">Fecha de realización</label>
-                    <input name="tgl_selesai" type="text" class="datetimepicker form-control" placeholder="Fecha de realización">
+                    <label for="fecha_terminacion">Fecha de realización</label>
+                    <input name="fecha_terminacion" type="text" class="datetimepicker form-control" placeholder="Fecha de realización">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="waktu">Hora</label>
-                    <input placeholder="en minutos" type="number" class="form-control" name="waktu">
+                    <label for="tiempo">Hora</label>
+                    <input placeholder="en minutos" type="number" class="form-control" name="tiempo">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="jenis">Patrón de preguntas</label>
-                    <select name="jenis" class="form-control">
+                    <label for="tipo">Patrón de preguntas</label>
+                    <select name="tipo" class="form-control">
                         <option value="" disabled selected>--- Seleccionar ---</option>
                         <option value="Random">Preguntas Aleatorias</option>
                         <option value="Sort">Ordenar Preguntas</option>
@@ -57,16 +57,16 @@
                 </div>
                 <!---Documentos-->
                 <!-- <div class="form-group">
-                    <label for="soal" class="control-label">Material de estudio</label>
+                    <label for="banco_preguntas" class="control-label">Material de estudio</label>
                     <div class="form-group">
-                        <input type="file" id="file_soal" name="file_soal" class="form-control">
-                        <small class="help-block" style="color: #dc3545"><?= form_error('file_soal') ?></small>
+                        <input type="file" id="file_banco_preguntas" name="file_banco_preguntas" class="form-control">
+                        <small class="help-block" style="color: #dc3545"><?= form_error('file_banco_preguntas') ?></small>
                     </div>
                 </div> -->
                 <div class="form-group">
-                    <label for="soal" class="control-label">Instrucciones :</label>
-                    <textarea name="soal" id="soal" class="form-control summernote"><?= set_value('soal') ?></textarea>
-                    <small class="help-block" style="color: #dc3545"><?= form_error('soal') ?></small>
+                    <label for="banco_preguntas" class="control-label">Instrucciones :</label>
+                    <textarea name="banco_preguntas" id="banco_preguntas" class="form-control summernote"><?= set_value('banco_preguntas') ?></textarea>
+                    <small class="help-block" style="color: #dc3545"><?= form_error('banco_preguntas') ?></small>
                 </div>
                 <div class="form-group">
                     <label for="enlace" class="control-label">Enlace de descarga: </label>
@@ -86,4 +86,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/ujian/add.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/prueba/add.js"></script>

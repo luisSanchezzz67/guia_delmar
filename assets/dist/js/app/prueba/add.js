@@ -3,12 +3,12 @@ $(document).ready(function () {
         format: 'YYYY-MM-DD HH:mm:ss'
     });
 
-    $('#formujian input, #formujian select').on('change', function () {
+    $('#formprueba input, #formprueba select').on('change', function () {
         $(this).closest('.form-group').eq(0).removeClass('has-error');
         $(this).nextAll('.help-block').eq(0).text('');
     });
 
-    $('#formujian').on('submit', function (e) {
+    $('#formprueba').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
