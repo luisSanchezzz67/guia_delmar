@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Ujian extends CI_Controller
+class Prueba extends CI_Controller
 {
 
 	public $mhs, $user;
@@ -15,22 +15,22 @@ class Ujian extends CI_Controller
 		$this->load->library(['datatables', 'form_validation']); // Load Library Ignited-Datatables
 		$this->load->helper('my');
 		$this->load->model('Master_model', 'master');
-		$this->load->model('Soal_model', 'soal');
-		$this->load->model('Ujian_model', 'ujian');
+		$this->load->model('Banco_preguntas_model', 'banco_preguntas');
+		$this->load->model('Prueba_model', 'prueba');
 		$this->form_validation->set_error_delimiters('', '');
 
 		$this->user = $this->ion_auth->user()->row();
-		$this->mhs 	= $this->ujian->getIdMahasiswa($this->user->username);
+		$this->mhs 	= $this->prueba->getIdEstudiante($this->user->username);
 	}
 
-	public function akses_dosen()
+	public function akses_profesor()
 	{
 		if (!$this->ion_auth->in_group('Lecturer')) {
 			show_error('This page is specifically for lecturers to make an Online Test, <a href="' . base_url('dashboard') . '">Back to main menu</a>', 403, 'Forbidden Access');
 		}
 	}
 
-	public function akses_mahasiswa()
+	public function akses_estudiante()
 	{
 		if (!$this->ion_auth->in_group('Student')) {
 			show_error('This page is specifically for students taking the exam, <a href="' . base_url('dashboard') . '">Back to main menu</a>', 403, 'Forbidden Access');
@@ -45,23 +45,23 @@ class Ujian extends CI_Controller
 
 	public function json($id = null)
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 
-		$this->output_json($this->ujian->getDataUjian($id), false);
+		$this->output_json($this->prueba->getDataPrueba($id), false);
 	}
 
 	public function master()
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 		$user = $this->ion_auth->user()->row();
 		$data = [
 			'user' => $user,
-			'judul'	=> 'Exam',
-			'subjudul' => 'Exam Data',
-			'dosen' => $this->ujian->getIdDosen($user->username),
+			'titulo'	=> 'Exam',
+			'subtitulo' => 'Exam Data',
+			'profesor' => $this->prueba->getIdProfesor($user->username),
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('ujian/data');
+		$this->load->view('prueba/data');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -73,14 +73,14 @@ class Ujian extends CI_Controller
 
 		$data = [
 			'user' 		=> $user,
-			'judul'		=> 'Exam',
-			'subjudul'	=> 'Add Exam',
+			'titulo'		=> 'Exam',
+			'subtitulo'	=> 'Add Exam',
 			'matkul'	=> $this->soal->getMatkulDosen($user->username),
-			'dosen'		=> $this->ujian->getIdDosen($user->username),
+			'dosen'		=> $this->prueba->getIdDosen($user->username),
 		];
 
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('ujian/add');
+		$this->load->view('prueba/add');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -95,12 +95,12 @@ class Ujian extends CI_Controller
 			'judul'		=> 'Exam',
 			'subjudul'	=> 'Edit Exam',
 			'matkul'	=> $this->soal->getMatkulDosen($user->username),
-			'dosen'		=> $this->ujian->getIdDosen($user->username),
-			'ujian'		=> $this->ujian->getUjianById($id),
+			'dosen'		=> $this->prueba->getIdDosen($user->username),
+			'prueba'		=> $this->prueba->getPruebaById($id),
 		];
 
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('ujian/edit');
+		$this->load->view('prueba/edit');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
@@ -115,11 +115,11 @@ class Ujian extends CI_Controller
 		$this->akses_dosen();
 
 		$user 	= $this->ion_auth->user()->row();
-		$dosen 	= $this->ujian->getIdDosen($user->username);
-		$jml 	= $this->ujian->getJumlahSoal($dosen->id_dosen)->jml_soal;
+		$dosen 	= $this->prueba->getIdDosen($user->username);
+		$jml 	= $this->prueba->getJumlahSoal($dosen->id_dosen)->jml_soal;
 		$jml_a 	= $jml + 1; // If you don't understand, please read the user_guide codeigniter about form_validation in the less_than section
 
-		$this->form_validation->set_rules('nama_ujian', 'Exam Name', 'required|alpha_numeric_spaces|max_length[50]');
+		$this->form_validation->set_rules('nama_prueba', 'Exam Name', 'required|alpha_numeric_spaces|max_length[50]');
 		$this->form_validation->set_rules('jumlah_soal', 'Number of Questions', "required|integer|less_than[{$jml_a}]|greater_than[0]", ['less_than' => "Soal tidak cukup, anda hanya punya {$jml} soal"]);
 		$this->form_validation->set_rules('tgl_mulai', 'Start Date', 'required');
 		$this->form_validation->set_rules('tgl_selesai', 'Completion Date', 'required');
@@ -152,7 +152,7 @@ class Ujian extends CI_Controller
 		$method 		= $this->input->post('method', true);
 		$dosen_id 		= $this->input->post('dosen_id', true);
 		$matkul_id 		= $this->input->post('matkul_id', true);
-		$nama_ujian 	= $this->input->post('nama_ujian', true);
+		$nama_prueba 	= $this->input->post('nama_ujian', true);
 		$jumlah_soal 	= $this->input->post('jumlah_soal', true);
 		$tgl_mulai 		= $this->convert_tgl($this->input->post('tgl_mulai', 	true));
 		$tgl_selesai	= $this->convert_tgl($this->input->post('tgl_selesai', true));
@@ -249,7 +249,7 @@ class Ujian extends CI_Controller
 	}
 
 	/**
-	 * BAGIAN MAHASISWA
+	 * BAGIAN estudiante
 	 */
 
 	public function list_json()
