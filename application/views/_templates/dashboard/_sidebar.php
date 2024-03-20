@@ -95,23 +95,23 @@
 				</li>
 			<?php endif; ?>
 			<?php if ($this->ion_auth->in_group('Lecturer')) : ?>
-				<li class="<?= $page === 'ujian' ? "active" : "" ?>">
-					<a href="<?= base_url('ujian/master') ?>" rel="noopener noreferrer">
+				<li class="<?= $page === 'prueba' ? "active" : "" ?>">
+					<a href="<?= base_url('prueba/master') ?>" rel="noopener noreferrer">
 						<i class="fa fa-pencil"></i> <span>Examen</span>
 					</a>
 				</li>
 			<?php endif; ?>
 			<?php if ($this->ion_auth->in_group('Student')) : ?>
-				<li class="<?= $page === 'ujian' ? "active" : "" ?>">
-					<a href="<?= base_url('ujian/list') ?>" rel="noopener noreferrer">
+				<li class="<?= $page === 'prueba' ? "active" : "" ?>">
+					<a href="<?= base_url('prueba/list') ?>" rel="noopener noreferrer">
 						<i class="fa fa-pencil"></i> <span>Examen</span>
 					</a>
 				</li>
 			<?php endif; ?>
 			<?php if (!$this->ion_auth->in_group('Student')) : ?>
 				<li class="header">REPORTS</li>
-				<li class="<?= $page === 'hasilujian' ? "active" : "" ?>">
-					<a href="<?= base_url('hasilujian') ?>" rel="noopener noreferrer">
+				<li class="<?= $page === 'resultado_examen' ? "active" : "" ?>">
+					<a href="<?= base_url('resultado_examen') ?>" rel="noopener noreferrer">
 						<i class="fa fa-file"></i> <span>Resultados de Examen</span>
 					</a>
 				</li>

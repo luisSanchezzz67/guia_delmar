@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= $subjudul ?></h3>
+        <h3 class="box-title"><?= $subtitulo ?></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -9,13 +9,13 @@
     <div class="box-body">
         <button type="button" onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash"></i> Eliminación Masiva</button>
         <div class="pull-right">
-            <a href="<?= base_url('ujian/add') ?>" class="btn bg-blue btn-sm btn-flat"><i class="fa fa-plus"></i> Conducir Nuevo Examen</a>
+            <a href="<?= base_url('prueba/add') ?>" class="btn bg-blue btn-sm btn-flat"><i class="fa fa-plus"></i> Conducir Nuevo Examen</a>
             <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat bg-maroon"><i class="fa fa-refresh"></i> Recargar</button>
         </div>
     </div>
-    <?= form_open('ujian/delete', array('id' => 'bulk')) ?>
+    <?= form_open('prueba/delete', array('id' => 'bulk')) ?>
     <div class="table-responsive px-4 pb-3" style="border: 0">
-        <table id="ujian" class="w-100 table table-striped table-bordered table-hover">
+        <table id="prueba" class="w-100 table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th class="text-center">
@@ -52,7 +52,7 @@
 </div>
 
 <script type="text/javascript">
-    var id_dosen = '<?= $dosen->id_dosen ?>';
+    var id_profesor = '<?= $profesor->id_profesor ?>';
 </script>
 
-<script src="<?= base_url() ?>assets/dist/js/app/ujian/data.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/prueba/data.js"></script>

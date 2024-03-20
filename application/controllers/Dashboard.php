@@ -61,8 +61,8 @@ class Dashboard extends CI_Controller
 			],
 			[
 				'box' 		=> 'purple',
-				'total' 	=> $this->dashboard->total('h_ujian'),
-				'title'		=> 'hasilujian',
+				'total' 	=> $this->dashboard->total('h_prueba'),
+				'title'		=> 'resultado_examen',
 				'text'      => 'Resultados Generados',
 				'icon'		=> 'file'
 			],

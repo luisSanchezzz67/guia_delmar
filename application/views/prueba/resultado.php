@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= $subjudul ?></h3>
+        <h3 class="box-title"><?= $subtitulo ?></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -47,4 +47,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/ujian/hasil.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/prueba/resultado.js"></script>

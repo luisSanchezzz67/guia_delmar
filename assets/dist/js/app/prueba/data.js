@@ -4,10 +4,10 @@ $(document).ready(function() {
 
     ajaxcsrf();
 
-    table = $("#ujian").DataTable({
+    table = $("#prueba").DataTable({
         initComplete: function() {
             var api = this.api();
-            $('#ujian_filter input')
+            $('#prueba_filter input')
                 .off('.DT')
                 .on('keyup.DT', function(e) {
                     api.search(this.value).draw();
@@ -19,24 +19,24 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            "url": base_url + "ujian/json",
+            "url": base_url + "prueba/json",
             "type": "POST",
         },
         columns: [{
-                "data": "id_ujian",
+                "data": "id_prueba",
                 "orderable": false,
                 "searchable": false
             },
             {
-                "data": "id_ujian",
+                "data": "id_prueba",
                 "orderable": false,
                 "searchable": false
             },
-            { "data": 'nama_ujian' },
-            { "data": 'nama_matkul' },
-            { "data": 'jumlah_soal' },
-            { "data": 'waktu' },
-            { "data": 'jenis' },
+            { "data": 'nombre_prueba' },
+            { "data": 'nombre_curso' },
+            { "data": 'cantidad_banco_preguntas' },
+            { "data": 'tiempo' },
+            { "data": 'tipo' },
             {
                 "data": 'token',
                 "orderable": false
@@ -44,7 +44,7 @@ $(document).ready(function() {
         ],
         columnDefs: [{
                 "targets": 0,
-                "data": "id_ujian",
+                "data": "id_prueba",
                 "render": function(data, type, row, meta) {
                     return `<div class="text-center">
 									<input name="checked[]" class="check" value="${data}" type="checkbox">
@@ -62,13 +62,13 @@ $(document).ready(function() {
             },
             {
                 "targets": 8,
-                "data": "id_ujian",
+                "data": "id_prueba",
                 "render": function(data, type, row, meta) {
                     return `<div class="text-center">
 									<button type="button" data-id="${data}" class="btn btn-token btn-xs bg-purple">
 										<i class="fa fa-refresh"></i>
 									</button>
-									<a href="${base_url}ujian/edit/${data}" class="btn btn-xs btn-primary">
+									<a href="${base_url}prueba/edit/${data}" class="btn btn-xs btn-primary">
 										<i class="fa fa-edit"></i>
 									</a>
 								</div>`;
@@ -104,9 +104,9 @@ $(document).ready(function() {
         }
     });
 
-    $('#ujian tbody').on('click', 'tr .check', function() {
-        var check = $('#ujian tbody tr .check').length;
-        var checked = $('#ujian tbody tr .check:checked').length;
+    $('#prueba tbody').on('click', 'tr .check', function() {
+        var check = $('#prueba tbody tr .check').length;
+        var checked = $('#prueba tbody tr .check:checked').length;
         if (check === checked) {
             $('.select_all').prop('checked', true);
         } else {
@@ -114,12 +114,12 @@ $(document).ready(function() {
         }
     });
 
-    $('#ujian').on('click', '.btn-token', function() {
+    $('#prueba').on('click', '.btn-token', function() {
         let id = $(this).data('id');
 
         $(this).attr('disabled', 'disabled').children().addClass('fa-spin');
         $.ajax({
-            url: base_url + 'ujian/refresh_token/' + id,
+            url: base_url + 'prueba/refresh_token/' + id,
             type: 'get',
             dataType: 'json',
             success: function(data) {
@@ -165,11 +165,11 @@ $(document).ready(function() {
         });
     });
 
-    table.ajax.url(base_url + 'ujian/json/' + id_dosen).load();
+    table.ajax.url(base_url + 'prueba/json/' + id_dosen).load();
 });
 
 function bulk_delete() {
-    if ($('#ujian tbody tr .check:checked').length == 0) {
+    if ($('#prueba tbody tr .check:checked').length == 0) {
         Swal({
             title: "Proceso Fallido",
             text: 'No datos seleccionados',

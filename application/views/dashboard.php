@@ -29,26 +29,26 @@
                 <table class="table table-hover">
                     <tr>
                         <th>Name</th>
-                        <td><?= $dosen->nama_dosen ?></td>
+                        <td><?= $profesor->nombre_profesor ?></td>
                     </tr>
                     <tr>
                         <th>NIP</th>
-                        <td><?= $dosen->nip ?></td>
+                        <td><?= $profesor->nip ?></td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td><?= $dosen->email ?></td>
+                        <td><?= $profesor->email ?></td>
                     </tr>
                     <tr>
                         <th>Course</th>
-                        <td><?= $dosen->nama_matkul ?></td>
+                        <td><?= $profesor->nombre_curso ?></td>
                     </tr>
                     <tr>
                         <th>Class List</th>
                         <td>
                             <ol class="pl-4">
-                                <?php foreach ($kelas as $k) : ?>
-                                    <li><?= $k->nama_kelas ?></li>
+                                <?php foreach ($clase as $k) : ?>
+                                    <li><?= $k->nombre_clase ?></li>
                                 <?php endforeach; ?>
                             </ol>
                         </td>
@@ -69,27 +69,27 @@
                 <table class="table table-hover">
                     <tr>
                         <th>NIM</th>
-                        <td><?= $mahasiswa->nim ?></td>
+                        <td><?= $estudiante->nim ?></td>
                     </tr>
                     <tr>
                         <th>Name</th>
-                        <td><?= $mahasiswa->nama ?></td>
+                        <td><?= $estudiante->nombre ?></td>
                     </tr>
                     <tr>
                         <th>Gender</th>
-                        <td><?= $mahasiswa->jenis_kelamin === 'M' ? "Male" : "Female"; ?></td>
+                        <td><?= $estudiante->jenis_kelamin === 'M' ? "Male" : "Female"; ?></td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td><?= $mahasiswa->email ?></td>
+                        <td><?= $estudiante->email ?></td>
                     </tr>
                     <tr>
                         <th>Department</th>
-                        <td><?= $mahasiswa->nama_jurusan ?></td>
+                        <td><?= $estudiante->nombre_grupo ?></td>
                     </tr>
                     <tr>
                         <th>Class</th>
-                        <td><?= $mahasiswa->nama_kelas ?></td>
+                        <td><?= $estudiante->nombre_clase ?></td>
                     </tr>
                 </table>
             </div>
