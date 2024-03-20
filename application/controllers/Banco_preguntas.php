@@ -248,20 +248,20 @@ class Banco_preguntas extends CI_Controller
         foreach ($chk as $id) {
             $abjad = ['a', 'b', 'c', 'd', 'e'];
             $path = FCPATH . 'uploads/banco_preguntas/';
-            $soal = $this->banco_preguntas->getSoalById($id);
-            // Hapus File Soal
-            if (!empty($soal->file)) {
-                if (file_exists($path . $soal->file)) {
-                    unlink($path . $soal->file);
+            $banco_preguntas = $this->banco_preguntas->getBanco_preguntasById($id);
+            // Hapus File banco_preguntas
+            if (!empty($banco_preguntas->file)) {
+                if (file_exists($path . $banco_preguntas->file)) {
+                    unlink($path . $banco_preguntas->file);
                 }
             }
             //Hapus File Opsi
             $i = 0; //index
             foreach ($abjad as $abj) {
                 $file_opsi = 'file_' . $abj;
-                if (!empty($soal->$file_opsi)) {
-                    if (file_exists($path . $soal->$file_opsi)) {
-                        unlink($path . $soal->$file_opsi);
+                if (!empty($banco_preguntas->$file_opsi)) {
+                    if (file_exists($path . $banco_preguntas->$file_opsi)) {
+                        unlink($path . $banco_preguntas->$file_opsi);
                     }
                 }
             }
@@ -270,7 +270,7 @@ class Banco_preguntas extends CI_Controller
         if (!$chk) {
             $this->output_json(['status' => false]);
         } else {
-            if ($this->master->delete('tb_soal', $chk, 'id_soal')) {
+            if ($this->master->delete('tb_banco_preguntas', $chk, 'id_banco_preguntas')) {
                 $this->output_json(['status' => true, 'total' => count($chk)]);
             }
         }
