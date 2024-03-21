@@ -116,7 +116,7 @@ class Prueba extends CI_Controller
 
 		$user 	= $this->ion_auth->user()->row();
 		$profesor 	= $this->prueba->getIdProfesor($user->username);
-		$jml 	= $this->prueba->getCantidadBanco_preguntas($profesor->id_profesor)->jml_banco_preguntas;
+		$jml 	= $this->prueba->getCantidadBanco_preguntas($profesor->id_profesor)->numero_preguntas;
 		$jml_a 	= $jml + 1; // If you don't understand, please read the user_guide codeigniter about form_validation in the less_than section
 
 		$this->form_validation->set_rules('nombre_prueba', 'Exam Name', 'required|alpha_numeric_spaces|max_length[50]');
@@ -256,7 +256,7 @@ class Prueba extends CI_Controller
 	{
 		$this->akses_estudiante();
 
-		$list = $this->prueba->getListPrueba($this->mhs->id_estudiante, $this->mhs->kelas_id);
+		$list = $this->prueba->getListPrueba($this->mhs->id_estudiante, $this->mhs->clase_id);
 		$this->output_json($list, false);
 	}
 
@@ -315,85 +315,85 @@ class Prueba extends CI_Controller
 
 	public function index()
 	{
-		$this->akses_mahasiswa();
+		$this->akses_estudiante();
 		$key = $this->input->get('key', true);
 		$id  = $this->encryption->decrypt(rawurldecode($key));
 
-		$ujian 		= $this->prueba->getUjianById($id);
-		$soal 		= $this->prueba->getSoal($id);
+		$prueba 		= $this->prueba->getPruebaById($id);
+		$banco_preguntas 		= $this->prueba->getBanco_preguntas($id);
 
 		$mhs		= $this->mhs;
-		$h_ujian 	= $this->prueba->HslUjian($id, $mhs->id_mahasiswa);
+		$h_prueba	= $this->prueba->Resultado_examen($id, $mhs->id_estudiante);
 
-		$cek_sudah_ikut = $h_ujian->num_rows();
+		$cek_sudah_ikut = $h_prueba->num_rows();
 
 		if ($cek_sudah_ikut < 1) {
-			$soal_urut_ok 	= array();
+			$banco_preguntas_urut_ok 	= array();
 			$i = 0;
-			foreach ($soal as $s) {
-				$soal_per = new stdClass();
-				$soal_per->id_soal 		= $s->id_soal;
-				$soal_per->soal 		= $s->soal;
-				$soal_per->file 		= $s->file;
-				$soal_per->tipe_file 	= $s->tipe_file;
-				$soal_per->opsi_a 		= $s->opsi_a;
-				$soal_per->opsi_b 		= $s->opsi_b;
-				$soal_per->opsi_c 		= $s->opsi_c;
-				$soal_per->opsi_d 		= $s->opsi_d;
-				$soal_per->opsi_e 		= $s->opsi_e;
-				$soal_per->jawaban 		= $s->jawaban;
-				$soal_urut_ok[$i] 		= $soal_per;
+			foreach ($banco_preguntas as $s) {
+				$banco_preguntas_per = new stdClass();
+				$banco_preguntas_per->id_banco_preguntas 		= $s->id_banco_preguntas;
+				$banco_preguntas_per->banco_preguntas 		= $s->banco_preguntas;
+				$banco_preguntas_per->file 		= $s->file;
+				$banco_preguntas_per->tipe_file 	= $s->tipe_file;
+				$banco_preguntas_per->opsi_a 		= $s->opsi_a;
+				$banco_preguntas_per->opsi_b 		= $s->opsi_b;
+				$banco_preguntas_per->opsi_c 		= $s->opsi_c;
+				$banco_preguntas_per->opsi_d 		= $s->opsi_d;
+				$banco_preguntas_per->opsi_e 		= $s->opsi_e;
+				$banco_preguntas_per->respuesta 		= $s->respuesta;
+				$banco_preguntas_urut_ok[$i] 		= $banco_preguntas_per;
 				$i++;
 			}
-			$soal_urut_ok 	= $soal_urut_ok;
-			$list_id_soal	= "";
-			$list_jw_soal 	= "";
-			if (!empty($soal)) {
-				foreach ($soal as $d) {
-					$list_id_soal .= $d->id_soal . ",";
-					$list_jw_soal .= $d->id_soal . "::N,";
+			$banco_preguntas_urut_ok 	= $banco_preguntas_urut_ok;
+			$list_id_banco_preguntas	= "";
+			$list_jw_banco_preguntas 	= "";
+			if (!empty($banco_preguntas)) {
+				foreach ($banco_preguntas as $d) {
+					$list_id_banco_preguntas .= $d->id_banco_preguntas . ",";
+					$list_jw_banco_preguntas .= $d->id_banco_preguntas . "::N,";
 				}
 			}
-			$list_id_soal 	= substr($list_id_soal, 0, -1);
-			$list_jw_soal 	= substr($list_jw_soal, 0, -1);
-			$waktu_selesai 	= date('Y-m-d H:i:s', strtotime("+{$ujian->waktu} minute"));
-			$time_mulai		= date('Y-m-d H:i:s');
+			$list_id_banco_preguntas 	= substr($list_id_banco_preguntas, 0, -1);
+			$list_jw_banco_preguntas 	= substr($list_jw_banco_preguntas, 0, -1);
+			$tiempo_terminado 	= date('Y-m-d H:i:s', strtotime("+{$prueba->tiempo} minute"));
+			$hora_inicio		= date('Y-m-d H:i:s');
 
 			$input = [
-				'ujian_id' 		=> $id,
-				'mahasiswa_id'	=> $mhs->id_mahasiswa,
-				'list_soal'		=> $list_id_soal,
-				'list_jawaban' 	=> $list_jw_soal,
-				'jml_benar'		=> 0,
-				'nilai'			=> 0,
-				'nilai_bobot'	=> 0,
-				'tgl_mulai'		=> $time_mulai,
-				'tgl_selesai'	=> $waktu_selesai,
+				'prueba_id' 		=> $id,
+				'estudiante_id'	=> $mhs->id_estudiante,
+				'list_banco_preguntas'		=> $list_id_banco_preguntas,
+				'list_respuesta' 	=> $list_jw_banco_preguntas,
+				'cantidad_verdadera'		=> 0,
+				'valor'			=> 0,
+				'valor_peso'	=> 0,
+				'fecha_inicio'		=> $hora_inicio,
+				'fecha_terminacion'	=> $tiempo_terminado,
 				'status'		=> 'Y'
 			];
-			$this->master->create('h_ujian', $input);
+			$this->master->create('h_prueba', $input);
 
 			// Setelah insert wajib refresh dulu
-			redirect('ujian/?key=' . urlencode($key), 'location', 301);
+			redirect('prueba/?key=' . urlencode($key), 'location', 301);
 		}
 
-		$q_soal = $h_ujian->row();
+		$q_banco_preguntas = $h_prueba->row();
 
-		$urut_soal 		= explode(",", $q_soal->list_jawaban);
-		$soal_urut_ok	= array();
-		for ($i = 0; $i < sizeof($urut_soal); $i++) {
-			$pc_urut_soal	= explode(":", $urut_soal[$i]);
-			$pc_urut_soal1 	= empty($pc_urut_soal[1]) ? "''" : "'{$pc_urut_soal[1]}'";
-			$ambil_soal 	= $this->prueba->ambilSoal($pc_urut_soal1, $pc_urut_soal[0]);
-			$soal_urut_ok[] = $ambil_soal;
+		$urut_banco_preguntas 		= explode(",", $q_banco_preguntas->list_respuesta);
+		$banco_preguntas_urut_ok	= array();
+		for ($i = 0; $i < sizeof($urut_banco_preguntas); $i++) {
+			$pc_urut_banco_preguntas	= explode(":", $urut_banco_preguntas[$i]);
+			$pc_urut_banco_preguntas1 	= empty($pc_urut_banco_preguntas[1]) ? "''" : "'{$pc_urut_banco_preguntas[1]}'";
+			$ambil_banco_preguntas 	= $this->prueba->tomarBanco_preguntas($pc_urut_banco_preguntas1, $pc_urut_banco_preguntas[0]);
+			$banco_preguntas_urut_ok[] = $ambil_banco_preguntas;
 		}
 
-		$detail_tes = $q_soal;
-		$soal_urut_ok = $soal_urut_ok;
+		$detail_tes = $q_banco_preguntas;
+		$banco_preguntas_urut_ok = $banco_preguntas_urut_ok;
 
-		$pc_list_jawaban = explode(",", $detail_tes->list_jawaban);
+		$pc_list_respuesta = explode(",", $detail_tes->list_respuesta);
 		$arr_jawab = array();
-		foreach ($pc_list_jawaban as $v) {
+		foreach ($pc_list_respuesta as $v) {
 			$pc_v 	= explode(":", $v);
 			$idx 	= $pc_v[0];
 			$val 	= $pc_v[1];
@@ -405,23 +405,23 @@ class Prueba extends CI_Controller
 		$arr_opsi = array("a", "b", "c", "d", "e");
 		$html = '';
 		$no = 1;
-		if (!empty($soal_urut_ok)) {
-			foreach ($soal_urut_ok as $s) {
-				$path = 'uploads/bank_soal/';
-				$vrg = $arr_jawab[$s->id_soal]["r"] == "" ? "N" : $arr_jawab[$s->id_soal]["r"];
-				$html .= '<input type="hidden" name="id_soal_' . $no . '" value="' . $s->id_soal . '">';
+		if (!empty($banco_preguntas_urut_ok)) {
+			foreach ($banco_preguntas_urut_ok as $s) {
+				$path = 'uploads/banco_preguntas/';
+				$vrg = $arr_jawab[$s->id_banco_preguntas]["r"] == "" ? "N" : $arr_jawab[$s->id_banco_preguntas]["r"];
+				$html .= '<input type="hidden" name="id_banco_preguntas_' . $no . '" value="' . $s->id_banco_preguntas . '">';
 				$html .= '<input type="hidden" name="rg_' . $no . '" id="rg_' . $no . '" value="' . $vrg . '">';
 				$html .= '<div class="step" id="widget_' . $no . '">';
 
-				$html .= '<div class="text-center"><div class="w-25">' . tampil_media($path . $s->file) . '</div></div>' . $s->soal . '<div class="funkyradio">';
+				$html .= '<div class="text-center"><div class="w-25">' . tampil_media($path . $s->file) . '</div></div>' . $s->banco_preguntas . '<div class="funkyradio">';
 				for ($j = 0; $j < $this->config->item('jml_opsi'); $j++) {
 					$opsi 			= "opsi_" . $arr_opsi[$j];
 					$file 			= "file_" . $arr_opsi[$j];
-					$checked 		= $arr_jawab[$s->id_soal]["j"] == strtoupper($arr_opsi[$j]) ? "checked" : "";
+					$checked 		= $arr_jawab[$s->id_banco_preguntas]["j"] == strtoupper($arr_opsi[$j]) ? "checked" : "";
 					$pilihan_opsi 	= !empty($s->$opsi) ? $s->$opsi : "";
 					$tampil_media_opsi = (is_file(base_url() . $path . $s->$file) || $s->$file != "") ? tampil_media($path . $s->$file) : "";
 					$html .= '<div class="funkyradio-success" onclick="return simpan_sementara();">
-						<input type="radio" id="opsi_' . strtolower($arr_opsi[$j]) . '_' . $s->id_soal . '" name="opsi_' . $no . '" value="' . strtoupper($arr_opsi[$j]) . '" ' . $checked . '> <label for="opsi_' . strtolower($arr_opsi[$j]) . '_' . $s->id_soal . '"><div class="huruf_opsi">' . $arr_opsi[$j] . '</div> <p>' . $pilihan_opsi . '</p><div class="w-25">' . $tampil_media_opsi . '</div></label></div>';
+						<input type="radio" id="opsi_' . strtolower($arr_opsi[$j]) . '_' . $s->id_banco_preguntas . '" name="opsi_' . $no . '" value="' . strtoupper($arr_opsi[$j]) . '" ' . $checked . '> <label for="opsi_' . strtolower($arr_opsi[$j]) . '_' . $s->id_banco_preguntas . '"><div class="huruf_opsi">' . $arr_opsi[$j] . '</div> <p>' . $pilihan_opsi . '</p><div class="w-25">' . $tampil_media_opsi . '</div></label></div>';
 				}
 				$html .= '</div></div>';
 				$no++;
@@ -436,13 +436,13 @@ class Prueba extends CI_Controller
 			'mhs'		=> $this->mhs,
 			'titulo'		=> 'Exam',
 			'subtitulo'	=> 'Exam Sheet',
-			'soal'		=> $detail_tes,
+			'banco_preguntas'		=> $detail_tes,
 			'no' 		=> $no,
 			'html' 		=> $html,
 			'id_tes'	=> $id_tes
 		];
 		$this->load->view('_templates/topnav/_header.php', $data);
-		$this->load->view('ujian/sheet');
+		$this->load->view('prueba/sheet');
 		$this->load->view('_templates/topnav/_footer.php');
 	}
 
@@ -453,21 +453,21 @@ class Prueba extends CI_Controller
 		$id_tes = $this->encryption->decrypt($id_tes);
 
 		$input 	= $this->input->post(null, true);
-		$list_jawaban 	= "";
-		for ($i = 1; $i < $input['jml_soal']; $i++) {
+		$list_respuesta 	= "";
+		for ($i = 1; $i < $input['numero_preguntas']; $i++) {
 			$_tjawab 	= "opsi_" . $i;
-			$_tidsoal 	= "id_soal_" . $i;
-			$_ragu 		= "rg_" . $i;
-			$jawaban_ 	= empty($input[$_tjawab]) ? "" : $input[$_tjawab];
-			$list_jawaban	.= "" . $input[$_tidsoal] . ":" . $jawaban_ . ":" . $input[$_ragu] . ",";
+			$_tidbanco_preguntas 	= "id_banco_preguntas_" . $i;
+			$_duda 		= "rg_" . $i;
+			$respuesta_ 	= empty($input[$_tjawab]) ? "" : $input[$_tjawab];
+			$list_respuesta	.= "" . $input[$_tidbanco_preguntas] . ":" . $respuesta_ . ":" . $input[$_duda] . ",";
 		}
-		$list_jawaban	= substr($list_jawaban, 0, -1);
+		$list_respuesta	= substr($list_respuesta, 0, -1);
 		$d_simpan = [
-			'list_jawaban' => $list_jawaban
+			'list_respuesta' => $list_respuesta
 		];
 
-		// Simpan jawaban
-		$this->master->update('h_ujian', $d_simpan, 'id', $id_tes);
+		// Simpan respuesta
+		$this->master->update('h_prueba', $d_simpan, 'id', $id_tes);
 		$this->output_json(['status' => true]);
 	}
 
@@ -477,42 +477,42 @@ class Prueba extends CI_Controller
 		$id_tes = $this->input->post('id', true);
 		$id_tes = $this->encryption->decrypt($id_tes);
 
-		// Get Jawaban
-		$list_jawaban = $this->prueba->getJawaban($id_tes);
+		// Get respuesta
+		$list_respuesta = $this->prueba->getRespuesta($id_tes);
 
-		// Pecah Jawaban
-		$pc_jawaban = explode(",", $list_jawaban);
+		// Pecah respuesta
+		$pc_respuesta = explode(",", $list_respuesta);
 
-		$jumlah_benar 	= 0;
-		$jumlah_salah 	= 0;
-		$jumlah_ragu  	= 0;
-		$nilai_bobot 	= 0;
-		$total_bobot	= 0;
-		$jumlah_soal	= sizeof($pc_jawaban);
+		$cantidad_verdadera 	= 0;
+		$cantidad_incorrecta 	= 0;
+		$cantidad_duda  	= 0;
+		$valor_peso	= 0;
+		$total_peso	= 0;
+		$cantidad_banco_preguntas	= sizeof($pc_respuesta);
 
-		foreach ($pc_jawaban as $jwb) {
+		foreach ($pc_respuesta as $jwb) {
 			$pc_dt 		= explode(":", $jwb);
-			$id_soal 	= $pc_dt[0];
-			$jawaban 	= $pc_dt[1];
-			$ragu 		= $pc_dt[2];
+			$id_banco_preguntas	= $pc_dt[0];
+			$respuesta 	= $pc_dt[1];
+			$duda		= $pc_dt[2];
 
-			$cek_jwb 	= $this->soal->getSoalById($id_soal);
-			$total_bobot = $total_bobot + $cek_jwb->bobot;
+			$cek_jwb 	= $this->banco_preguntas->getBanco_preguntasById($id_banco_preguntas);
+			$total_peso = $total_peso + $cek_jwb->peso;
 
-			$jawaban == $cek_jwb->jawaban ? $jumlah_benar++ : $jumlah_salah++;
+			$respuesta == $cek_jwb->respuesta ? $cantidad_verdadera++ : $cantidad_incorrecta++;
 		}
 
-		$nilai = ($jumlah_benar / $jumlah_soal)  * 100;
-		$nilai_bobot = ($total_bobot / $jumlah_soal)  * 100;
+		$valor = ($cantidad_verdadera / $cantidad_banco_preguntas)  * 100;
+		$valor_peso= ($total_peso / $cantidad_banco_preguntas)  * 100;
 
 		$d_update = [
-			'jml_benar'		=> $jumlah_benar,
-			'nilai'			=> number_format(floor($nilai), 0),
-			'nilai_bobot'	=> number_format(floor($nilai_bobot), 0),
+			'cantidad_verdadera'		=> $cantidad_verdadera,
+			'valor'			=> number_format(floor($valor), 0),
+			'valor_peso'	=> number_format(floor($valor_peso), 0),
 			'status'		=> 'N'
 		];
 
-		$this->master->update('h_ujian', $d_update, 'id', $id_tes);
+		$this->master->update('h_prueba', $d_update, 'id', $id_tes);
 		$this->output_json(['status' => TRUE, 'data' => $d_update, 'id' => $id_tes]);
 	}
 }

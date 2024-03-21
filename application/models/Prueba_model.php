@@ -44,7 +44,7 @@ class Prueba_model extends CI_Model {
 
     public function getCantidadBanco_preguntas($profesor)
     {
-        $this->db->select('COUNT(id_banco_preguntas) as jml_banco_preguntas');
+        $this->db->select('COUNT(id_banco_preguntas) as numero_preguntas');
         $this->db->from('tb_banco_preguntas');
         $this->db->where('profesor_id', $profesor);
         return $this->db->get()->row();

@@ -3,16 +3,16 @@ $(document).ready(function() {
 
     $('#btncek').on('click', function() {
         var token = $('#token').val();
-        var idUjian = $(this).data('id');
+        var idPrueba = $(this).data('id');
         if (token === '') {
             Swal('Failed', 'Token must be filled', 'error');
         } else {
-            var key = $('#id_ujian').data('key');
+            var key = $('#id_prueba').data('key');
             $.ajax({
-                url: base_url + 'ujian/cektoken/',
+                url: base_url + 'prueba/cektoken/',
                 type: 'POST',
                 data: {
-                    id_ujian: idUjian,
+                    id_prueba: idPrueba,
                     token: token
                 },
                 cache: false,
@@ -23,7 +23,7 @@ $(document).ready(function() {
                         "text": result.status ? "True Token" : "Incorrect Token"
                     }).then((data) => {
                         if (result.status) {
-                            location.href = base_url + 'ujian/?key=' + key;
+                            location.href = base_url + 'prueba/?key=' + key;
                         }
                     });
                 }

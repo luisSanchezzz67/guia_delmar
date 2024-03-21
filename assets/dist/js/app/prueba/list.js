@@ -4,10 +4,10 @@ $(document).ready(function () {
 
     ajaxcsrf();
 
-    table = $("#ujian").DataTable({
+    table = $("#prueba").DataTable({
         initComplete: function () {
             var api = this.api();
-            $('#ujian_filter input')
+            $('#prueba_filter input')
                 .off('.DT')
                 .on('keyup.DT', function (e) {
                     api.search(this.value).draw();
@@ -19,20 +19,20 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            "url": base_url+"ujian/list_json",
+            "url": base_url+"prueba/list_json",
             "type": "POST",
         },
         columns: [
             {
-                "data": "id_ujian",
+                "data": "id_prueba",
                 "orderable": false,
                 "searchable": false
             },
-            { "data": 'nama_ujian' },
-            { "data": 'nama_matkul' },
-            { "data": 'nama_dosen' },
-            { "data": 'jumlah_soal' },
-            { "data": 'waktu' },
+            { "data": 'nombre_prueba' },
+            { "data": 'nombre_curso' },
+            { "data": 'nombre_profesor' },
+            { "data": 'cantidad_banco_preguntas' },
+            { "data": 'tiempo' },
             {
                 "searchable": false,
                 "orderable": false
@@ -42,18 +42,18 @@ $(document).ready(function () {
             {
                 "targets": 6,
                 "data": {
-                    "id_ujian": "id_ujian",
+                    "id_prueba": "id_prueba",
                     "ada": "ada"
                 },
                 "render": function (data, type, row, meta) {
                     var btn;
                     if (data.ada > 0) {
                         btn = `
-								<a class="btn btn-xs btn-success" href="${base_url}hasilujian/cetak/${data.id_ujian}" target="_blank">
+								<a class="btn btn-xs btn-success" href="${base_url}resultado_examen/imprimir/${data.id_prueba}" target="_blank">
 									<i class="fa fa-print"></i> Imprimir Resultados
 								</a>`;
                     } else {
-                        btn = `<a class="btn btn-xs btn-primary" href="${base_url}ujian/token/${data.id_ujian}">
+                        btn = `<a class="btn btn-xs btn-primary" href="${base_url}prueba/token/${data.id_prueba}">
 								<i class="fa fa-pencil"></i> Tomar Examen
 							</a>`;
                     }

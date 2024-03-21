@@ -3,10 +3,10 @@ var table;
 $(document).ready(function() {
   ajaxcsrf();
 
-  table = $("#hasil").DataTable({
+  table = $("#resultado").DataTable({
     initComplete: function() {
       var api = this.api();
-      $("#hasil_filter input")
+      $("#resultado_filter input")
         .off(".DT")
         .on("keyup.DT", function(e) {
           api.search(this.value).draw();
@@ -40,21 +40,21 @@ $(document).ready(function() {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + "hasilujian/data",
+      url: base_url + "resultado_examen/data",
       type: "POST"
     },
     columns: [
       {
-        data: "id_ujian",
+        data: "id_prueba",
         orderable: false,
         searchable: false
       },
-      { data: "nama_ujian" },
-      { data: "nama_matkul" },
-      { data: "nama_dosen" },
-      { data: "jumlah_soal" },
-      { data: "waktu" },
-      { data: "tgl_mulai" },
+      { data: "nombre_prueba" },
+      { data: "nombre_curso" },
+      { data: "nombre_profesor" },
+      { data: "cantidad_banco_preguntas" },
+      { data: "tiempo" },
+      { data: "fecha_inicio" },
       {
         orderable: false,
         searchable: false
@@ -63,11 +63,11 @@ $(document).ready(function() {
     columnDefs: [
       {
         targets: 7,
-        data: "id_ujian",
+        data: "id_prueba",
         render: function(data, type, row, meta) {
           return `
                     <div class="text-center">
-                        <a class="btn btn-xs bg-green" href="${base_url}hasilujian/detail/${data}" >
+                        <a class="btn btn-xs bg-green" href="${base_url}resultado_examen/detail/${data}" >
                             <i class="fa fa-search"></i> Ver Resultados
                         </a>
                     </div>
@@ -92,4 +92,4 @@ $(document).ready(function() {
 table
   .buttons()
   .container()
-  .appendTo("#hasil_wrapper .col-md-6:eq(0)");
+  .appendTo("#resultado_wrapper .col-md-6:eq(0)");

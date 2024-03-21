@@ -12,7 +12,7 @@ $(document).ready(function() {
     btnback = $(".back");
     btnsubmit = $(".submit");
 
-    $(".step, .back, .selesai").hide();
+    $(".step, .back, .finalizado").hide();
     $("#widget_1").show();
 });
 
@@ -32,7 +32,7 @@ function buka(id_widget) {
     cek_status_ragu(id_widget);
     cek_terakhir(id_widget);
 
-    $("#soalke").html(id_widget);
+    $("#preguntas").html(id_widget);
 
     $(".step").hide();
     $("#widget_" + id_widget).show();
@@ -45,7 +45,7 @@ function next() {
     berikutnya = parseInt(berikutnya);
     berikutnya = berikutnya > total_widget ? total_widget : berikutnya;
 
-    $("#soalke").html(berikutnya);
+    $("#preguntas").html(berikutnya);
 
     $(".next").attr('rel', (berikutnya + 1));
     $(".back").attr('rel', (berikutnya - 1));
@@ -74,7 +74,7 @@ function back() {
     back = parseInt(back);
     back = back < 1 ? 1 : back;
 
-    $("#soalke").html(back);
+    $("#preguntas").html(back);
 
     $(".back").attr('rel', (back - 1));
     $(".next").attr('rel', (back + 1));
@@ -107,13 +107,13 @@ function tidak_jawab() {
 
     if (status_ragu == "N") {
         $("#rg_" + id_step).val('Y');
-        $("#btn_soal_" + id_step).removeClass('btn-success');
-        $("#btn_soal_" + id_step).addClass('btn-primary');
+        $("#btn_banco_preguntas_" + id_step).removeClass('btn-success');
+        $("#btn_banco_preguntas_" + id_step).addClass('btn-primary');
 
     } else {
         $("#rg_" + id_step).val('N');
-        $("#btn_soal_" + id_step).removeClass('btn-primary');
-        $("#btn_soal_" + id_step).addClass('btn-success');
+        $("#btn_banco_preguntas_" + id_step).removeClass('btn-primary');
+        $("#btn_banco_preguntas_" + id_step).addClass('btn-success');
     }
 
     cek_status_ragu(id_step);
@@ -121,8 +121,8 @@ function tidak_jawab() {
     simpan();
 }
 
-function cek_status_ragu(id_soal) {
-    var status_ragu = $("#rg_" + id_soal).val();
+function cek_status_ragu(id_banco_preguntas) {
+    var status_ragu = $("#rg_" + id_banco_preguntas).val();
 
     if (status_ragu == "N") {
         $(".ragu_ragu").html('Doubt');
@@ -131,29 +131,29 @@ function cek_status_ragu(id_soal) {
     }
 }
 
-function cek_terakhir(id_soal) {
-    var jml_soal = $("#jml_soal").val();
-    jml_soal = (parseInt(jml_soal) - 1);
+function cek_terakhir(id_banco_preguntas) {
+    var numero_preguntas = $("#numero_preguntas").val();
+    numero_preguntas = (parseInt(numero_preguntas) - 1);
 
-    if (jml_soal === id_soal) {
+    if (numero_preguntas === id_banco_preguntas) {
         $('.next').hide();
-        $(".selesai, .back").show();
+        $(".finalizado, .back").show();
     } else {
         $('.next').show();
-        $(".selesai, .back").hide();
+        $(".finalizado, .back").hide();
     }
 }
 
 function simpan_sementara() {
-    var f_asal = $("#ujian");
+    var f_asal = $("#prueba");
     var form = getFormData(f_asal);
     //form = JSON.stringify(form);
-    var jml_soal = form.jml_soal;
-    jml_soal = parseInt(jml_soal);
+    var numero_preguntas = form.numero_preguntas;
+    numero_preguntas = parseInt(numero_preguntas);
 
-    var hasil_jawaban = "";
+    var resultado_respuesta = "";
 
-    for (var i = 1; i < jml_soal; i++) {
+    for (var i = 1; i < numero_preguntas; i++) {
         var idx = 'opsi_' + i;
         var idx2 = 'rg_' + i;
         var jawab = form[idx];
@@ -162,31 +162,31 @@ function simpan_sementara() {
         if (jawab != undefined) {
             if (ragu == "Y") {
                 if (jawab == "-") {
-                    hasil_jawaban += '<a id="btn_soal_' + (i) + '" class="btn btn-default btn_soal btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
+                    resultado_respuesta += '<a id="btn_banco_preguntas_' + (i) + '" class="btn btn-default btn_banco_preguntas btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
                 } else {
-                    hasil_jawaban += '<a id="btn_soal_' + (i) + '" class="btn btn-primary btn_soal btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
+                    resultado_respuesta += '<a id="btn_banco_preguntas_' + (i) + '" class="btn btn-primary btn_banco_preguntas btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
                 }
             } else {
                 if (jawab == "-") {
-                    hasil_jawaban += '<a id="btn_soal_' + (i) + '" class="btn btn-default btn_soal btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
+                    resultado_respuesta += '<a id="btn_banco_preguntas_' + (i) + '" class="btn btn-default btn_banco_preguntas btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
                 } else {
-                    hasil_jawaban += '<a id="btn_soal_' + (i) + '" class="btn btn-success btn_soal btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
+                    resultado_respuesta += '<a id="btn_banco_preguntas_' + (i) + '" class="btn btn-success btn_banco_preguntas btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". " + jawab + "</a>";
                 }
             }
         } else {
-            hasil_jawaban += '<a id="btn_soal_' + (i) + '" class="btn btn-default btn_soal btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". -</a>";
+            resultado_respuesta += '<a id="btn_banco_preguntas_' + (i) + '" class="btn btn-default btn_banco_preguntas btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". -</a>";
         }
     }
-    $("#tampil_jawaban").html('<div id="yes"></div>' + hasil_jawaban);
+    $("#tampil_jawaban").html('<div id="yes"></div>' + resultado_respuesta);
 }
 
 function simpan() {
     simpan_sementara();
-    var form = $("#ujian");
+    var form = $("#prueba");
 
     $.ajax({
         type: "POST",
-        url: base_url + "ujian/simpan_satu",
+        url: base_url + "prueba/simpan_satu",
         data: form.serialize(),
         dataType: 'json',
         success: function(data) {
@@ -196,12 +196,12 @@ function simpan() {
     });
 }
 
-function selesai() {
+function finalizado() {
     simpan();
     ajaxcsrf();
     $.ajax({
         type: "POST",
-        url: base_url + "ujian/simpan_akhir",
+        url: base_url + "prueba/simpan_akhir",
         data: { id: id_tes },
         beforeSend: function() {
             simpan();
@@ -210,20 +210,20 @@ function selesai() {
         success: function(r) {
             console.log(r);
             if (r.status) {
-                window.location.href = base_url + 'ujian/list';
+                window.location.href = base_url + 'prueba/list';
             }
         }
     });
 }
 
 function waktuHabis() {
-    selesai();
+    finalizado();
     alert('Exam time is up!');
 }
 
 function simpan_akhir() {
     simpan();
     if (confirm('Are you sure you want to end the test?')) {
-        selesai();
+        finalizado();
     }
 }

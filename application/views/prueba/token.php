@@ -7,39 +7,39 @@
         <h3 class="box-title">Confirm Data</h3>
     </div>
     <div class="box-body">
-        <span id="id_ujian" data-key="<?= $encrypted_id ?>"></span>
+        <span id="id_prueba" data-key="<?= $encrypted_id ?>"></span>
         <div class="row">
             <div class="col-sm-6">
                 <table class="table table-bordered">
                     <tr>
                         <th>Name</th>
-                        <td><?= $mhs->nama ?></td>
+                        <td><?= $mhs->nombre ?></td>
                     </tr>
                     <tr>
                         <th>Lecturer</th>
-                        <td><?= $ujian->nama_dosen ?></td>
+                        <td><?= $prueba->nombre_profesor ?></td>
                     </tr>
                     <tr>
                         <th>Class/Department</th>
-                        <td><?= $mhs->nama_kelas ?> / <?= $mhs->nama_jurusan ?></td>
+                        <td><?= $mhs->nombre_clase ?> / <?= $mhs->nombre_grupo ?></td>
                     </tr>
                     <tr>
                         <th>Exam Name</th>
-                        <td><?= $ujian->nama_ujian ?></td>
+                        <td><?= $prueba->nombre_prueba ?></td>
                     </tr>
                     <tr>
                         <th>Number of Questions</th>
-                        <td><?= $ujian->jumlah_soal ?></td>
+                        <td><?= $prueba->cantidad_banco_preguntas ?></td>
                     </tr>
                     <tr>
                         <th>Time</th>
-                        <td><?= $ujian->waktu ?> Minute</td>
+                        <td><?= $prueba->tiempo ?> Minute</td>
                     </tr>
                     <tr>
                         <th>Late</th>
                         <td>
-                            <?= date('d M Y', strtotime($ujian->terlambat)) ?>
-                            <?= date('h:i A', strtotime($ujian->terlambat)) ?>
+                            <?= date('d M Y', strtotime($prueba->tarde)) ?>
+                            <?= date('h:i A', strtotime($prueba->tarde)) ?>
                         </td>
                     </tr>
                     <tr>
@@ -55,11 +55,11 @@
                     <div class="box-body pb-0">
                         <div class="callout callout-info">
                             <p>
-                            <?= $ujian->soal ?>
+                            <?= $prueba->banco_preguntas ?>
                             </p>
                         </div>
                         <div class="callout callout-info">
-                            <a href="<?= $ujian->enlace ?>">Descargar PDF AQUÍ</a>
+                            <a href="<?= $prueba->enlace ?>">Descargar PDF AQUÍ</a>
                         </div>
                         <div class="callout callout-info">
                             <p>
@@ -67,22 +67,22 @@
                             </p>
                         </div>
                         <?php
-                        $mulai = strtotime($ujian->tgl_mulai);
-                        $terlambat = strtotime($ujian->terlambat);
+                        $comenzar = strtotime($prueba->fecha_inicio);
+                        $tarde = strtotime($prueba->tarde);
                         $now = time();
-                        if ($mulai > $now) :
+                        if ($comenzar > $now) :
                         ?>
                             <div class="callout callout-success">
                                 <strong><i class="fa fa-clock-o"></i>El examen iniciará en</strong>
                                 <br>
-                                <span class="countdown" data-time="<?= date('Y-m-d H:i:s', strtotime($ujian->tgl_mulai)) ?>">00 Days, 00 Hours, 00 Minutes, 00 Seconds</strong><br />
+                                <span class="countdown" data-time="<?= date('Y-m-d H:i:s', strtotime($prueba->fecha_inicio)) ?>">00 Days, 00 Hours, 00 Minutes, 00 Seconds</strong><br />
                             </div>
-                        <?php elseif ($terlambat > $now) : ?>
-                            <button id="btncek" data-id="<?= $ujian->id_ujian ?>" class="btn btn-success btn-lg mb-4">
+                        <?php elseif ($tarde > $now) : ?>
+                            <button id="btncek" data-id="<?= $prueba->id_prueba ?>" class="btn btn-success btn-lg mb-4">
                                 <i class="fa fa-pencil"></i> Inicio
                             </button>
                             <div class="callout callout-danger">
-                                <i class="fa fa-clock-o"></i> <strong class="countdown" data-time="<?= date('Y-m-d H:i:s', strtotime($ujian->terlambat)) ?>">00 Days, 00 Hours, 00 Minutes, 00 Seconds</strong><br />
+                                <i class="fa fa-clock-o"></i> <strong class="countdown" data-time="<?= date('Y-m-d H:i:s', strtotime($prueba->tarde)) ?>">00 Days, 00 Hours, 00 Minutes, 00 Seconds</strong><br />
                                 Tiempo de espera para presionar el botón de inicio.
                             </div>
                         <?php else : ?>
@@ -98,4 +98,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/ujian/token.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/prueba/token.js"></script>

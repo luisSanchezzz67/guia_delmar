@@ -1,6 +1,6 @@
 <?php
 if (time() >= $soal->waktu_habis) {
-    redirect('ujian/list', 'location', 301);
+    redirect('prueba/list', 'location', 301);
 }
 ?>
 <div class="row">
@@ -13,17 +13,17 @@ if (time() >= $soal->waktu_habis) {
                     </button>
                 </div>
             </div>
-            <div class="box-body text-center" id="tampil_jawaban">
+            <div class="box-body text-center" id="tampil_respuesta">
             </div>
         </div>
     </div>
     <div class="col-sm-9">
-        <?= form_open('', array('id' => 'ujian'), array('id' => $id_tes)); ?>
+        <?= form_open('', array('id' => 'prueba'), array('id' => $id_tes)); ?>
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title"><span class="badge bg-blue"># de Pregunta<span id="soalke"></span> </span></h3>
+                <h3 class="box-title"><span class="badge bg-blue"># de Pregunta<span id="preguntas"></span> </span></h3>
                 <div class="box-tools pull-right">
-                    <span class="badge bg-red">Tiempo Faltante <span class="sisawaktu" data-time="<?= $soal->tgl_selesai ?>"></span></span>
+                    <span class="badge bg-red">Tiempo Faltante <span class="sisawaktu" data-time="<?= $banco_preguntas->tgl_selesai ?>"></span></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
                 </div>
@@ -36,7 +36,7 @@ if (time() >= $soal->waktu_habis) {
                 <a class="ragu_ragu btn btn-primary" rel="1" onclick="return tidak_jawab();">Dudoso</a>
                 <a class="action next btn btn-info" rel="2" onclick="return next();"><i class="glyphicon glyphicon-chevron-right"></i> Siguiente</a>
                 <a class="selesai action submit btn btn-danger" onclick="return simpan_akhir();"><i class="glyphicon glyphicon-stop"></i> Terminado</a>
-                <input type="hidden" name="jml_soal" id="jml_soal" value="<?= $no; ?>">
+                <input type="hidden" name="numero_preguntas" id="numero_preguntas" value="<?= $no; ?>">
             </div>
         </div>
         <?= form_close(); ?>
@@ -50,4 +50,4 @@ if (time() >= $soal->waktu_habis) {
     var total_widget = widget.length;
 </script>
 
-<script src="<?= base_url() ?>assets/dist/js/app/ujian/sheet.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/prueba/sheet.js"></script>
