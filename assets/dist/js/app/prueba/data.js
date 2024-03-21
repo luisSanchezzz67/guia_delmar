@@ -165,7 +165,7 @@ $(document).ready(function() {
         });
     });
 
-    table.ajax.url(base_url + 'prueba/json/' + id_dosen).load();
+    table.ajax.url(base_url + 'prueba/json/' + id_profesor).load();
 });
 
 function bulk_delete() {

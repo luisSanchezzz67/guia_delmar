@@ -62,7 +62,7 @@ class Prueba_model extends CI_Model {
 
     public function Resultado_examen($id, $mhs)
     {
-        $this->db->select('*, UNIX_TIMESTAMP(tgl_selesai) as tiempo_terminado');
+        $this->db->select('*, UNIX_TIMESTAMP(fecha_terminacion) as tiempo_terminado');
         $this->db->from('h_prueba');
         $this->db->where('prueba_id', $id);
         $this->db->where('estudiante_id', $mhs);

@@ -233,7 +233,7 @@ class Prueba extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('m_ujian', $chk, 'id_ujian')) {
+			if ($this->master->delete('m_prueba', $chk, 'id_prueba')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}
@@ -243,63 +243,63 @@ class Prueba extends CI_Controller
 	{
 		$this->load->helper('string');
 		$data['token'] = strtoupper(random_string('alpha', 5));
-		$refresh = $this->master->update('m_ujian', $data, 'id_ujian', $id);
+		$refresh = $this->master->update('m_prueba', $data, 'id_prueba', $id);
 		$data['status'] = $refresh ? TRUE : FALSE;
 		$this->output_json($data);
 	}
 
 	/**
-	 * BAGIAN estudiante
+	 * PARTE estudiante
 	 */
 
 	public function list_json()
 	{
-		$this->akses_mahasiswa();
+		$this->akses_estudiante();
 
-		$list = $this->ujian->getListUjian($this->mhs->id_mahasiswa, $this->mhs->kelas_id);
+		$list = $this->prueba->getListPrueba($this->mhs->id_estudiante, $this->mhs->kelas_id);
 		$this->output_json($list, false);
 	}
 
 	public function list()
 	{
-		$this->akses_mahasiswa();
+		$this->akses_estudiante();
 
 		$user = $this->ion_auth->user()->row();
 
 		$data = [
 			'user' 		=> $user,
-			'judul'		=> 'Exam',
-			'subjudul'	=> 'List Exam',
-			'mhs' 		=> $this->ujian->getIdMahasiswa($user->username),
+			'titulo'		=> 'Exam',
+			'subtitulo'	=> 'List Exam',
+			'mhs' 		=> $this->prueba->getIdEstudiante($user->username),
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('ujian/list');
+		$this->load->view('prueba/list');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
 	public function token($id)
 	{
-		$this->akses_mahasiswa();
+		$this->akses_estudiante();
 		$user = $this->ion_auth->user()->row();
 
 		$data = [
 			'user' 		=> $user,
-			'judul'		=> 'Exam',
-			'subjudul'	=> 'Token Exam',
-			'mhs' 		=> $this->ujian->getIdMahasiswa($user->username),
-			'ujian'		=> $this->ujian->getUjianById($id),
+			'titulo'		=> 'Exam',
+			'subtitulo'	=> 'Token Exam',
+			'mhs' 		=> $this->prueba->getIdEstudiante($user->username),
+			'prueba'		=> $this->prueba->getPruebaById($id),
 			'encrypted_id' => urlencode($this->encryption->encrypt($id))
 		];
 		$this->load->view('_templates/topnav/_header.php', $data);
-		$this->load->view('ujian/token');
+		$this->load->view('prueba/token');
 		$this->load->view('_templates/topnav/_footer.php');
 	}
 
 	public function cektoken()
 	{
-		$id = $this->input->post('id_ujian', true);
+		$id = $this->input->post('id_prueba', true);
 		$token = $this->input->post('token', true);
-		$cek = $this->ujian->getUjianById($id);
+		$cek = $this->prueba->getPruebaById($id);
 
 		$data['status'] = $token === $cek->token ? TRUE : FALSE;
 		$this->output_json($data);
@@ -319,11 +319,11 @@ class Prueba extends CI_Controller
 		$key = $this->input->get('key', true);
 		$id  = $this->encryption->decrypt(rawurldecode($key));
 
-		$ujian 		= $this->ujian->getUjianById($id);
-		$soal 		= $this->ujian->getSoal($id);
+		$ujian 		= $this->prueba->getUjianById($id);
+		$soal 		= $this->prueba->getSoal($id);
 
 		$mhs		= $this->mhs;
-		$h_ujian 	= $this->ujian->HslUjian($id, $mhs->id_mahasiswa);
+		$h_ujian 	= $this->prueba->HslUjian($id, $mhs->id_mahasiswa);
 
 		$cek_sudah_ikut = $h_ujian->num_rows();
 
@@ -384,7 +384,7 @@ class Prueba extends CI_Controller
 		for ($i = 0; $i < sizeof($urut_soal); $i++) {
 			$pc_urut_soal	= explode(":", $urut_soal[$i]);
 			$pc_urut_soal1 	= empty($pc_urut_soal[1]) ? "''" : "'{$pc_urut_soal[1]}'";
-			$ambil_soal 	= $this->ujian->ambilSoal($pc_urut_soal1, $pc_urut_soal[0]);
+			$ambil_soal 	= $this->prueba->ambilSoal($pc_urut_soal1, $pc_urut_soal[0]);
 			$soal_urut_ok[] = $ambil_soal;
 		}
 
@@ -478,7 +478,7 @@ class Prueba extends CI_Controller
 		$id_tes = $this->encryption->decrypt($id_tes);
 
 		// Get Jawaban
-		$list_jawaban = $this->ujian->getJawaban($id_tes);
+		$list_jawaban = $this->prueba->getJawaban($id_tes);
 
 		// Pecah Jawaban
 		$pc_jawaban = explode(",", $list_jawaban);

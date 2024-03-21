@@ -2,13 +2,13 @@
     <div class="col-sm-3">
         <div class="alert bg-green">
             <h4>Clase<i class="pull-right fa fa-building-o"></i></h4>
-            <span class="d-block"> <?= $mhs->nama_kelas ?></span>
+            <span class="d-block"> <?= $mhs->nombre_clase ?></span>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="alert bg-blue">
             <h4>Departmento<i class="pull-right fa fa-graduation-cap"></i></h4>
-            <span class="d-block"> <?= $mhs->nama_jurusan ?></span>
+            <span class="d-block"> <?= $mhs->nombre_grupo ?></span>
         </div>
     </div>
     <div class="col-sm-3">
@@ -26,7 +26,7 @@
     <div class="col-sm-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= $subjudul ?></h3>
+                <h3 class="box-title"><?= $subtitulo ?></h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="table-responsive px-4 pb-3" style="border: 0">
-                <table id="ujian" class="w-100 table table-striped table-bordered table-hover">
+                <table id="prueba" class="w-100 table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -69,4 +69,4 @@
     </div>
 </div>
 
-<script src="<?= base_url() ?>assets/dist/js/app/ujian/list.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/prueba/list.js"></script>
