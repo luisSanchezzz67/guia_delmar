@@ -228,7 +228,7 @@ class Prueba extends CI_Controller
 
 	public function delete()
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 		$chk = $this->input->post('checked', true);
 		if (!$chk) {
 			$this->output_json(['status' => false]);
