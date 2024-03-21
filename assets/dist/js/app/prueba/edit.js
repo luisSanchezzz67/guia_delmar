@@ -1,20 +1,20 @@
 $(document).ready(function () {
-    $('#tgl_mulai').datetimepicker({
+    $('#fecha_inicio').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
-        date: tgl_mulai
+        date: fecha_inicio
     });
-    $('#tgl_selesai').datetimepicker({
+    $('#fecha_terminacion').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss',
-        date: terlambat
+        date: tarde
     });
 
 
-    $('#formujian input, #formujian select').on('change', function () {
+    $('#formprueba input, #formprueba select').on('change', function () {
         $(this).closest('.form-group').eq(0).removeClass('has-error');
         $(this).nextAll('.help-block').eq(0).text('');
     });
 
-    $('#formujian').on('submit', function (e) {
+    $('#formprueba').on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
@@ -30,7 +30,7 @@ $(document).ready(function () {
                         "type": "success",
                         "text": "Data saved successfully"
                     }).then(result => {
-                        window.location.href = base_url+"ujian/master";
+                        window.location.href = base_url+"prueba/master";
                     });
                 } else {
                     if (data.errors) {

@@ -86,16 +86,16 @@ class Prueba extends CI_Controller
 
 	public function edit($id)
 	{
-		$this->akses_dosen();
+		$this->akses_profesor();
 
 		$user = $this->ion_auth->user()->row();
 
 		$data = [
 			'user' 		=> $user,
-			'judul'		=> 'Exam',
-			'subjudul'	=> 'Edit Exam',
-			'matkul'	=> $this->soal->getMatkulDosen($user->username),
-			'dosen'		=> $this->prueba->getIdDosen($user->username),
+			'titulo'		=> 'Exam',
+			'subtitulo'	=> 'Edit Exam',
+			'curso'	=> $this->banco_preguntas->getCursoProfesor($user->username),
+			'profesor'		=> $this->prueba->getIdProfesor($user->username),
 			'prueba'		=> $this->prueba->getPruebaById($id),
 		];
 
@@ -434,8 +434,8 @@ class Prueba extends CI_Controller
 		$data = [
 			'user' 		=> $this->user,
 			'mhs'		=> $this->mhs,
-			'judul'		=> 'Exam',
-			'subjudul'	=> 'Exam Sheet',
+			'titulo'		=> 'Exam',
+			'subtitulo'	=> 'Exam Sheet',
 			'soal'		=> $detail_tes,
 			'no' 		=> $no,
 			'html' 		=> $html,
