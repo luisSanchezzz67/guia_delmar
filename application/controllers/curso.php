@@ -182,16 +182,16 @@ class Curso extends CI_Controller
 
 			$spreadsheet = $reader->load($file);
 			$sheetData = $spreadsheet->getActiveSheet()->toArray();
-			$matkul = [];
+			$curso = [];
 			for ($i = 1; $i < count($sheetData); $i++) {
 				if ($sheetData[$i][0] != null) {
-					$matkul[] = $sheetData[$i][0];
+					$curso[] = $sheetData[$i][0];
 				}
 			}
 
 			unlink($file);
 
-			$this->import($matkul);
+			$this->import($curso);
 		}
 	}
 	public function do_import()

@@ -356,7 +356,7 @@ class Prueba extends CI_Controller
 			}
 			$list_id_banco_preguntas 	= substr($list_id_banco_preguntas, 0, -1);
 			$list_jw_banco_preguntas 	= substr($list_jw_banco_preguntas, 0, -1);
-			$tiempo_terminado 	= date('Y-m-d H:i:s', strtotime("+{$prueba->tiempo} minute"));
+			$tiempo_finalizado 	= date('Y-m-d H:i:s', strtotime("+{$prueba->tiempo} minute"));
 			$hora_inicio		= date('Y-m-d H:i:s');
 
 			$input = [
@@ -368,13 +368,13 @@ class Prueba extends CI_Controller
 				'valor'			=> 0,
 				'valor_peso'	=> 0,
 				'fecha_inicio'		=> $hora_inicio,
-				'fecha_terminacion'	=> $tiempo_terminado,
+				'fecha_terminacion'	=> $tiempo_finalizado,
 				'status'		=> 'Y'
 			];
 			$this->master->create('h_prueba', $input);
 
 			// Setelah insert wajib refresh dulu
-			redirect('prueba/?key=' . urlencode($key), 'location', 301);
+			redirect('Prueba/?key=' . urlencode($key), 'location', 301);
 		}
 
 		$q_banco_preguntas = $h_prueba->row();
@@ -384,8 +384,8 @@ class Prueba extends CI_Controller
 		for ($i = 0; $i < sizeof($urut_banco_preguntas); $i++) {
 			$pc_urut_banco_preguntas	= explode(":", $urut_banco_preguntas[$i]);
 			$pc_urut_banco_preguntas1 	= empty($pc_urut_banco_preguntas[1]) ? "''" : "'{$pc_urut_banco_preguntas[1]}'";
-			$ambil_banco_preguntas 	= $this->prueba->tomarBanco_preguntas($pc_urut_banco_preguntas1, $pc_urut_banco_preguntas[0]);
-			$banco_preguntas_urut_ok[] = $ambil_banco_preguntas;
+			$tomar_banco_preguntas 	= $this->prueba->tomarBanco_preguntas($pc_urut_banco_preguntas1, $pc_urut_banco_preguntas[0]);
+			$banco_preguntas_urut_ok[] = $tomar_banco_preguntas;
 		}
 
 		$detail_tes = $q_banco_preguntas;

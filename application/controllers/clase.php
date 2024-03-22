@@ -60,13 +60,13 @@ class Clase extends CI_Controller
 		if (!$chk) {
 			redirect('admin/clase');
 		} else {
-			$kelas = $this->master->getClaseById($chk);
+			$clase = $this->master->getClaseById($chk);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
 				'titulo'		=> 'Editar Clase',
 				'subtitulo'	=> 'Editar Datos de Clase',
 				'grupo'	=> $this->master->getAllGrupo(),
-				'clase'		=> $kelas
+				'clase'		=> $clase
 			];
 			$this->load->view('_templates/dashboard/_header.php', $data);
 			$this->load->view('direccion/clase/edit');
@@ -194,8 +194,8 @@ class Clase extends CI_Controller
 			$data = [];
 			for ($i = 1; $i < count($sheetData); $i++) {
 				$data[] = [
-					'kelas' => $sheetData[$i][0],
-					'jurusan' => $sheetData[$i][1]
+					'clase' => $sheetData[$i][0],
+					'grupo' => $sheetData[$i][1]
 				];
 			}
 

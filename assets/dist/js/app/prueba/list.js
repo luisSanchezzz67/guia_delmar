@@ -19,7 +19,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            "url": base_url+"prueba/list_json",
+            "url": base_url+"Prueba/list_json",
             "type": "POST",
         },
         columns: [

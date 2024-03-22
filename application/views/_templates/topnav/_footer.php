@@ -37,7 +37,7 @@
 			$('.sisawaktu').html(cd);
 		}, 100);
 		setTimeout(function() {
-			waktuHabis();
+			tiempoFinalizado();
 		}, (time.getTime() - n.getTime()));
 	}
 

@@ -62,7 +62,7 @@ class Prueba_model extends CI_Model {
 
     public function Resultado_examen($id, $mhs)
     {
-        $this->db->select('*, UNIX_TIMESTAMP(fecha_terminacion) as tiempo_terminado');
+        $this->db->select('*, UNIX_TIMESTAMP(fecha_terminacion) as tiempo_finalizado');
         $this->db->from('h_prueba');
         $this->db->where('prueba_id', $id);
         $this->db->where('estudiante_id', $mhs);
@@ -124,7 +124,7 @@ class Prueba_model extends CI_Model {
             $get = "generate";
         }
         
-        $this->$db->select('d.id, a.nombre, b.nombre_clase, c.nombre_grupo, d.jml_benar, d.valor');
+        $this->$db->select('d.id, a.nombre, b.nombre_clase, c.nombre_grupo, d.cantidad_verdadera, d.valor');
         $this->$db->from('estudiante a');
         $this->$db->join('clase b', 'a.clase_id=b.id_clase');
         $this->$db->join('grupo c', 'b.grupo_id=c.id_grupo');

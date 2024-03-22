@@ -13,7 +13,7 @@
 			</div>
 			<div class="form-group col-sm-4 text-center">
 				<?php if ($this->ion_auth->is_admin()) : ?>
-					<select id="matkul_filter" class="form-control select2" style="width:100% !important">
+					<select id="curso_filter" class="form-control select2" style="width:100% !important">
 						<option value="all">Todos los Cursos</option>
 						<?php foreach ($curso as $m) : ?>
 							<option value="<?= $m->id_curso ?>"><?= $m->nombre_curso ?></option>
@@ -71,7 +71,7 @@
 <?php if ($this->ion_auth->is_admin()) : ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#matkul_filter').on('change', function() {
+			$('#curso_filter').on('change', function() {
 				let id_curso = $(this).val();
 				let src = '<?= base_url() ?>banco_preguntas/data';
 				let url;

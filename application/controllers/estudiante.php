@@ -159,7 +159,7 @@ class Estudiante extends CI_Controller
 			'first_name'	=> $first_name,
 			'last_name'		=> $last_name
 		];
-		$group = array('3'); // Sets user to dosen.
+		$group = array('3'); // Sets user to profesor.
 
 		if ($this->ion_auth->username_check($username)) {
 			$data = [
@@ -233,10 +233,10 @@ class Estudiante extends CI_Controller
 			for ($i = 1; $i < count($sheetData); $i++) {
 				$data[] = [
 					'nim' => $sheetData[$i][0],
-					'nama' => $sheetData[$i][1],
+					'nombre' => $sheetData[$i][1],
 					'email' => $sheetData[$i][2],
 					'jenis_kelamin' => $sheetData[$i][3],
-					'kelas_id' => $sheetData[$i][4]
+					'clase_id' => $sheetData[$i][4]
 				];
 			}
 

@@ -1,6 +1,6 @@
 <?php
-if (time() >= $soal->waktu_habis) {
-    redirect('prueba/list', 'location', 301);
+if (time() >= $banco_preguntas->tiempo_finalizado) {
+    redirect('Prueba/list', 'location', 301);
 }
 ?>
 <div class="row">
@@ -23,7 +23,7 @@ if (time() >= $soal->waktu_habis) {
             <div class="box-header with-border">
                 <h3 class="box-title"><span class="badge bg-blue"># de Pregunta<span id="preguntas"></span> </span></h3>
                 <div class="box-tools pull-right">
-                    <span class="badge bg-red">Tiempo Faltante <span class="sisawaktu" data-time="<?= $banco_preguntas->tgl_selesai ?>"></span></span>
+                    <span class="badge bg-red">Tiempo Faltante <span class="sisawaktu" data-time="<?= $banco_preguntas->fecha_terminacion ?>"></span></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
                 </div>
@@ -35,7 +35,7 @@ if (time() >= $soal->waktu_habis) {
                 <a class="action back btn btn-info" rel="0" onclick="return back();"><i class="glyphicon glyphicon-chevron-left"></i> Volver</a>
                 <a class="ragu_ragu btn btn-primary" rel="1" onclick="return tidak_jawab();">Dudoso</a>
                 <a class="action next btn btn-info" rel="2" onclick="return next();"><i class="glyphicon glyphicon-chevron-right"></i> Siguiente</a>
-                <a class="selesai action submit btn btn-danger" onclick="return simpan_akhir();"><i class="glyphicon glyphicon-stop"></i> Terminado</a>
+                <a class="finalizado action submit btn btn-danger" onclick="return simpan_akhir();"><i class="glyphicon glyphicon-stop"></i> Terminado</a>
                 <input type="hidden" name="numero_preguntas" id="numero_preguntas" value="<?= $no; ?>">
             </div>
         </div>

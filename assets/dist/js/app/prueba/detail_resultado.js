@@ -4,10 +4,10 @@ $(document).ready(function () {
 
     ajaxcsrf();
 
-    table = $("#detail_hasil").DataTable({
+    table = $("#detail_resultado").DataTable({
         initComplete: function () {
             var api = this.api();
-            $('#detail_hasil_filter input')
+            $('#detail_resultado_filter input')
                 .off('.DT')
                 .on('keyup.DT', function (e) {
                     api.search(this.value).draw();
@@ -19,7 +19,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            "url": base_url + "hasilujian/NilaiMhs/"+id,
+            "url": base_url + "resultado_examen/Calificacion/"+id,
             "type": "POST",
         },
         columns: [
@@ -28,11 +28,11 @@ $(document).ready(function () {
                 "orderable": false,
                 "searchable": false
             },
-            { "data": 'nama' },
-            { "data": 'nama_kelas' },
-            { "data": 'nama_jurusan' },
-            { "data": 'jml_benar' },
-            { "data": 'nilai' },
+            { "data": 'nombre' },
+            { "data": 'nombre_clase' },
+            { "data": 'nombre_grupo' },
+            { "data": 'cantidad_verdadera' },
+            { "data": 'valor' },
         ],
         order: [
             [1, 'asc']

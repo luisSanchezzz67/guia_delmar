@@ -103,7 +103,7 @@
 			<?php endif; ?>
 			<?php if ($this->ion_auth->in_group('Student')) : ?>
 				<li class="<?= $page === 'prueba' ? "active" : "" ?>">
-					<a href="<?= base_url('prueba/list') ?>" rel="noopener noreferrer">
+					<a href="<?= base_url('Prueba/list') ?>" rel="noopener noreferrer">
 						<i class="fa fa-pencil"></i> <span>Examen</span>
 					</a>
 				</li>

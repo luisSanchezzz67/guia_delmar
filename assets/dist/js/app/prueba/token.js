@@ -9,7 +9,7 @@ $(document).ready(function() {
         } else {
             var key = $('#id_prueba').data('key');
             $.ajax({
-                url: base_url + 'prueba/cektoken/',
+                url: base_url + 'Prueba/cektoken/',
                 type: 'POST',
                 data: {
                     id_prueba: idPrueba,
@@ -23,7 +23,7 @@ $(document).ready(function() {
                         "text": result.status ? "True Token" : "Incorrect Token"
                     }).then((data) => {
                         if (result.status) {
-                            location.href = base_url + 'prueba/?key=' + key;
+                            location.href = base_url + 'Prueba/?key=' + key;
                         }
                     });
                 }

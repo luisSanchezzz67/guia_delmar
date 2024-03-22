@@ -74,41 +74,41 @@ All the detailed information are provided below!
     </tr>
     <tr>
         <th>Name</th>
-        <td>{$mhs->nama}</td>
+        <td>{$mhs->nombre}</td>
     </tr>
     <tr>
         <th>Class</th>
-        <td>{$mhs->nama_kelas}</td>
+        <td>{$mhs->nombre_clase}</td>
     </tr>
     <tr>
         <th>Department</th>
-        <td>{$mhs->nama_jurusan}</td>
+        <td>{$mhs->nombre_grupo}</td>
     </tr>
 </table>
 <h2>Exam Data</h2>
-<table id="data-hasil">
+<table id="data-resultado">
     <tr>
         <th>Course</th>
-        <td>{$ujian->nama_matkul}</td>
+        <td>{$prueba->nombre_curso}</td>
     </tr>
     <tr>
         <th>Exam Name</th>
-        <td>{$ujian->nama_ujian}</td>
+        <td>{$prueba->nombre_prueba}</td>
     </tr>
     <tr>
         <th>Total Questions</th>
-        <td>{$ujian->jumlah_soal}</td>
+        <td>{$prueba->cantidad_banco_preguntas}</td>
     </tr>
 </table>
 <h2>Exam Results</h2>
 <table>
     <tr>
         <th>Correct Answer</th>
-        <td>{$hasil->jml_benar}</td>
+        <td>{$resultado->cantidad_verdadera}</td>
     </tr>
     <tr>
         <th>Obtained Score</th>
-        <td>{$hasil->nilai}</td>
+        <td>{$resultado->valor}</td>
     </tr>
 </table>
 EOD;
@@ -119,4 +119,4 @@ $pdf->lastPage();
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output($ujian->nama_ujian.'_'.$mhs->nim.'.pdf', 'I');
+$pdf->Output($prueba->nombre_prueba.'_'.$mhs->nim.'.pdf', 'I');

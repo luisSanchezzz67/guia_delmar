@@ -221,9 +221,9 @@ class Profesor extends CI_Controller
 			for ($i = 1; $i < count($sheetData); $i++) {
 				$data[] = [
 					'nip' => $sheetData[$i][0],
-					'nama_dosen' => $sheetData[$i][1],
+					'nombre_profesor' => $sheetData[$i][1],
 					'email' => $sheetData[$i][2],
-					'matkul_id' => $sheetData[$i][3]
+					'curso_id' => $sheetData[$i][3]
 				];
 			}
 

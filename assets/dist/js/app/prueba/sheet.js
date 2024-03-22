@@ -12,7 +12,7 @@ $(document).ready(function() {
     btnback = $(".back");
     btnsubmit = $(".submit");
 
-    $(".step, .back, .finalizado").hide();
+    $(".step, .back, .selesai").hide();
     $("#widget_1").show();
 });
 
@@ -137,10 +137,10 @@ function cek_terakhir(id_banco_preguntas) {
 
     if (numero_preguntas === id_banco_preguntas) {
         $('.next').hide();
-        $(".finalizado, .back").show();
+        $(".selesai, .back").show();
     } else {
         $('.next').show();
-        $(".finalizado, .back").hide();
+        $(".selesai, .back").hide();
     }
 }
 
@@ -177,7 +177,7 @@ function simpan_sementara() {
             resultado_respuesta += '<a id="btn_banco_preguntas_' + (i) + '" class="btn btn-default btn_banco_preguntas btn-sm" onclick="return buka(' + (i) + ');">' + (i) + ". -</a>";
         }
     }
-    $("#tampil_jawaban").html('<div id="yes"></div>' + resultado_respuesta);
+    $("#tampil_respuesta").html('<div id="yes"></div>' + resultado_respuesta);
 }
 
 function simpan() {
@@ -216,7 +216,7 @@ function finalizado() {
     });
 }
 
-function waktuHabis() {
+function tiempoFinalizado() {
     finalizado();
     alert('Exam time is up!');
 }

@@ -63,8 +63,8 @@ $pdf->SetFont('helvetica', '', 10);
 // add a page
 $pdf->AddPage();
 
-$mulai = date('l, d M Y', strtotime($ujian->tgl_mulai));
-$selesai = date('l, d M Y', strtotime($ujian->terlambat));
+$comenzar = date('l, d M Y', strtotime($prueba->fecha_inicio));
+$finalizado = date('l, d M Y', strtotime($prueba->tarde));
 
 // create some HTML content
 $html = <<<EOD
@@ -75,33 +75,33 @@ Toda la información detallada se proporciona a continuación con el puntaje má
 <table>
     <tr>
         <th><b>Nombre de Examen</b></th>
-        <td>{$ujian->nama_ujian}</td>
+        <td>{$prueba->nombre_prueba}</td>
         <th><b>Curso</b></th>
-        <td>{$ujian->nama_matkul}</td> 
+        <td>{$prueba->nombre_curso}</td> 
     </tr>
     <tr>
         <th><b>Total de Preguntas</b></th>
-        <td>{$ujian->jumlah_soal}</td>
+        <td>{$prueba->cantidad_banco_preguntas}</td>
         <th><b>Profesor</b></th>
-        <td>{$ujian->nama_dosen}</td>
+        <td>{$prueba->nombre_profesor}</td>
     </tr>
     <tr>
         <th><b>Hora</b></th>
-        <td>{$ujian->waktu} Minute</td>
+        <td>{$prueba->tiempo} Minute</td>
         <th><b>Puntuación más baja</b></th>
-        <td>{$nilai->min_nilai}</td>
+        <td>{$valor->min_valor}</td>
     </tr>
     <tr>
         <th><b>Fecha de Inicio</b></th>
-        <td>{$mulai}</td>
+        <td>{$comenzar}</td>
         <th><b>Puntuación más alta</b></th>
-        <td>{$nilai->max_nilai}</td>
+        <td>{$valor->max_valor}</td>
     </tr>
     <tr>
         <th><b>Fecha de Terminación</b></th>
-        <td>{$selesai}</td>
+        <td>{$finalizado}</td>
         <th><b>Puntuación media</b></th>
-        <td>{$nilai->avg_nilai}</td>
+        <td>{$valor->avg_valor}</td>
     </tr>
 </table>
 EOD;
@@ -123,15 +123,15 @@ $html .= <<<EOD
 EOD;
 
 $no = 1;
-foreach ($hasil as $row) {
+foreach ($resultado as $row) {
     $html .= <<<EOD
     <tr>
         <td align="center" width="5%">{$no}</td>
-        <td width="35%">{$row->nama}</td>
-        <td width="15%">{$row->nama_kelas}</td>
-        <td width="25%">{$row->nama_jurusan}</td>
-        <td width="10%">{$row->jml_benar}</td>
-        <td width="10%">{$row->nilai}</td>
+        <td width="35%">{$row->nombre}</td>
+        <td width="15%">{$row->nombre_clase}</td>
+        <td width="25%">{$row->nombre_grupo}</td>
+        <td width="10%">{$row->cantidad_verdadera}</td>
+        <td width="10%">{$row->valor}</td>
     </tr>
 EOD;
     $no++;
