@@ -179,19 +179,13 @@ class Banco_preguntas extends CI_Controller
                             exit();
                         } else {
                             if ($method === 'edit') {
-                                if (!file_exists($img_src . $getbanco_preguntas->file)) {
-                                    echo "ERROR: LA IMAGEN QUE TRATA DE CAMBIAR NO EXISTE";
-                                    exit(); 
-                                }
-                            } else {
-                                if (!unlink($img_src . $getbanco_preguntas->file)) {
-                                    show_error('Error when deleting image <br/>' . var_dump($getbanco_preguntas), 500, 'Image Editing Error');
-                                    exit();
+                                if (!empty($getbanco_preguntas->file)) {
+                                    if (!unlink($img_src . $getbanco_preguntas->file)) {
+                                        show_error('Error when deleting image  1 <br/>' . var_dump($getbanco_preguntas), 500, 'Image Editing Error');
+                                        exit();
+                                    } 
+                                   
                                 } 
-                                // else {
-                                //     echo "Img eliminada ";
-                                //     exit();
-                                // }
                             }
                             $data['file'] = $this->upload->data('file_name');
                             $data['tipe_file'] = $this->upload->data('file_type');
@@ -208,7 +202,7 @@ class Banco_preguntas extends CI_Controller
                         } else {
                             if ($method === 'edit') {
                                 if (!empty($getbanco_preguntas->$file_abj) && !unlink($img_src . $getbanco_preguntas->$file_abj)) {
-                                    show_error('Error when deleting image', 500, 'Image Editing Error');
+                                    show_error('Error when deleting image2', 500, 'Image Editing Error');
                                     exit();
                                 }
                             }
