@@ -32,6 +32,23 @@ function load_clase(id) {
     });
 }
 
+// function load_clase(id) {
+//     $('#genero').find('option').not(':first').remove();
+
+//     $.getJSON(base_url+'estudiante/estudiante_genero/' + id, function (data) {
+//         var option = [];
+//         for (let i = 0; i < data.length; i++) {
+//             option.push({
+//                 id: data[i].id_clase,
+//                 text: data[i].nombre_clase
+//             });
+//         }
+//         $('#clase').select2({
+//             data: option
+//         });
+//     });
+// }
+
 $(document).ready(function () {
 
     ajaxcsrf();
@@ -49,7 +66,7 @@ $(document).ready(function () {
         $(this).nextAll('.help-block').eq(0).text('');
     });
 
-    $('[name="jenis_kelamin"]').on('change', function () {
+    $('[name="genero"]').on('change', function () {
         $(this).parent().nextAll('.help-block').eq(0).text('');
     });
 

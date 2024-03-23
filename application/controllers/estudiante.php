@@ -84,7 +84,7 @@ class Estudiante extends CI_Controller
 		$this->form_validation->set_rules('nim', 'NIM', 'required|numeric|trim|min_length[8]|max_length[12]' . $u_nim);
 		$this->form_validation->set_rules('nombre', 'Nombre', 'required|trim|min_length[3]|max_length[50]');
 		$this->form_validation->set_rules('email', 'Correo', 'required|trim|valid_email' . $u_email);
-		$this->form_validation->set_rules('jenis_kelamin', 'Género', 'required');
+		$this->form_validation->set_rules('genero', 'Género', 'required');
 		$this->form_validation->set_rules('grupo', 'Departamento', 'required');
 		$this->form_validation->set_rules('clase', 'Clase', 'required');
 
@@ -103,7 +103,7 @@ class Estudiante extends CI_Controller
 					'nim' => form_error('nim'),
 					'nombre' => form_error('nombre'),
 					'email' => form_error('email'),
-					'jenis_kelamin' => form_error('jenis_kelamin'),
+					'genero' => form_error('genero'),
 					'grupo' => form_error('grupo'),
 					'clase' => form_error('clase'),
 				]
@@ -114,7 +114,7 @@ class Estudiante extends CI_Controller
 				'nim' 			=> $this->input->post('nim', true),
 				'email' 		=> $this->input->post('email', true),
 				'nombre' 			=> $this->input->post('nombre', true),
-				'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+				'genero' => $this->input->post('genero', true),
 				'clase_id' 		=> $this->input->post('clase', true),
 			];
 			if ($method === 'add') {

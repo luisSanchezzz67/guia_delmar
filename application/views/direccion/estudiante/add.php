@@ -27,11 +27,11 @@
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="jenis_kelamin">Género</label>
-                    <select name="jenis_kelamin" class="form-control select2">
+                    <label for="genero">Género</label>
+                    <select id="genero" name="genero" class="form-control select2">
                         <option value="">-- Seleccionar --</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
                     </select>
                     <small class="help-block"></small>
                 </div>
