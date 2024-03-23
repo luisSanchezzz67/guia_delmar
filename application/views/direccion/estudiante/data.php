@@ -25,7 +25,7 @@
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Clase</th>
-                        <th>Departamento</th>
+                        <th>Grupo</th>
                         <th width="100" class="text-center">Acción</th>
                         <th width="100" class="text-center">
                             <input class="select_all" type="checkbox">

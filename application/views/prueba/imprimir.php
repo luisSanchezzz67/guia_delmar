@@ -81,7 +81,7 @@ All the detailed information are provided below!
         <td>{$mhs->nombre_clase}</td>
     </tr>
     <tr>
-        <th>Department</th>
+        <th>Grupo</th>
         <td>{$mhs->nombre_grupo}</td>
     </tr>
 </table>

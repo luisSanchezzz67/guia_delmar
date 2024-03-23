@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th># No</th>
-                            <th>Departmento</th>
+                            <th>Grupo</th>
                         </tr>
                     </thead>
                     <tbody id="inputs">

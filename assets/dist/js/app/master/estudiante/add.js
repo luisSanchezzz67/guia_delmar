@@ -49,7 +49,7 @@ $(document).ready(function () {
         $(this).nextAll('.help-block').eq(0).text('');
     });
 
-    $('[name="jenis_kelamin"]').on('change', function () {
+    $('[name="genero"]').on('change', function () {
         $(this).parent().nextAll('.help-block').eq(0).text('');
     });
 

@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-3">
         <div class="alert bg-blue">
-            <h4>Departmento<i class="pull-right fa fa-graduation-cap"></i></h4>
+            <h4>Grupo<i class="pull-right fa fa-graduation-cap"></i></h4>
             <span class="d-block"> <?= $mhs->nombre_grupo ?></span>
         </div>
     </div>

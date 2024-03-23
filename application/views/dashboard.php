@@ -77,14 +77,14 @@
                     </tr>
                     <tr>
                         <th>Gender</th>
-                        <td><?= $estudiante->jenis_kelamin === 'M' ? "Male" : "Female"; ?></td>
+                        <td><?= $estudiante->genero === 'M' ? "Masculino" : "Femenino"; ?></td>
                     </tr>
                     <tr>
                         <th>Email</th>
                         <td><?= $estudiante->email ?></td>
                     </tr>
                     <tr>
-                        <th>Department</th>
+                        <th>Grupo</th>
                         <td><?= $estudiante->nombre_grupo ?></td>
                     </tr>
                     <tr>

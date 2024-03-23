@@ -20,7 +20,7 @@
                         <td><?= $prueba->nombre_profesor ?></td>
                     </tr>
                     <tr>
-                        <th>Class/Department</th>
+                        <th>Class/Grupo</th>
                         <td><?= $mhs->nombre_clase ?> / <?= $mhs->nombre_grupo ?></td>
                     </tr>
                     <tr>

@@ -78,7 +78,7 @@ class GrupoCurso extends CI_Controller
 	{
 		$method = $this->input->post('method', true);
 		$this->form_validation->set_rules('curso_id', 'Course', 'required');
-		$this->form_validation->set_rules('grupo_id[]', 'Department', 'required');
+		$this->form_validation->set_rules('grupo_id[]', 'Grupo', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = [

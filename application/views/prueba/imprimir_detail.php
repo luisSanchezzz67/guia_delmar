@@ -114,7 +114,7 @@ $html .= <<<EOD
             <th width="5%">#</th>
             <th width="35%"><b>Nombre</b></th>
             <th width="15%"><b>Clase</b></th>
-            <th width="25%"><b>Departamento</b></th>
+            <th width="25%"><b>Grupo</b></th>
             <th width="10%"><b>Respuestas Correcta</b></th>
             <th width="10%"><b>Puntaje</b></th>
         </tr>        

@@ -70,22 +70,27 @@ class Estudiante extends CI_Controller
 
 	public function validasi_estudiante($method)
 	{
+		//$this->validasi_profesor($method);
 		$id_estudiante 	= $this->input->post('id_estudiante', true);
 		$nim 			= $this->input->post('nim', true);
 		$email 			= $this->input->post('email', true);
+		//$emailProfesor 			= $this->input->post('emailProfesor', true); 
 		if ($method == 'add') {
 			$u_nim = '|is_unique[estudiante.nim]';
 			$u_email = '|is_unique[estudiante.email]';
+			$u_emailProfesor = '|is_unique[profesor.email]';
+		//	$u_email_profesor = '|is_unique[profesor.email]';
 		} else {
 			$dbdata 	= $this->master->getEstudianteById($id_estudiante);
 			$u_nim		= $dbdata->nim === $nim ? "" : "|is_unique[estudiante.nim]";
 			$u_email	= $dbdata->email === $email ? "" : "|is_unique[estudiante.email]";
+			//$u_emailProfesor	= $dbdata->emailProfesor === $emailProfesor ? "" : "|is_unique[profesor.email]";
 		}
 		$this->form_validation->set_rules('nim', 'NIM', 'required|numeric|trim|min_length[8]|max_length[12]' . $u_nim);
 		$this->form_validation->set_rules('nombre', 'Nombre', 'required|trim|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('email', 'Correo', 'required|trim|valid_email' . $u_email);
-		$this->form_validation->set_rules('jenis_kelamin', 'Género', 'required');
-		$this->form_validation->set_rules('grupo', 'Departamento', 'required');
+		$this->form_validation->set_rules('email', 'Correo', 'required|trim|valid_email' . $u_email . $u_emailProfesor); //. $u_email_profesor
+		$this->form_validation->set_rules('genero', 'Género', 'required');
+		$this->form_validation->set_rules('grupo', 'Grupo', 'required');
 		$this->form_validation->set_rules('clase', 'Clase', 'required');
 
 		$this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
@@ -103,7 +108,7 @@ class Estudiante extends CI_Controller
 					'nim' => form_error('nim'),
 					'nombre' => form_error('nombre'),
 					'email' => form_error('email'),
-					'jenis_kelamin' => form_error('jenis_kelamin'),
+					'genero' => form_error('genero'),
 					'grupo' => form_error('grupo'),
 					'clase' => form_error('clase'),
 				]
@@ -114,7 +119,7 @@ class Estudiante extends CI_Controller
 				'nim' 			=> $this->input->post('nim', true),
 				'email' 		=> $this->input->post('email', true),
 				'nombre' 			=> $this->input->post('nombre', true),
-				'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+				'genero' => $this->input->post('genero', true),
 				'clase_id' 		=> $this->input->post('clase', true),
 			];
 			if ($method === 'add') {
@@ -235,7 +240,7 @@ class Estudiante extends CI_Controller
 					'nim' => $sheetData[$i][0],
 					'nombre' => $sheetData[$i][1],
 					'email' => $sheetData[$i][2],
-					'jenis_kelamin' => $sheetData[$i][3],
+					'genero' => $sheetData[$i][3],
 					'clase_id' => $sheetData[$i][4]
 				];
 			}
@@ -255,7 +260,7 @@ class Estudiante extends CI_Controller
 				'nim' => $d->nim,
 				'nama' => $d->nama,
 				'email' => $d->email,
-				'jenis_kelamin' => $d->jenis_kelamin,
+				'genero' => $d->genero,
 				'kelas_id' => $d->kelas_id
 			];
 		}

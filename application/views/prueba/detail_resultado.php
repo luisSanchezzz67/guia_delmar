@@ -74,7 +74,7 @@
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Clase</th>
-                    <th>Departamento</th>
+                    <th>Grupo</th>
                     <th>Respuesta Correcta</th>
                     <th>Puntaje</th>
                 </tr>

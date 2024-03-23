@@ -21,7 +21,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Departmento</th>
+					<th>Grupo</th>
 					<th class="text-center">
 						<input type="checkbox" id="select_all">
 					</th>

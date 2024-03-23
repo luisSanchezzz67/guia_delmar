@@ -78,6 +78,8 @@ class Profesor extends CI_Controller
 		if ($method == 'add') {
 			$u_nip = '|is_unique[profesor.nip]';
 			$u_email = '|is_unique[profesor.email]';
+			$u_emailEstudiante = '|is_unique[estudiante.email]';
+
 		} else {
 			$dbdata 	= $this->master->getProfesorById($id_profesor);
 			$u_nip		= $dbdata->nip === $nip ? "" : "|is_unique[profesor.nip]";
@@ -85,7 +87,7 @@ class Profesor extends CI_Controller
 		}
 		$this->form_validation->set_rules('nip', 'NIP', 'required|numeric|trim|min_length[8]|max_length[12]' . $u_nip);
 		$this->form_validation->set_rules('nombre_profesor', 'Nama Dosen', 'required|trim|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email);
+		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email . $u_emailEstudiante);
 		$this->form_validation->set_rules('curso', 'Mata Kuliah', 'required');
 
 		if ($this->form_validation->run() == FALSE) {

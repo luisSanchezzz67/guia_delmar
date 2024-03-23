@@ -27,16 +27,16 @@
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="jenis_kelamin">Género</label>
-                    <select name="jenis_kelamin" class="form-control select2">
+                    <label for="genero">Género</label>
+                    <select name="genero" class="form-control select2">
                         <option value="">-- Seleccionar --</option>
-                        <option <?= $estudiante->jenis_kelamin === "M" ? "selected" : "" ?> value="M">Male</option>
-                        <option <?= $estudiante->jenis_kelamin === "F" ? "selected" : "" ?> value="F">Female</option>
+                        <option <?= $estudiante->genero === "M" ? "selected" : "" ?> value="M">Masculino</option>
+                        <option <?= $estudiante->genero === "F" ? "selected" : "" ?> value="F">Femenino</option>
                     </select>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="grupo">Departmento</label>
+                    <label for="grupo">Grupo</label>
                     <select id="grupo" name="grupo" class="form-control select2">
                         <option value="" disabled selected>-- Seleccionar --</option>
                         <?php foreach ($grupo as $j) : ?>

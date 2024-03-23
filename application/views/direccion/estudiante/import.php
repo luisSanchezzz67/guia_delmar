@@ -63,15 +63,15 @@
                                         <td class="<?= $data['email'] == null ? 'bg-danger' : ''; ?>">
                                             <?= $data['email'] == null ? 'NOT FILLED' : $data['email'];; ?>
                                         </td>
-                                        <td class="<?= $data['jenis_kelamin'] == null ? 'bg-danger' : ''; ?>">
-                                            <?= $data['jenis_kelamin'] == null ? 'NOT FILLED' : $data['jenis_kelamin'];; ?>
+                                        <td class="<?= $data['genero'] == null ? 'bg-danger' : ''; ?>">
+                                            <?= $data['genero'] == null ? 'NOT FILLED' : $data['genero'];; ?>
                                         </td>
                                         <td class="<?= $data['kelas_id'] == null ? 'bg-danger' : ''; ?>">
                                             <?= $data['kelas_id'] == null ? 'NOT FILLED' : $data['kelas_id'];; ?>
                                         </td>
                                     </tr>
                             <?php
-                                        if ($data['nim'] == null || $data['nama'] == null || $data['email'] == null || $data['jenis_kelamin'] == null || $data['kelas_id'] == null) {
+                                        if ($data['nim'] == null || $data['nama'] == null || $data['email'] == null || $data['genero'] == null || $data['kelas_id'] == null) {
                                             $status = false;
                                         }
                                     endforeach;

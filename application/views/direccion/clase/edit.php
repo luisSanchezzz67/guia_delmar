@@ -25,7 +25,7 @@
                         <tr>
                             <th># No</th>
                             <th>Clase</th>
-                            <th>Departamento</th>
+                            <th>Grupo</th>
                         </tr>
                     </thead>
                     <tbody>
