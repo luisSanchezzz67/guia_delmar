@@ -175,14 +175,23 @@ class Banco_preguntas extends CI_Controller
                     if (!empty($_FILES['file_banco_preguntas']['tmp_name'])) {
                         if (!$this->upload->do_upload('file_banco_preguntas')) {
                             $error = $this->upload->display_errors();
-                            show_error($error, 500, 'File Ques. Error'); 
+                            show_error($error, 500, 'File Ques. Error');
                             exit();
                         } else {
                             if ($method === 'edit') {
+                                if (!file_exists($img_src . $getbanco_preguntas->file)) {
+                                    echo "ERROR: LA IMAGEN QUE TRATA DE CAMBIAR NO EXISTE";
+                                    exit(); 
+                                }
+                            } else {
                                 if (!unlink($img_src . $getbanco_preguntas->file)) {
                                     show_error('Error when deleting image <br/>' . var_dump($getbanco_preguntas), 500, 'Image Editing Error');
                                     exit();
-                                }
+                                } 
+                                // else {
+                                //     echo "Img eliminada ";
+                                //     exit();
+                                // }
                             }
                             $data['file'] = $this->upload->data('file_name');
                             $data['tipe_file'] = $this->upload->data('file_type');
