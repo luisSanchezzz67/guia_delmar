@@ -28,7 +28,11 @@
                 </div>
                 <div class="form-group">
                     <label for="genero">Género</label>
+<<<<<<< HEAD
                     <select name="genero" class="form-control select2">
+=======
+                    <select id="genero" name="genero" class="form-control select2">
+>>>>>>> 0e5f70f971dcee42c3ff1ec837154ba13602edf4
                         <option value="">-- Seleccionar --</option>
                         <option value="M">Masculino</option>
                         <option value="F">Femenino</option>
