@@ -120,7 +120,7 @@ class Prueba extends CI_Controller
 		$jml_a 	= $jml + 1; // If you don't understand, please read the user_guide codeigniter about form_validation in the less_than section
 
 		$this->form_validation->set_rules('nombre_prueba', 'Exam Name', 'required|alpha_numeric_spaces|max_length[50]');
-		$this->form_validation->set_rules('cantidad_banco_preguntas', 'Number of Questions', "required|integer|less_than[{$jml_a}]|greater_than[0]", ['less_than' => "banco_preguntas tidak cukup, anda hanya punya {$jml} banco_preguntas"]);
+		$this->form_validation->set_rules('cantidad_banco_preguntas', 'Number of Questions', "required|integer|less_than[{$jml_a}]|greater_than[0]", ['less_than' => "En el banco de preguntas solo cuentas con {$jml} preguntas"]);
 		$this->form_validation->set_rules('fecha_inicio', 'Start Date', 'required');
 		$this->form_validation->set_rules('fecha_terminacion', 'Completion Date', 'required');
 		$this->form_validation->set_rules('tiempo', 'Time', 'required|integer|max_length[4]|greater_than[0]');
