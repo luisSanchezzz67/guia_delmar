@@ -2,7 +2,7 @@
     <div class="row">
         <?php foreach ($info_box as $info) : ?>
             <div class="col-lg-3 col-xs-6">
-                <div class="small-box bg-<?= $info->box ?>">
+                <div class="card small-box bg-<?= $info->box ?>">
                     <div class="inner">
                         <h3><?= $info->total; ?></h3>
                         <p><?= $info->text; ?></p>
