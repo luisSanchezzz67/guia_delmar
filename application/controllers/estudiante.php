@@ -88,15 +88,9 @@ class Estudiante extends CI_Controller
 		}
 		$this->form_validation->set_rules('nim', 'NIM', 'required|numeric|trim|min_length[8]|max_length[12]' . $u_nim);
 		$this->form_validation->set_rules('nombre', 'Nombre', 'required|trim|min_length[3]|max_length[50]');
-<<<<<<< HEAD
 		$this->form_validation->set_rules('email', 'Correo', 'required|trim|valid_email' . $u_email . $u_emailProfesor); //. $u_email_profesor
 		$this->form_validation->set_rules('genero', 'Género', 'required');
 		$this->form_validation->set_rules('grupo', 'Grupo', 'required');
-=======
-		$this->form_validation->set_rules('email', 'Correo', 'required|trim|valid_email' . $u_email);
-		$this->form_validation->set_rules('genero', 'Género', 'required');
-		$this->form_validation->set_rules('grupo', 'Departamento', 'required');
->>>>>>> 0e5f70f971dcee42c3ff1ec837154ba13602edf4
 		$this->form_validation->set_rules('clase', 'Clase', 'required');
 
 		$this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
