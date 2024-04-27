@@ -89,13 +89,13 @@ class Grupo extends CI_Controller
     $error = array(); // Inicializar el array de errores
     $status = true; // Establecer el estado predeterminado como verdadero
 	
-	$curso 	= $this->input->post('curso', true);
+	//$curso 	= $this->input->post('curso', true);
 
     for ($i = 1; $i <= $rows; $i++) {
         $nombre_grupo = 'nombre_grupo[' . $i . ']';
         $this->form_validation->set_rules($nombre_grupo, 'Dept.', 'required');
         $this->form_validation->set_message('required', '{field} Required');
-		$this->form_validation->set_rules('curso', 'Mata Kuliah', 'required');
+	//	$this->form_validation->set_rules('curso', 'Mata Kuliah', 'required');
 
 
         if ($this->form_validation->run() === FALSE) {
@@ -110,7 +110,7 @@ class Grupo extends CI_Controller
                 $update[] = array(
                     'id_grupo'    => $this->input->post('id_grupo[' . $i . ']', true),
                     'nombre_grupo'    => $this->input->post($nombre_grupo, true),
-					'curso_id' 	=> $curso
+					'curso_id' 	=> $this->input->post('curso', true)
                 );
             }
         }
