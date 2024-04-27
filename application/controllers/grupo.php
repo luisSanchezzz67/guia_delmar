@@ -66,17 +66,18 @@ class Grupo extends CI_Controller
 		if (!$chk) {
 			redirect('grupo');
 		} else {
-			$grupo = $this->master->getGrupoById($chk);
+			$grupo = $this->master->getgrupoById($chk);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
 				'titulo'		=> 'Editar Grupo',
 				'subtitulo'	=> 'Editar Datos del Grupo',
 				'grupo'	=> $grupo,
-				'curso' 		=> $this->master->getAllCurso(),
-
+				'curso' => $this->master->getAllCurso(),
+				'data' 		=> $this->master->getgrupoById($chk)
 			];
+			//$curso_id = $grupo->curso_id;
 			$this->load->view('_templates/dashboard/_header', $data);
-			$this->load->view('direccion/grupo/edit');
+			$this->load->view('direccion/grupo/edit', $data);
 			$this->load->view('_templates/dashboard/_footer');
 		}
 	}

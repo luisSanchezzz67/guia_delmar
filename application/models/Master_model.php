@@ -61,19 +61,22 @@ class Master_model extends CI_Model
 
     public function getDataGrupo()
     {
-        $this->datatables->select('id_grupo, nombre_grupo');
+        $this->datatables->select('id_grupo, nombre_grupo, curso_id');
         $this->datatables->from('grupo');
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_grupo, nombre_grupo');
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_grupo, nombre_grupo, curso_id');
         return $this->datatables->generate();
     }
 
     public function getgrupoById($id)
     {
+        $this->db->select('id_grupo, nombre_grupo, curso_id');  // Especifica los campos que deseas recuperar
+        $this->datatables->from('grupo');
         $this->db->where_in('id_grupo', $id);
         $this->db->order_by('nombre_grupo');
         $query = $this->db->get('grupo')->result();
         return $query;
     }
+ 
 
     /**
      * Data Estudiante
