@@ -72,7 +72,7 @@ class Grupo extends CI_Controller
 				'titulo'		=> 'Editar Grupo',
 				'subtitulo'	=> 'Editar Datos del Grupo',
 				'grupo'	=> $grupo,
-				'curso' 		=> $this->master->getAllCurso()
+				'curso' 		=> $this->master->getAllCurso(),
 
 			];
 			$this->load->view('_templates/dashboard/_header', $data);
