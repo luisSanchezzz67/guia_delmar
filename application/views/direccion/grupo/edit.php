@@ -21,6 +21,8 @@
                 </div>
                 <?= form_open('grupo/save', array('id' => 'grupo'), array('mode' => 'edit')) ?>
                 <table id="form-table" class="table text-center table-condensed">
+
+
                     <thead>
                         <tr>
                             <th># No</th>
@@ -28,8 +30,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                    
+
                         <?php
                         $no = 1;
+                        
                         foreach ($grupo as $j) : ?>
                             <tr>
                                 <td><?= $no ?></td>
@@ -45,8 +50,26 @@
                             $no++;
                         endforeach;
                         ?>
+
                     </tbody>
+
                 </table>
+
+                <div class="form-group">
+                    
+                    <label for="curso">Curso</label>
+                    <select name="curso" id="curso" class="form-control select2" style="width: 100%!important">
+                    
+
+                        <option value="" disabled selected>Elegir Curso</option>
+                        <?php $data->curso_id = 0; // se inicializa para que no sea indefinida
+                        foreach ($curso as $row) : ?>
+                            <option <?= $data->curso_id === $row->id_curso ? "selected" : "" ?> value="<?= $row->id_curso ?>"><?= $row->nombre_curso ?></option>
+                        <?php  endforeach; ?>
+                    </select>
+                    <small class="help-block"></small>
+                </div>
+                <!-- <?php var_dump($curso); ?> -->
                 <button type="submit" class="mb-4 btn btn-block btn-flat bg-purple">
                     <i class="fa fa-save"></i> Guardar Cambios
                 </button>
@@ -57,3 +80,4 @@
 </div>
 
 <script src="<?= base_url() ?>assets/dist/js/app/master/grupo/edit.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/profesor/edit.js"></script>

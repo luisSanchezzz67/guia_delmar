@@ -1,5 +1,6 @@
 <?= form_open('profesor/save', array('id' => 'formprofesor'), array('method' => 'edit', 'id_profesor' => $data->id_profesor)); ?>
 <div class="box">
+    
     <div class="box-header with-border">
         <h3 class="box-title">Formulario <?= $subtitulo ?></h3>
         <div class="box-tools pull-right">

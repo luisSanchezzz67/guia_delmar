@@ -12,6 +12,7 @@ class Grupo extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth');
 		} else if (!$this->ion_auth->is_admin()) {
@@ -60,6 +61,7 @@ class Grupo extends CI_Controller
 
 	public function edit()
 	{
+		
 		$chk = $this->input->post('checked', true);
 		if (!$chk) {
 			redirect('grupo');
@@ -69,7 +71,9 @@ class Grupo extends CI_Controller
 				'user' 		=> $this->ion_auth->user()->row(),
 				'titulo'		=> 'Editar Grupo',
 				'subtitulo'	=> 'Editar Datos del Grupo',
-				'grupo'	=> $grupo
+				'grupo'	=> $grupo,
+				'curso' 		=> $this->master->getAllCurso()
+
 			];
 			$this->load->view('_templates/dashboard/_header', $data);
 			$this->load->view('direccion/grupo/edit');
@@ -83,11 +87,15 @@ class Grupo extends CI_Controller
     $mode = $this->input->post('mode', true);
     $error = array(); // Inicializar el array de errores
     $status = true; // Establecer el estado predeterminado como verdadero
+	
+	$curso 	= $this->input->post('curso', true);
 
     for ($i = 1; $i <= $rows; $i++) {
         $nombre_grupo = 'nombre_grupo[' . $i . ']';
         $this->form_validation->set_rules($nombre_grupo, 'Dept.', 'required');
         $this->form_validation->set_message('required', '{field} Required');
+		$this->form_validation->set_rules('curso', 'Mata Kuliah', 'required');
+
 
         if ($this->form_validation->run() === FALSE) {
             $error[$nombre_grupo] = form_error($nombre_grupo); // Agregar el error al array
@@ -100,7 +108,8 @@ class Grupo extends CI_Controller
             } else if ($mode == 'edit') {
                 $update[] = array(
                     'id_grupo'    => $this->input->post('id_grupo[' . $i . ']', true),
-                    'nombre_grupo'    => $this->input->post($nombre_grupo, true)
+                    'nombre_grupo'    => $this->input->post($nombre_grupo, true),
+					'curso_id' 	=> $curso
                 );
             }
         }
