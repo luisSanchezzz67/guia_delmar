@@ -74,6 +74,7 @@ class Estudiante extends CI_Controller
 		$id_estudiante 	= $this->input->post('id_estudiante', true);
 		$nim 			= $this->input->post('nim', true);
 		$email 			= $this->input->post('email', true);
+		$u_emailProfesor = "";
 		//$emailProfesor 			= $this->input->post('emailProfesor', true); 
 		if ($method == 'add') {
 			$u_nim = '|is_unique[estudiante.nim]';

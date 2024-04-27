@@ -75,6 +75,7 @@ class Profesor extends CI_Controller
 		$nombre_profesor = $this->input->post('nombre_profesor', true);
 		$email 		= $this->input->post('email', true);
 		$curso 	= $this->input->post('curso', true);
+		$u_emailEstudiante = "";
 		if ($method == 'add') {
 			$u_nip = '|is_unique[profesor.nip]';
 			$u_email = '|is_unique[profesor.email]';
