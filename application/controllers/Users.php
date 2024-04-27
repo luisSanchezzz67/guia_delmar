@@ -57,7 +57,7 @@ class Users extends CI_Controller
 			'titulo'		=> 'Gestiones de Usuario',
 			'subtitulo'	=> 'Editar Datos de Usuario',
 			'users' 	=> $this->ion_auth->user($id)->row(),
-			'roles'	=> $this->ion_auth->groups()->result(),
+			'roles'	=> $this->ion_auth->roles()->result(),
 			'level'		=> $level[0]
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);

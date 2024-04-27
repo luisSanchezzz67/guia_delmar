@@ -62,7 +62,7 @@
                         <label for="level">Nivel de Usuario</label>
                         <select id="level" name="level" class="form-control select2" style="width: 100%!important">
                             <option value="">Escoger Nivel</option>
-                            <?php foreach ($groups as $row) : ?>
+                            <?php foreach ($roles as $row) : ?>
                                 <option <?= $level->id === $row->id ? "selected" : "" ?> value="<?= $row->id ?>"><?= $row->name ?></option>
                             <?php endforeach; ?>
                         </select>

@@ -30,7 +30,7 @@ function submitajax(url, data, msg, btn) {
                     });
                 }
             }
-            btn.removeAttr('disabled').text('Change Password');
+            btn.removeAttr('disabled').text('Cambios guardados');
         }
     });
 }
@@ -50,7 +50,7 @@ $(document).ready(function () {
 
         url = $(this).attr('action');
         data = $(this).serialize();
-        msg = "User information has been successfully updated";
+        msg = "La información del usuario ha sido actualizada";
         submitajax(url, data, msg, btn);
     });
 
@@ -63,7 +63,7 @@ $(document).ready(function () {
 
         url = $(this).attr('action');
         data = $(this).serialize();
-        msg = "User level has been successfully updated";
+        msg = "Rol del usuario actualizado con exito";   
         submitajax(url, data, msg, btn);
     });
 
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
         url = $(this).attr('action');
         data = $(this).serialize();
-        msg = "User status has been successfully updated";
+        msg = "Estado del usuario actualizado con exito";
         submitajax(url, data, msg, btn);
     });
 
