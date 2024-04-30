@@ -47,3 +47,25 @@ function tampil_media($file,$width="",$height="") {
 
 	return $ret;
 }
+
+/*Bee functions*/
+function get_user($key = null) {
+	if (!isset($_SESSION['user_session'])) return false;
+
+	$session = $_SESSION['user_session']; // información de la sesión del usuario actual, regresará siempre falso si no hay dicha sesión
+
+	if (!isset($session['user']) || empty($session['user'])) return false;
+
+	$user = $session['user']; // información de la base de datos o directamente insertada del usuario
+
+	if ($key === null) return $user;
+
+	if (!isset($user[$key])) return false; // regresará falso en caso de no encontrar el key buscado
+
+	// Regresa la información del usuario
+	return $user[$key];
+}
+
+function get_user_role() {
+	return $rol = get_user('rol');
+  }

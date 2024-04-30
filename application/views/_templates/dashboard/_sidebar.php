@@ -63,6 +63,12 @@
 								Estudiante
 							</a>
 						</li>
+						<li class="<?= $page === 'leccion' ? "active" : "" ?>">
+							<a href="<?= base_url('leccion') ?>">
+								<i class="fa fa-bars"></i>
+								Lecciones
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li class="treeview <?= in_array($page, $relasi)  ? "active menu-open" : ""  ?>">

@@ -42,7 +42,7 @@ class Master_model extends CI_Model
     {
         $this->datatables->select('id_clase, nombre_clase, id_grupo, nombre_grupo');
         $this->datatables->from('clase');
-        $this->datatables->join('grupo', 'id_grupo=grupo_id','');
+        $this->datatables->join('grupo', 'id_grupo=grupo_id', '');
         $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_clase, nombre_clase, id_grupo, nombre_grupo');
         return $this->datatables->generate();
     }
@@ -76,7 +76,7 @@ class Master_model extends CI_Model
         $query = $this->db->get('grupo')->result();
         return $query;
     }
- 
+
 
     /**
      * Data Estudiante
@@ -130,7 +130,7 @@ class Master_model extends CI_Model
             if ($id_grupo === []) {
                 $id_grupo = null;
             }
-            
+
             $this->db->select('*');
             $this->db->from('grupo');
             $this->db->where_not_in('id_grupo', $id_grupo);
@@ -141,7 +141,7 @@ class Master_model extends CI_Model
 
     public function getClaseByGrupo($id)
     {
-        $query = $this->db->get_where('clase', array('grupo_id'=>$id));
+        $query = $this->db->get_where('clase', array('grupo_id' => $id));
         return $query->result();
     }
 
@@ -159,7 +159,7 @@ class Master_model extends CI_Model
 
     public function getProfesorById($id)
     {
-        $query = $this->db->get_where('profesor', array('id_profesor'=>$id));
+        $query = $this->db->get_where('profesor', array('id_profesor' => $id));
         return $query->row();
     }
 
@@ -186,7 +186,7 @@ class Master_model extends CI_Model
             $this->db->order_by('nombre_curso');
             $query = $this->db->get('curso')->result();
         } else {
-            $query = $this->db->get_where('curso', array('id_curso'=>$id))->row();
+            $query = $this->db->get_where('curso', array('id_curso' => $id))->row();
         }
         return $query;
     }
@@ -227,7 +227,7 @@ class Master_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    
+
     public function getAllClase()
     {
         $this->db->select('id_clase, nombre_clase, nombre_grupo');
@@ -236,7 +236,7 @@ class Master_model extends CI_Model
         $this->db->order_by('nombre_clase');
         return $this->db->get()->result();
     }
-    
+
     public function getClaseByProfesor($id)
     {
         $this->db->select('clase.id_clase');
@@ -290,5 +290,28 @@ class Master_model extends CI_Model
         $this->db->where('curso_id', $id);
         $query = $this->db->get()->result();
         return $query;
+    }
+
+    // Lecciones
+
+    public function getDataLecciones()
+    {
+        // $sql = 
+        // 'SELECT 
+        // l.*, 
+        // p.nombre_profesor AS nombre_profesor, 
+        // c.nombre_curso AS curso 
+        // FROM lecciones l
+        // LEFT JOIN profesor p ON p.id_profesor = l.id_profesor
+        // LEFT JOIN curso c ON c.id_curso = l.id_curso
+        // ORDER BY l.id DESC';
+        $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo');
+    $this->datatables->from('lecciones l');
+    $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
+    $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
+    $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo');
+
+    //$this->datatables->order_by('l.id', 'DESC');
+    return $this->datatables->generate();
     }
 }
