@@ -1,4 +1,4 @@
-<?= form_open('leccion/save', array('id' => 'formleccion'), array('method' => 'add')); ?>
+<?= form_open('leccion/save', array('id' => 'formleccion'), array('method' => 'add', 'profesor_id' => $profesor->id_profesor, /*'curso_id' => $curso->curso_id*/)); ?>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Formulario <?= $subtitulo ?></h3>
@@ -40,19 +40,19 @@
                     <label for="estado_leccion">Estado</label>
                     <select name="estado_leccion" class="form-control">
                         <option value="" disabled selected>--- Seleccionar ---</option>
-                        <option value="Random">Borrador</option>
-                        <option value="Sort">Publicada</option>
+                        <option value="Borrador">Borrador</option>
+                        <option value="Publicada">Publicada</option>
                     </select>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="fecha_inicio">Fecha inicial</label>
-                    <input name="fecha_inicio" type="text" class="datetimepicker form-control" placeholder="Fecha de Inicio">
+                    <label for="fecha_inicial">Fecha inicial</label>
+                    <input name="fecha_inicial" type="text" class="datetimepicker form-control" placeholder="Fecha de Inicio">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
-                    <label for="fecha_terminacion">Fecha máxima</label>
-                    <input name="fecha_terminacion" type="text" class="datetimepicker form-control" placeholder="Fecha máxima">
+                    <label for="fecha_disponible">Fecha máxima</label>
+                    <input name="fecha_disponible" type="text" class="datetimepicker form-control" placeholder="Fecha máxima">
                     <small class="help-block"></small>
                 </div>
 

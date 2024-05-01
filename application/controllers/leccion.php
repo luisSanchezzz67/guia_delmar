@@ -48,11 +48,14 @@ class leccion extends CI_Controller
 
 	public function add()
 	{
+		$user = $this->ion_auth->user()->row();
+
 		$data = [
-			'user' => $this->ion_auth->user()->row(),
+			'user' => $user,
 			'titulo'	=> 'Nueva Lección',
 			'subtitulo' => 'Agregar nueva lección',
-			'curso'	=> $this->master->getAllCurso()
+			'curso'	=> $this->master->getAllCurso(),
+			'profesor' => $this->master->getIdProfesor($user->username),
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
 		$this->load->view('direccion/leccion/add');
@@ -83,27 +86,31 @@ class leccion extends CI_Controller
 	{
 		$method 	= $this->input->post('method', true);
 		$id_leccion	= $this->input->post('id_leccion', true);
+		$profesor_id 		= $this->input->post('profesor_id', true);
+		//$curso_id 		= $this->input->post('curso_id', true);
 		$curso 	= $this->input->post('curso', true);
 		$titulo_leccion 		= $this->input->post('titulo_leccion', true);
 		$video_leccion = $this->input->post('video_leccion', true);
 		$contenido_leccion 		= $this->input->post('contenido_leccion', true);
 		$estado_leccion 		= $this->input->post('estado_leccion', true);
-		$fecha_inicio 		= $this->input->post('fecha_inicio', true);
-		$fecha_terminacion 		= $this->input->post('fecha_terminacion', true);
+		$fecha_inicial 		= $this->convert_tgl($this->input->post('fecha_inicial', 	true));
+		$fecha_disponible 		= $this->convert_tgl($this->input->post('fecha_disponible', 	true));
 		if ($method == 'add') {
-			$l_fecha_inicio = '|is_unique[lecciones.fecha_inicio]';
-			$l_fecha_terminacion = '|is_unique[lecciones.fecha_terminacion]';
-
+			$l_fecha_inicial = '|is_unique[lecciones.fecha_inicial]';
+			$l_fecha_disponible = '|is_unique[lecciones.fecha_disponible]';
 		} else {
 			$dbdata 	= $this->master->getLeccionById($id_leccion);
 			// $u_nip		= $dbdata->nip === $nip ? "" : "|is_unique[profesor.nip]";
 			// $u_email	= $dbdata->email === $email ? "" : "|is_unique[profesor.email]";
 		}
 		$this->form_validation->set_rules('curso', 'Curso', 'required');
-		$this->form_validation->set_rules('titulo_leccion', 'Titulo', 'required|trim|min_length[8]|max_length[12]');
-		$this->form_validation->set_rules('video_leccion', 'Video', 'required|trim|min_length[3]|max_length[80]');
-		$this->form_validation->set_rules('contenido_leccion', 'Contenido', 'required|trim|min_length[3]|max_length[150]');
+		$this->form_validation->set_rules('titulo_leccion', 'Titulo', 'required|trim|min_length[3]|max_length[100]');
+		$this->form_validation->set_rules('video_leccion', 'Video', 'trim|min_length[0]|max_length[80]');
+		$this->form_validation->set_rules('contenido_leccion', 'Contenido', 'trim|min_length[0]|max_length[150]');
 		$this->form_validation->set_rules('estado_leccion', 'Estado', 'required|trim|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('fecha_inicial', 'Fecha Inicial', 'required');
+		$this->form_validation->set_rules('fecha_disponible', 'Fecha Disponible', 'required');
+
 		//$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email . $u_emailEstudiante);
 
 		if ($this->form_validation->run() == FALSE) {
@@ -115,16 +122,21 @@ class leccion extends CI_Controller
 					'video' => form_error('video_leccion'),
 					'contenido' => form_error('contenido_leccion'),
 					'status' => form_error('estado_leccion'),
+					'fecha_inicial' 	=> form_error('fecha_inicial'),
+					'fecha_disponible' 	=> form_error('fecha_disponible'),
 				]
 			];
 			$this->output_json($data);
 		} else {
 			$input = [
 				'id_curso' 	=> $curso,
+				'id_profesor' 	=> $profesor_id,
 				'titulo'			=> $titulo_leccion,
 				'video' 	=> $video_leccion,
 				'contenido' 	=> $contenido_leccion,
 				'status' 		=> $estado_leccion,
+				'fecha_inicial' 	=> $fecha_inicial,
+				'fecha_disponible' 	=> $fecha_disponible,
 			];
 			if ($method === 'add') {
 				$action = $this->master->create('lecciones', $input);
@@ -137,6 +149,18 @@ class leccion extends CI_Controller
 			} else {
 				$this->output_json(['status' => false]);
 			}
+		}
+	}
+	public function convert_tgl($tgl)
+	{
+		$this->akses_profesor();
+		return date('Y-m-d H:i:s', strtotime($tgl));
+	}
+	public function akses_profesor()
+	{
+		if (!$this->ion_auth->in_group('Lecturer')) {
+			// Descomentar esto para que solo pueda acceder el profesor
+			//	show_error('This page is specifically for lecturers to make an Online Test, <a href="' . base_url('dashboard') . '">Back to main menu</a>', 403, 'Forbidden Access');
 		}
 	}
 
