@@ -52,7 +52,9 @@ $(document).ready(function() {
         searchable: false
       },
       { data: "titulo" },
-     // { data: "nombre_grupo" },
+     { data: "video" },
+     { data: "status" },
+     { data: "fecha_disponible" },
       {
         data: "bulk_select",
         orderable: false,
