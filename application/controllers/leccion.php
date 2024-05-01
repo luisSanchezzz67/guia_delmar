@@ -46,19 +46,18 @@ class leccion extends CI_Controller
 		$this->output_json($this->master->getDataLecciones(), false);
 	}
 
-	// public function add()
-	// {
-	// 	$data = [
-	// 		'user' 		=> $this->ion_auth->user()->row(),
-	// 		'titulo'		=> 'Agregar Clase',
-	// 		'subtitulo'	=> 'Agregar Datos de Clase',
-	// 		'lote'	=> $this->input->post('lote', true),
-	// 		'grupo'	=> $this->master->getAllGrupo()
-	// 	];
-	// 	$this->load->view('_templates/dashboard/_header.php', $data);
-	// 	$this->load->view('direccion/clase/add');
-	// 	$this->load->view('_templates/dashboard/_footer.php');
-	// }
+	public function add()
+	{
+		$data = [
+			'user' => $this->ion_auth->user()->row(),
+			'titulo'	=> 'Nueva Lección',
+			'subtitulo' => 'Agregar nueva lección',
+			'curso'	=> $this->master->getAllCurso()
+		];
+		$this->load->view('_templates/dashboard/_header.php', $data);
+		$this->load->view('direccion/leccion/add');
+		$this->load->view('_templates/dashboard/_footer.php');
+	}
 
 	// public function edit()
 	// {
@@ -80,55 +79,66 @@ class leccion extends CI_Controller
 	// 	}
 	// }
 
-	// public function save()
-	// {
-	// 	$rows = count($this->input->post('nombre_clase', true));
-	// 	$mode = $this->input->post('mode', true);
-	// 	for ($i = 1; $i <= $rows; $i++) {
-	// 		$nombre_clase 	= 'nombre_clase[' . $i . ']';
-	// 		$grupo_id 	= 'grupo_id[' . $i . ']';
-	// 		$this->form_validation->set_rules($nombre_clase, 'Class', 'required');
-	// 		$this->form_validation->set_rules($grupo_id, 'Dept.', 'required');
-	// 		$this->form_validation->set_message('required', '{field} Required');
+	public function save()
+	{
+		$method 	= $this->input->post('method', true);
+		$id_leccion	= $this->input->post('id_leccion', true);
+		$curso 	= $this->input->post('curso', true);
+		$titulo_leccion 		= $this->input->post('titulo_leccion', true);
+		$video_leccion = $this->input->post('video_leccion', true);
+		$contenido_leccion 		= $this->input->post('contenido_leccion', true);
+		$estado_leccion 		= $this->input->post('estado_leccion', true);
+		$fecha_inicio 		= $this->input->post('fecha_inicio', true);
+		$fecha_terminacion 		= $this->input->post('fecha_terminacion', true);
+		if ($method == 'add') {
+			$l_fecha_inicio = '|is_unique[lecciones.fecha_inicio]';
+			$l_fecha_terminacion = '|is_unique[lecciones.fecha_terminacion]';
 
-	// 		if ($this->form_validation->run() === FALSE) {
-	// 			$error[] = [
-	// 				$nombre_clase 	=> form_error($nombre_clase),
-	// 				$grupo_id 	=> form_error($grupo_id),
-	// 			];
-	// 			$status = FALSE;
-	// 		} else {
-	// 			if ($mode == 'add') {
-	// 				$insert[] = [
-	// 					'nombre_clase' 	=> $this->input->post($nombre_clase, true),
-	// 					'grupo_id' 	=> $this->input->post($grupo_id, true)
-	// 				];
-	// 			} else if ($mode == 'edit') {
-	// 				$update[] = array(
-	// 					'id_clase'		=> $this->input->post('id_clase[' . $i . ']', true),
-	// 					'nombre_clase' 	=> $this->input->post($nombre_clase, true),
-	// 					'grupo_id' 	=> $this->input->post($grupo_id, true)
-	// 				);
-	// 			}
-	// 			$status = TRUE;
-	// 		}
-	// 	}
-	// 	if ($status) {
-	// 		if ($mode == 'add') {
-	// 			$this->master->create('clase', $insert, true);
-	// 			$data['insert']	= $insert;
-	// 		} else if ($mode == 'edit') {
-	// 			$this->master->update('clase', $update, 'id_clase', null, true);
-	// 			$data['update'] = $update;
-	// 		}
-	// 	} else {
-	// 		if (isset($error)) {
-	// 			$data['errors'] = $error;
-	// 		}
-	// 	}
-	// 	$data['status'] = $status;
-	// 	$this->output_json($data);
-	// }
+		} else {
+			$dbdata 	= $this->master->getLeccionById($id_leccion);
+			// $u_nip		= $dbdata->nip === $nip ? "" : "|is_unique[profesor.nip]";
+			// $u_email	= $dbdata->email === $email ? "" : "|is_unique[profesor.email]";
+		}
+		$this->form_validation->set_rules('curso', 'Curso', 'required');
+		$this->form_validation->set_rules('titulo_leccion', 'Titulo', 'required|trim|min_length[8]|max_length[12]');
+		$this->form_validation->set_rules('video_leccion', 'Video', 'required|trim|min_length[3]|max_length[80]');
+		$this->form_validation->set_rules('contenido_leccion', 'Contenido', 'required|trim|min_length[3]|max_length[150]');
+		$this->form_validation->set_rules('estado_leccion', 'Estado', 'required|trim|min_length[3]|max_length[50]');
+		//$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email . $u_emailEstudiante);
+
+		if ($this->form_validation->run() == FALSE) {
+			$data = [
+				'status'	=> false,
+				'errors'	=> [
+					'curso' => form_error('curso'),
+					'titulo' => form_error('titulo_leccion'),
+					'video' => form_error('video_leccion'),
+					'contenido' => form_error('contenido_leccion'),
+					'status' => form_error('estado_leccion'),
+				]
+			];
+			$this->output_json($data);
+		} else {
+			$input = [
+				'id_curso' 	=> $curso,
+				'titulo'			=> $titulo_leccion,
+				'video' 	=> $video_leccion,
+				'contenido' 	=> $contenido_leccion,
+				'status' 		=> $estado_leccion,
+			];
+			if ($method === 'add') {
+				$action = $this->master->create('lecciones', $input);
+			} else if ($method === 'edit') {
+				$action = $this->master->update('lecciones', $input, 'id', $id_leccion);
+			}
+
+			if ($action) {
+				$this->output_json(['status' => true]);
+			} else {
+				$this->output_json(['status' => false]);
+			}
+		}
+	}
 
 	// public function delete()
 	// {

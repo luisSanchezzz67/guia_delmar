@@ -305,7 +305,7 @@ class Master_model extends CI_Model
         // LEFT JOIN profesor p ON p.id_profesor = l.id_profesor
         // LEFT JOIN curso c ON c.id_curso = l.id_curso
         // ORDER BY l.id DESC';
-        $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_disponible');
+    $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_disponible');
     $this->datatables->from('lecciones l');
     $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
     $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
@@ -313,5 +313,10 @@ class Master_model extends CI_Model
 
     //$this->datatables->order_by('l.id', 'DESC');
     return $this->datatables->generate();
+    }
+    public function getLeccionById($id)
+    {
+        $query = $this->db->get_where('leccion', array('id_leccion' => $id));
+        return $query->row();
     }
 }
