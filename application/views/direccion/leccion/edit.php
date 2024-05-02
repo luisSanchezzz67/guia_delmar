@@ -11,53 +11,61 @@
     <div class="box-body">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-            <input type="hidden" class="form-control" name="id_leccion">
+                        <?php
+                        $i = 1;
+                        foreach ($leccion as $lec) : ?>
 
                 <div class="form-group">
                     <label for="curso">Curso</label>
                     <select name="curso" id="curso" class="form-control select2" style="width: 100%!important">
                         <option value="" disabled selected>Escoger Curso</option>
                         <?php foreach ($curso as $row) : ?>
-                            <option value="<?= $row->id_curso ?>"><?= $row->nombre_curso ?></option>
+                            <option <?= $lec->id_curso == $row->id_curso ? "selected='selected'" : "" ?> value="<?= $row->id_curso ?>"><?= $row->nombre_curso ?></option>
                         <?php endforeach; ?>
                     </select>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
                     <label for="titulo_leccion">Título de la lección</label>
-                    <input type="text" class="form-control" name="titulo_leccion" placeholder="Título">
+                    <input value="<?= $lec->titulo ?>" type="text" class="form-control" name="titulo_leccion" placeholder="Título">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
                     <label for="video_leccion">Video de la lección</label>
-                    <input type="text" class="form-control" name="video_leccion" placeholder="Ejemplo: https://www.youtube.com/watch?v=cJ5QJ9oh8Ng">
+                    <input value="<?= $lec->video ?>" type="text" class="form-control" name="video_leccion" placeholder="Ejemplo: https://www.youtube.com/watch?v=cJ5QJ9oh8Ng">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
                     <label for="contenido_leccion">Contenido</label>
-                    <textarea type="text" class="form-control" name="contenido_leccion"></textarea>
+                    <textarea  type="text" class="form-control" name="contenido_leccion"><?= $lec->contenido ?></textarea>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
                     <label for="estado_leccion">Estado</label>
                     <select name="estado_leccion" class="form-control">
-                        <option value="" disabled selected>--- Seleccionar ---</option>
-                        <option value="Borrador">Borrador</option>
-                        <option value="Publicada">Publicada</option>
+                        <option value="<?= $lec->status ?>" selected><?= $lec->status ?></option>
+                        <?php
+                        if ($lec->status == "Publicada") { ?>
+                            <option value="Borrador">Borrador</option>
+                            <?php  }  else { ?>
+                                <option value="Publicada">Publicada</option>
+
+                                <?php  }     ?>
                     </select>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
                     <label for="fecha_inicial">Fecha inicial</label>
-                    <input name="fecha_inicial" type="text" class="datetimepicker form-control" placeholder="Fecha de Inicio">
+                    <input value="<?= $lec->fecha_inicial ?>" name="fecha_inicial" type="text" class="datetimepicker form-control" placeholder="Fecha de Inicio">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">
                     <label for="fecha_disponible">Fecha máxima</label>
-                    <input name="fecha_disponible" type="text" class="datetimepicker form-control" placeholder="Fecha máxima">
+                    <input value="<?= $lec->fecha_disponible ?>" name="fecha_disponible" type="text" class="datetimepicker form-control" placeholder="Fecha máxima">
                     <small class="help-block"></small>
                 </div>
-
+                <?php $i++;
+                        endforeach; ?>
                 <div class="form-group pull-right">
                     <button type="reset" class="btn btn-flat btn-default">
                         <i class="fa fa-rotate-left"></i> Resetear
@@ -72,4 +80,4 @@
 </div>
 <?= form_close(); ?>
 
-<script src="<?= base_url() ?>assets/dist/js/app/master/leccion/add.js"></script>
+<script src="<?= base_url() ?>assets/dist/js/app/master/leccion/edit.js"></script>

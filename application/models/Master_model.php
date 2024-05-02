@@ -323,7 +323,11 @@ class Master_model extends CI_Model
     }
     public function getLeccionById($id)
     {
-        $query = $this->db->get_where('leccion', array('id_leccion' => $id));
-        return $query->row();
+        $this->db->where_in('id', $id);
+        //$this->db->order_by('nombre_clase');
+        $query = $this->db->get('lecciones')->result();
+        return $query;
+       // $query = $this->db->get_where('lecciones', array('id' => $id));
+        //return $query->row();
     }
 }

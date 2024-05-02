@@ -63,25 +63,27 @@ class leccion extends CI_Controller
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
-	// public function edit()
-	// {
-	// 	$chk = $this->input->post('checked', true);
-	// 	if (!$chk) {
-	// 		redirect('admin/clase');
-	// 	} else {
-	// 		$clase = $this->master->getClaseById($chk);
-	// 		$data = [
-	// 			'user' 		=> $this->ion_auth->user()->row(),
-	// 			'titulo'		=> 'Editar Clase',
-	// 			'subtitulo'	=> 'Editar Datos de Clase',
-	// 			'grupo'	=> $this->master->getAllGrupo(),
-	// 			'clase'		=> $clase
-	// 		];
-	// 		$this->load->view('_templates/dashboard/_header.php', $data);
-	// 		$this->load->view('direccion/clase/edit');
-	// 		$this->load->view('_templates/dashboard/_footer.php');
-	// 	}
-	// }
+	public function edit()
+	{
+		$chk = $this->input->post('checked', true);
+		if (!$chk) {
+			redirect('admin/leccion');
+		} else {
+		$user = $this->ion_auth->user()->row();
+		$leccion = $this->master->getLeccionById($chk);
+		$data = [
+			'user' 		=> $this->ion_auth->user()->row(),
+			'titulo'		=> 'Editar Lección',
+			'subtitulo'	=> 'Editar datos de la lección ',
+			'curso'	=> $this->master->getAllCurso(),
+			'profesor' => $this->master->getIdProfesor($user->username),
+			'leccion'		=> $leccion
+		];
+		$this->load->view('_templates/dashboard/_header.php', $data);
+		$this->load->view('direccion/leccion/edit');
+		$this->load->view('_templates/dashboard/_footer.php');
+	}
+}
 
 	public function save()
 	{

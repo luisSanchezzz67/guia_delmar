@@ -28,7 +28,7 @@ $(document).ready(function () {
               type: "success",
               text: "Datos guardados exitosamente",
             }).then((result) => {
-              window.location = "master";
+              window.location.href = base_url+'leccion';
             });
           } else {
             if (data.errors) {

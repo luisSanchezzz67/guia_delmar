@@ -189,14 +189,14 @@ function bulk_delete() {
 }
 
 function bulk_edit() {
-  if ($("#clase tbody tr .check:checked").length == 0) {
+  if ($("#leccion tbody tr .check:checked").length == 0) {
     Swal({
       title: "Fallido",
       text: "Sin datos seleccionados",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "clase/edit");
+    $("#bulk").attr("action", base_url + "leccion/edit");
     $("#bulk").submit();
   }
 }
