@@ -101,6 +101,14 @@
 				</li>
 			<?php endif; ?>
 			<?php if ($this->ion_auth->in_group('Lecturer')) : ?>
+				<li class="<?= $page === 'leccion' ? "active" : "" ?>">
+					<a href="<?= base_url('leccion') ?>">
+						<i class="fa fa-bars"></i>
+						Lecciones
+					</a>
+				</li>
+			<?php endif; ?>
+			<?php if ($this->ion_auth->in_group('Lecturer')) : ?>
 				<li class="<?= $page === 'prueba' ? "active" : "" ?>">
 					<a href="<?= base_url('prueba/master') ?>" rel="noopener noreferrer">
 						<i class="fa fa-pencil"></i> <span>Examen</span>

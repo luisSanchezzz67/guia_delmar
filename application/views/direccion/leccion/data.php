@@ -8,12 +8,17 @@
 	</div>
 	<div class="box-body">
 		<div class="mt-2 mb-3">
+			<?php 
+			if ($this->ion_auth->in_group('Lecturer')){
+				
+			?>
 			<a href="<?= base_url('leccion/add') ?>" class="btn btn-sm bg-blue btn-flat"><i class="fa fa-plus"></i> Nueva Lección</a>
 			<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
 			<div class="pull-right">
 				<button onclick="bulk_edit()" class="btn btn-sm btn-flat btn-primary" type="button"><i class="fa fa-edit"></i> Editar</button>
 				<button onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger" type="button"><i class="fa fa-trash"></i> Eliminar</button>
 			</div>
+			<?php } ?>
 		</div>
 		<?= form_open('', array('id' => 'bulk')) ?>
 		<table id="leccion" class="w-100 table table-striped table-bordered table-hover">

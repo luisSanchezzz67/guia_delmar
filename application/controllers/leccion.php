@@ -10,9 +10,10 @@ class leccion extends CI_Controller
 		parent::__construct();
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth');
-		} else if (!$this->ion_auth->is_admin()) {
-			show_error('Solo los Administradores están autorizados a acceder a esta página, <a href="' . base_url('dashboard') . '">Volver al menú</a>', 403, 'Acceso Prohibido');
-		}
+		} 
+		// else if (!$this->ion_auth->is_admin()) {
+		// 	show_error('Solo los Administradores están autorizados a acceder a esta página, <a href="' . base_url('dashboard') . '">Volver al menú</a>', 403, 'Acceso Prohibido');
+		// }
 		$this->load->library(['datatables', 'form_validation']); // Load Library Ignited-Datatables
 		$this->load->model('Master_model', 'master');
 		$this->form_validation->set_error_delimiters('', '');
