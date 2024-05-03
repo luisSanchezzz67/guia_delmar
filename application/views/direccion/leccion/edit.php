@@ -1,4 +1,4 @@
-<?= form_open('leccion/save', array('id' => 'formleccion'), array('method' => 'add', 'profesor_id' => $profesor->id_profesor, /*'curso_id' => $curso->curso_id*/)); ?>
+<?= form_open('leccion/save', array('id' => 'formleccion'), array('method' => 'edit', 'id_leccion' => $leccion[0]->id)); ?>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Formulario <?= $subtitulo ?></h3>
@@ -12,6 +12,7 @@
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
                         <?php
+                        // var_dump($leccion);
                         $i = 1;
                         foreach ($leccion as $lec) : ?>
 
