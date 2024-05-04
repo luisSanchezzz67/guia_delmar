@@ -163,7 +163,7 @@ function load_grupo() {
   });
 }
 
-function bulk_delete() {
+function leccion_delete() {
   if ($("#leccion tbody tr .check:checked").length == 0) {
     Swal({
       title: "Failed",
@@ -188,7 +188,19 @@ function bulk_delete() {
   }
 }
 
-function bulk_edit() {
+function leccion_view() {
+  if ($("#leccion tbody tr .check:checked").length == 0) {
+    Swal({
+      title: "Fallido",
+      text: "Sin datos seleccionados",
+      type: "error"
+    });
+  } else {
+    $("#bulk").attr("action", base_url + "leccion/view");
+    $("#bulk").submit();
+  }
+}
+function leccion_edit() {
   if ($("#leccion tbody tr .check:checked").length == 0) {
     Swal({
       title: "Fallido",

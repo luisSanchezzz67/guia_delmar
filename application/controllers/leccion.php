@@ -10,7 +10,7 @@ class leccion extends CI_Controller
 		parent::__construct();
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth');
-		} 
+		}
 		// else if (!$this->ion_auth->is_admin()) {
 		// 	show_error('Solo los Administradores están autorizados a acceder a esta página, <a href="' . base_url('dashboard') . '">Volver al menú</a>', 403, 'Acceso Prohibido');
 		// }
@@ -31,6 +31,7 @@ class leccion extends CI_Controller
 
 	public function index()
 	{
+
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
 			'titulo'	=> 'Lecciones',
@@ -44,6 +45,7 @@ class leccion extends CI_Controller
 
 	public function data()
 	{
+		
 		$this->output_json($this->master->getDataLecciones(), false);
 	}
 
@@ -63,27 +65,48 @@ class leccion extends CI_Controller
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
+	public function view()
+	{
+		$chk = $this->input->post('checked', true);
+		if (!$chk) {
+			redirect('admin/leccion');
+		} else {
+			$user = $this->ion_auth->user()->row();
+			$leccion = $this->master->getLeccionById($chk);
+			$data = [
+				'user' 		=> $this->ion_auth->user()->row(),
+				'titulo'		=> 'Editar Lección',
+				'subtitulo'	=> 'Editar datos de la lección ',
+				'curso'	=> $this->master->getAllCurso(),
+				'profesor' => $this->master->getIdProfesor($user->username),
+				'leccion'		=> $leccion
+			];
+			$this->load->view('_templates/dashboard/_header.php', $data);
+			$this->load->view('direccion/leccion/view');
+			$this->load->view('_templates/dashboard/_footer.php');
+		}
+	}
 	public function edit()
 	{
 		$chk = $this->input->post('checked', true);
 		if (!$chk) {
 			redirect('admin/leccion');
 		} else {
-		$user = $this->ion_auth->user()->row();
-		$leccion = $this->master->getLeccionById($chk);
-		$data = [
-			'user' 		=> $this->ion_auth->user()->row(),
-			'titulo'		=> 'Editar Lección',
-			'subtitulo'	=> 'Editar datos de la lección ',
-			'curso'	=> $this->master->getAllCurso(),
-			'profesor' => $this->master->getIdProfesor($user->username),
-			'leccion'		=> $leccion
-		];
-		$this->load->view('_templates/dashboard/_header.php', $data);
-		$this->load->view('direccion/leccion/edit');
-		$this->load->view('_templates/dashboard/_footer.php');
+			$user = $this->ion_auth->user()->row();
+			$leccion = $this->master->getLeccionById($chk);
+			$data = [
+				'user' 		=> $this->ion_auth->user()->row(),
+				'titulo'		=> 'Editar Lección',
+				'subtitulo'	=> 'Editar datos de la lección ',
+				'curso'	=> $this->master->getAllCurso(),
+				'profesor' => $this->master->getIdProfesor($user->username),
+				'leccion'		=> $leccion
+			];
+			$this->load->view('_templates/dashboard/_header.php', $data);
+			$this->load->view('direccion/leccion/edit');
+			$this->load->view('_templates/dashboard/_footer.php');
+		}
 	}
-}
 
 	public function save()
 	{
@@ -108,8 +131,8 @@ class leccion extends CI_Controller
 		}
 		$this->form_validation->set_rules('curso', 'Curso', 'required');
 		$this->form_validation->set_rules('titulo_leccion', 'Titulo', 'required|trim|min_length[3]|max_length[100]');
-		$this->form_validation->set_rules('video_leccion', 'Video', 'trim|min_length[0]|max_length[80]');
-		$this->form_validation->set_rules('contenido_leccion', 'Contenido', 'trim|min_length[0]|max_length[150]');
+		$this->form_validation->set_rules('video_leccion', 'Video', 'trim|min_length[0]|max_length[100]');
+		$this->form_validation->set_rules('contenido_leccion', 'Contenido', 'trim|min_length[0]');
 		$this->form_validation->set_rules('estado_leccion', 'Estado', 'required|trim|min_length[3]|max_length[50]');
 		$this->form_validation->set_rules('fecha_inicial', 'Fecha Inicial', 'required');
 		$this->form_validation->set_rules('fecha_disponible', 'Fecha Disponible', 'required');
@@ -173,7 +196,7 @@ class leccion extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('lecciones', $chk, 'id')) {
+			if ($this->master->delete('leccion', $chk, 'id')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}
