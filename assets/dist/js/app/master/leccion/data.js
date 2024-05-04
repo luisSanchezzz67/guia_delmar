@@ -164,14 +164,14 @@ function load_grupo() {
 }
 
 function bulk_delete() {
-  if ($("#clase tbody tr .check:checked").length == 0) {
+  if ($("#leccion tbody tr .check:checked").length == 0) {
     Swal({
       title: "Failed",
       text: "No data selected",
       type: "error"
     });
   } else {
-    $("#bulk").attr("action", base_url + "clase/delete");
+    $("#bulk").attr("action", base_url + "leccion/delete");
     Swal({
       title: "Seguro?",
       text: "Estos datos serán eliminados!",

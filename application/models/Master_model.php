@@ -296,20 +296,13 @@ class Master_model extends CI_Model
 
     public function getDataLecciones()
     {
-        // $sql = 
-        // 'SELECT 
-        // l.*, 
-        // p.nombre_profesor AS nombre_profesor, 
-        // c.nombre_curso AS curso 
-        // FROM lecciones l
-        // LEFT JOIN profesor p ON p.id_profesor = l.id_profesor
-        // LEFT JOIN curso c ON c.id_curso = l.id_curso
-        // ORDER BY l.id DESC';
+       
     $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
     $this->datatables->from('lecciones l');
     $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
     $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
     $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+    $this->db->order_by('l.id', 'ASC');
 
     //$this->datatables->order_by('l.id', 'DESC');
     return $this->datatables->generate();

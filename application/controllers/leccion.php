@@ -121,7 +121,7 @@ class leccion extends CI_Controller
 				'status'	=> false,
 				'errors'	=> [
 					'curso' => form_error('curso'),
-					'titulo' => form_error('titulo_leccion'),
+					'titulo_leccion' => form_error('titulo_leccion'),
 					'video' => form_error('video_leccion'),
 					'contenido' => form_error('contenido_leccion'),
 					'status' => form_error('estado_leccion'),
@@ -167,17 +167,17 @@ class leccion extends CI_Controller
 		}
 	}
 
-	// public function delete()
-	// {
-	// 	$chk = $this->input->post('checked', true);
-	// 	if (!$chk) {
-	// 		$this->output_json(['status' => false]);
-	// 	} else {
-	// 		if ($this->master->delete('clase', $chk, 'id_clase')) {
-	// 			$this->output_json(['status' => true, 'total' => count($chk)]);
-	// 		}
-	// 	}
-	// }
+	public function delete()
+	{
+		$chk = $this->input->post('checked', true);
+		if (!$chk) {
+			$this->output_json(['status' => false]);
+		} else {
+			if ($this->master->delete('lecciones', $chk, 'id')) {
+				$this->output_json(['status' => true, 'total' => count($chk)]);
+			}
+		}
+	}
 
 	// public function clase_by_grupo($id)
 	// {
