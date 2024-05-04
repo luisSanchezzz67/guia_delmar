@@ -1,4 +1,4 @@
-<?= form_open('leccion/save', array('id' => 'formleccion'), array('method' => 'edit', 'id_leccion' => $leccion[0]->id)); ?>
+<?= form_open('leccion/save', array('id' => 'formleccion'), array('method' => 'edit', 'id_leccion' => $leccion[0]->id, 'profesor_id' => $profesor->id_profesor)); ?>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Formulario <?= $subtitulo ?></h3>

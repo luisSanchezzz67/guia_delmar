@@ -308,7 +308,7 @@ class Master_model extends CI_Model
     return $this->datatables->generate();
     }
     
-    // Obtener el id de profesor
+    // Obtener id profesor por nip
     public function getIdProfesor($nip)
     {
         $this->db->select('id_profesor, nombre_profesor')->from('profesor')->where('nip', $nip);

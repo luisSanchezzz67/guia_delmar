@@ -71,15 +71,17 @@ class leccion extends CI_Controller
 		if (!$chk) {
 			redirect('admin/leccion');
 		} else {
-			$user = $this->ion_auth->user()->row();
+			//$user = $this->ion_auth->user()->row();
 			$leccion = $this->master->getLeccionById($chk);
+			$id_profesor = $leccion[0]->id_profesor;
+			$dataProfesor = $this->master->getProfesorById($id_profesor);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
 				'titulo'		=> 'Editar Lección',
 				'subtitulo'	=> 'Editar datos de la lección ',
 				'curso'	=> $this->master->getAllCurso(),
-				'profesor' => $this->master->getIdProfesor($user->username),
-				'leccion'		=> $leccion
+				'leccion'		=> $leccion,
+				'profesor'      => $dataProfesor,
 			];
 			$this->load->view('_templates/dashboard/_header.php', $data);
 			$this->load->view('direccion/leccion/view');
@@ -196,7 +198,7 @@ class leccion extends CI_Controller
 		if (!$chk) {
 			$this->output_json(['status' => false]);
 		} else {
-			if ($this->master->delete('leccion', $chk, 'id')) {
+			if ($this->master->delete('lecciones', $chk, 'id')) {
 				$this->output_json(['status' => true, 'total' => count($chk)]);
 			}
 		}

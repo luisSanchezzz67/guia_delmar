@@ -15,7 +15,14 @@
                 // var_dump($leccion);
                 $i = 1;
                 foreach ($leccion as $lec) : ?>
-
+                    <div class="form-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Profesor</div>
+                            <div class="panel-body">
+                                <?= $profesor->nombre_profesor ?>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">Curso</div>

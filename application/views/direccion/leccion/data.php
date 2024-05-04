@@ -8,8 +8,12 @@
 	</div>
 	<div class="box-body">
 		<div class="mt-2 mb-3">
-			
+						<?php
+						if ($this->ion_auth->in_group('Lecturer') ) {
+
+						?>
 				<a href="<?= base_url('leccion/add') ?>" class="btn btn-sm bg-blue btn-flat"><i class="fa fa-plus"></i> Nueva Lección</a>
+				<?php } ?>
 				<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
 				<div class="pull-right">
 				<!-- data-toggle="modal" data-target="#myModal" -->

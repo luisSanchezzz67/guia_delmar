@@ -65,7 +65,7 @@
 						</li>
 						<li class="<?= $page === 'leccion' ? "active" : "" ?>">
 							<a href="<?= base_url('leccion') ?>">
-								<i class="fa fa-bars"></i>
+								<i class="fa fa-book"></i>
 								Lecciones
 							</a>
 						</li>
@@ -103,7 +103,7 @@
 			<?php if ($this->ion_auth->in_group('Lecturer') || $this->ion_auth->in_group('Student')) : ?>
 				<li class="<?= $page === 'leccion' ? "active" : "" ?>">
 					<a href="<?= base_url('leccion') ?>">
-						<i class="fa fa-bars"></i>
+						<i class="fa fa-book"></i>
 						Lecciones
 					</a>
 				</li>
