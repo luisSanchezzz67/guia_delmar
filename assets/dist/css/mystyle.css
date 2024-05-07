@@ -1679,3 +1679,15 @@
 .skin-yellow .sidebar-menu>li.active>a {
     border-left-color: #0c809d !important;
 }
+
+/*Estilos badge video - lecciones*/
+.video-active{
+    background-color: #009403bf !important;
+    border: none !important;
+    border-radius: 5% !important;
+}
+.video-not{
+    background-color: #c51e00d5 !important;
+    border: none !important;
+    border-radius: 5% !important;
+}

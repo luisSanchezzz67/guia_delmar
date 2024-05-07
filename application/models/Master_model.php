@@ -307,6 +307,21 @@ class Master_model extends CI_Model
     //$this->datatables->order_by('l.id', 'DESC');
     return $this->datatables->generate();
     }
+    public function getDataLeccionesbyProfesor($id_profesor)
+    {
+       
+    $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+    $this->datatables->from('lecciones l');
+    $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
+    $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
+    $this->db->where('l.id_profesor', $id_profesor);
+
+    $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+    $this->db->order_by('l.id', 'ASC');
+
+    //$this->datatables->order_by('l.id', 'DESC');
+    return $this->datatables->generate();
+    }
     
     // Obtener id profesor por nip
     public function getIdProfesor($nip)
