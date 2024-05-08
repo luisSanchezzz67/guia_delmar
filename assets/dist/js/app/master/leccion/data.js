@@ -55,16 +55,30 @@ $(document).ready(function () {
       {
         data: "video",
         render: function (data, type, row) {
-          return data ? " <ul class='nav nav-pills' role='tablist'> <li role='presentation' class='active'><a class='video-active'><i class='fa fa-video-camera'></i> Tiene video </a></li></ul>" 
-          : "<ul class='nav nav-pills' role='tablist'> <li role='presentation' class='active'><a class='video-not'><i class='fa fa-video-camera'></i> No tiene video </a></li></ul>"; 
+          return data
+            ? " <ul class='nav nav-pills' role='tablist'> <li role='presentation' class='active'><a class='video-active'><i class='fa fa-video-camera'></i> Tiene video </a></li></ul>"
+            : "<ul class='nav nav-pills' role='tablist'> <li role='presentation' class='active'><a class='video-not'><i class='fa fa-video-camera'></i> No tiene video </a></li></ul>";
         },
       },
       { data: "status" },
       { data: "fecha_disponible" },
+    ],
+    columnDefs: [
       {
-        data: "bulk_select",
-        orderable: false,
         searchable: false,
+        targets: 5,
+        data: {
+          id: "id",
+          ada: "ada",
+        },
+        render: function (data, type, row, meta) {
+
+          return `<div class="text-left">
+							<a href="${base_url}leccion/view/${data.id}" class="btn btn-xs btn-primary">
+								<i class="fa fa-eye"></i> Detalles
+							</a>
+						</div>`;
+        },
       },
     ],
     order: [[1, "asc"]],

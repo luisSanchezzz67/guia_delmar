@@ -78,28 +78,21 @@ class leccion extends CI_Controller
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
 
-	public function view()
+	public function view($id_leccion)
 	{
-		$chk = $this->input->post('checked', true);
-		if (!$chk) {
-			redirect('admin/leccion');
-		} else {
-			//$user = $this->ion_auth->user()->row();
-			$leccion = $this->master->getLeccionById($chk);
-			$id_profesor = $leccion[0]->id_profesor;
-			$dataProfesor = $this->master->getProfesorById($id_profesor);
-			$data = [
-				'user' 		=> $this->ion_auth->user()->row(),
-				'titulo'		=> 'Editar Lección',
-				'subtitulo'	=> 'Editar datos de la lección ',
-				'curso'	=> $this->master->getAllCurso(),
-				'leccion'		=> $leccion,
-				'profesor'      => $dataProfesor,
-			];
-			$this->load->view('_templates/dashboard/_header.php', $data);
-			$this->load->view('direccion/leccion/view');
-			$this->load->view('_templates/dashboard/_footer.php');
-		}
+		$leccion =  $this->master->getLeccionById($id_leccion);
+		$data = [
+			'user' 		=> $this->ion_auth->user()->row(),
+			'titulo'		=> 'Editar Lección',
+			'subtitulo'	=> 'Editar datos de la lección ',
+			'curso'	=> $this->master->getAllCurso(),
+			'leccion'		=>$leccion,
+			'profesor'		=> $this->master->getProfesorById($leccion[0]->id_profesor),
+		];
+		
+		$this->load->view('_templates/dashboard/_header.php', $data);
+		$this->load->view('direccion/leccion/view');
+		$this->load->view('_templates/dashboard/_footer.php');
 	}
 	public function edit()
 	{

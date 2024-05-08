@@ -17,7 +17,7 @@
 				<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
 				<div class="pull-right">
 				<!-- data-toggle="modal" data-target="#myModal" -->
-					<button onclick="leccion_view()" class="btn btn-sm btn-flat btn-primary" type="button"><i class="fa fa-eye"></i> Detalles</button>
+					
 					<?php
 						if ($this->ion_auth->in_group('Lecturer') ) {
 
@@ -27,7 +27,7 @@
 					<?php } ?>
 				</div>
 		</div>
-		<?= form_open('', array('id' => 'bulk')) ?>
+		<?= form_open('leccion/view', array('id' => 'bulk')) ?>
 		<table id="leccion" class="w-100 table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
@@ -36,10 +36,8 @@
 					<th>Video</th>
 					<th>Estado</th>
 					<th>Fecha máxima</th>
-
-					<th class="text-center">
-						<input type="checkbox" id="select_all">
-					</th>
+					<th>Acción</th>
+					
 				</tr>
 			</thead>
 		</table>
