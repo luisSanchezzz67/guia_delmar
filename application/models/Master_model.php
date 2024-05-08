@@ -296,46 +296,63 @@ class Master_model extends CI_Model
 
     public function getDataLecciones()
     {
-       
-    $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
-    $this->datatables->from('lecciones l');
-    $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
-    $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
-    $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
-    $this->db->order_by('l.id', 'ASC');
 
-    //$this->datatables->order_by('l.id', 'DESC');
-    return $this->datatables->generate();
+        $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+        $this->datatables->from('lecciones l');
+        $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
+        $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+        $this->db->order_by('l.id', 'ASC');
+
+        //$this->datatables->order_by('l.id', 'DESC');
+        return $this->datatables->generate();
     }
     public function getDataLeccionesbyProfesor($id_profesor)
     {
-       
-    $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
-    $this->datatables->from('lecciones l');
-    $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
-    $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
-    $this->db->where('l.id_profesor', $id_profesor);
 
-    $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
-    $this->db->order_by('l.id', 'ASC');
+        $this->datatables->select('l.id, p.nombre_profesor, c.nombre_curso, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+        $this->datatables->from('lecciones l');
+        $this->datatables->join('profesor p', 'p.id_profesor = l.id_profesor', 'left');
+        $this->datatables->join('curso c', 'c.id_curso = l.id_curso', 'left');
+        $this->db->where('l.id_profesor', $id_profesor);
 
-    //$this->datatables->order_by('l.id', 'DESC');
-    return $this->datatables->generate();
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+        $this->db->order_by('l.id', 'ASC');
+
+        //$this->datatables->order_by('l.id', 'DESC');
+        return $this->datatables->generate();
     }
-    
+    public function getDataLeccionesbyCurso($id_curso)
+    {
+
+
+        $this->datatables->select('l.id, l.titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+        $this->datatables->from('lecciones l');
+        $this->db->where('l.id_curso', $id_curso);
+
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id, nombre_profesor, nombre_curso, titulo, l.video, l.status, l.fecha_inicial, l.fecha_disponible');
+        $this->db->order_by('l.id', 'ASC');
+
+        //$this->datatables->order_by('l.id', 'DESC');
+        return $this->datatables->generate();
+    }
+
+    public function getLeccionById($id)
+    {
+        $this->db->where_in('id', $id);
+        $query = $this->db->get('lecciones')->result();
+        return $query;
+    }
     // Obtener id profesor por nip
     public function getIdProfesor($nip)
     {
         $this->db->select('id_profesor, nombre_profesor')->from('profesor')->where('nip', $nip);
         return $this->db->get()->row();
     }
-    public function getLeccionById($id)
+    // Obtener id estudiante por nip
+    public function getIdEstudiante($nip)
     {
-        $this->db->where_in('id', $id);
-        //$this->db->order_by('nombre_clase');
-        $query = $this->db->get('lecciones')->result();
-        return $query;
-       // $query = $this->db->get_where('lecciones', array('id' => $id));
-        //return $query->row();
+        $this->db->select('id_estudiante, nombre, clase_id')->from('estudiante')->where('nim', $nip);
+        return $this->db->get()->row();
     }
 }

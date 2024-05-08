@@ -45,18 +45,21 @@ class leccion extends CI_Controller
 
 	public function data()
 	{
-		$this->output_json($this->master->getDataLecciones(), false);
 
-		// $user_id = $this->ion_auth->user()->row()->id; // Get User ID
-		// echo $user_id;
-		// $data = $this->master->getProfesorById($id);
-
-		// if ($this->ion_auth->is_admin()) {
+		$user 	= $this->ion_auth->user()->row();
+		if ($this->ion_auth->is_admin()) {
 			
-		// 	$this->output_json($this->master->getDataLecciones(), false);
-		// } else if($this->ion_auth->in_group('Lecturer')){
-		// 	$this->output_json($this->master->getDataLeccionesbyProfesor(), false);
-		// }
+			$this->output_json($this->master->getDataLecciones(), false);
+		} else if($this->ion_auth->in_group('Lecturer')){
+			$profesor 	= $this->master->getIdProfesor($user->username);
+			$this->output_json($this->master->getDataLeccionesbyProfesor($profesor->id_profesor), false);
+		} else if($this->ion_auth->in_group('Student')){
+			$estudiante 	= $this->master->getIdEstudiante($user->username);
+			$clase_id = $estudiante->clase_id;
+			$dataClase = $this->master->getClaseById($clase_id);
+			$dataGrupo = $this->master->getgrupoById($dataClase[0]->grupo_id);
+			$this->output_json($this->master->getDataLeccionesbyCurso($dataGrupo[0]->curso_id), false);
+		}
 	}
 
 	public function add()

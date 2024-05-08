@@ -6,7 +6,7 @@ function load_grupo() {
         for (let i = 0; i < data.length; i++) {
             option.push({
                 id: data[i].id_grupo,
-                text: data[i].nombre_grupo
+                text: data[i].nombre_grupo,
             });
         }
         $('#grupo').select2({
