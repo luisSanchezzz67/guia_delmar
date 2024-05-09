@@ -94,14 +94,11 @@ class leccion extends CI_Controller
 		$this->load->view('direccion/leccion/view');
 		$this->load->view('_templates/dashboard/_footer.php');
 	}
-	public function edit()
+	public function edit($id_leccion)
 	{
-		$chk = $this->input->post('checked', true);
-		if (!$chk) {
-			redirect('admin/leccion');
-		} else {
+		
 			$user = $this->ion_auth->user()->row();
-			$leccion = $this->master->getLeccionById($chk);
+			$leccion = $this->master->getLeccionById($id_leccion);
 			$data = [
 				'user' 		=> $this->ion_auth->user()->row(),
 				'titulo'		=> 'Editar Lección',
@@ -113,7 +110,7 @@ class leccion extends CI_Controller
 			$this->load->view('_templates/dashboard/_header.php', $data);
 			$this->load->view('direccion/leccion/edit');
 			$this->load->view('_templates/dashboard/_footer.php');
-		}
+		
 	}
 
 	public function save()
@@ -198,16 +195,13 @@ class leccion extends CI_Controller
 		}
 	}
 
-	public function delete()
+	public function delete($id_leccion)
 	{
-		$chk = $this->input->post('checked', true);
-		if (!$chk) {
-			$this->output_json(['status' => false]);
-		} else {
-			if ($this->master->delete('lecciones', $chk, 'id')) {
-				$this->output_json(['status' => true, 'total' => count($chk)]);
+		
+			if ($this->master->delete('lecciones', $id_leccion, 'id')) {
+				$this->output_json(['status' => true]);
 			}
-		}
+		
 	}
 
 	// public function clase_by_grupo($id)

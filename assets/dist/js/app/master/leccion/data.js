@@ -61,23 +61,44 @@ $(document).ready(function () {
         },
       },
       { data: "status" },
+      { data: "fecha_inicial" },
       { data: "fecha_disponible" },
     ],
     columnDefs: [
       {
         searchable: false,
-        targets: 5,
+        targets: 6,
         data: {
           id: "id",
           ada: "ada",
         },
         render: function (data, type, row, meta) {
-
-          return `<div class="text-left">
-							<a href="${base_url}leccion/view/${data.id}" class="btn btn-xs btn-primary">
-								<i class="fa fa-eye"></i> Detalles
+          if (esAdministrador) {
+          return `
+            
+            <div class="btn">
+							<a href="${base_url}leccion/view/${data.id}" class="btn m-0 mx-0 mt-0 btn-primary">
+								<i class="fa fa-eye"></i> 
 							</a>
+						</div>
+            <div class="btn">
+							<a href="${base_url}leccion/edit/${data.id}" class="btn m-0 mx-0 mt-0 btn-primary">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</div>
+            <div class="btn">
+							<button onclick="leccion_delete(${data.id}); return false;" class="btn m-0 mx-0 mt-0 btn-primary">
+								<i class="fa fa-trash"></i>
+							</button>
 						</div>`;
+          } else {
+            return `<div class="btn">
+            <a href="${base_url}leccion/view/${data.id}" class="btn m-0 mx-0 mt-0 btn-primary">
+              <i class="fa fa-eye"></i> 
+            </a>
+          </div>`;
+          }
+
         },
       },
     ],
@@ -180,15 +201,9 @@ function load_grupo() {
   });
 }
 
-function leccion_delete() {
-  if ($("#leccion tbody tr .check:checked").length == 0) {
-    Swal({
-      title: "Failed",
-      text: "No data selected",
-      type: "error",
-    });
-  } else {
-    $("#bulk").attr("action", base_url + "leccion/delete");
+function leccion_delete(id_curso) {
+  
+  $("#bulk").attr("action", base_url + "leccion/delete/" + id_curso);
     Swal({
       title: "Seguro?",
       text: "Estos datos serán eliminados!",
@@ -199,33 +214,26 @@ function leccion_delete() {
       confirmButtonText: "Eliminar!",
     }).then((result) => {
       if (result.value) {
-        $("#bulk").submit();
+        $.ajax({
+          url: base_url + "leccion/delete/" + id_curso,
+          type: "POST",
+          success: function(response) {
+            Swal.fire({
+              title: 'Eliminado!',
+              text: 'La lección ha sido eliminada correctamente.',
+              type: 'success'
+            }).then(() => {
+              location.reload(); // Recarga la página cuando el usuario cierra el SweetAlert
+            });
+          },
+          error: function(xhr, status, error) {
+            Swal('Error', 'No se pudo eliminar la lección: ' + error, 'error');
+          }
+        });
       }
     });
-  }
+  
 }
 
-function leccion_view() {
-  if ($("#leccion tbody tr .check:checked").length == 0) {
-    Swal({
-      title: "Fallido",
-      text: "Sin datos seleccionados",
-      type: "error",
-    });
-  } else {
-    $("#bulk").attr("action", base_url + "leccion/view");
-    $("#bulk").submit();
-  }
-}
-function leccion_edit() {
-  if ($("#leccion tbody tr .check:checked").length == 0) {
-    Swal({
-      title: "Fallido",
-      text: "Sin datos seleccionados",
-      type: "error",
-    });
-  } else {
-    $("#bulk").attr("action", base_url + "leccion/edit");
-    $("#bulk").submit();
-  }
-}
+
+
