@@ -61,8 +61,20 @@ $(document).ready(function () {
         },
       },
       { data: "status" },
-      { data: "fecha_inicial" },
-      { data: "fecha_disponible" },
+        {
+            data: "fecha_inicial",
+            render: function (data, type, row) {
+                return moment(data).locale('es').format('D [de] MMMM [del] YYYY [a las] HH:mm');
+            }
+        },
+        {
+            data: "fecha_disponible",
+            render: function (data, type, row) {
+                return moment(data).locale('es').format('D [de] MMMM [del] YYYY [a las] HH:mm');
+            }
+        }
+      // { data: "fecha_inicial" },
+      // { data: "fecha_disponible" },
     ],
     columnDefs: [
       {
@@ -100,8 +112,11 @@ $(document).ready(function () {
           }
 
         },
+        
       },
+      
     ],
+    
     order: [[1, "asc"]],
     rowId: function (a) {
       return a;

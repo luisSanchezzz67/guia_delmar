@@ -71,11 +71,25 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Fecha inicial</div>
                             <div class="panel-body">
-                               <?php
+                                <?php
                                 $fecha_original = $lec->fecha_inicial;
                                 $fecha = new DateTime($fecha_original);
-                                echo $fecha->format('d-m-Y h:i:s A'); 
-                                 ?>
+
+                                // Crear un arreglo con los nombres de los meses en español
+                                $meses = [
+                                    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+                                    5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+                                    9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+                                ];
+
+                                // Formatear la fecha según el formato español "8 de mayo del 2024"
+                                $dia = $fecha->format('j'); // Día sin ceros iniciales
+                                $mes = $meses[(int)$fecha->format('n')]; // Mes en español
+                                $year = $fecha->format('Y'); // Año
+                                $hora = $fecha->format('H:i'); // Hora y minutos en formato 24 horas
+
+                                echo $dia . " de " . $mes . " del " . $year . " a las " . $hora;
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -83,15 +97,30 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Fecha máxima</div>
                             <div class="panel-body">
-                               <?php
+                                
+                                <?php
                                 $fecha_original = $lec->fecha_disponible;
                                 $fecha = new DateTime($fecha_original);
-                                echo $fecha->format('d-m-Y h:i:s A'); 
-                                 ?>
+
+                                // Crear un arreglo con los nombres de los meses en español
+                                $meses = [
+                                    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+                                    5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+                                    9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+                                ];
+
+                                // Formatear la fecha según el formato español "8 de mayo del 2024"
+                                $dia = $fecha->format('j'); // Día sin ceros iniciales
+                                $mes = $meses[(int)$fecha->format('n')]; // Mes en español
+                                $year = $fecha->format('Y'); // Año
+                                $hora = $fecha->format('H:i'); // Hora y minutos en formato 24 horas
+
+                                echo $dia . " de " . $mes . " del " . $year . " a las " . $hora;
+                                ?>
                             </div>
                         </div>
                     </div>
-                    
+
                 <?php $i++;
                 endforeach; ?>
                 <div class="form-group pull-right">
@@ -105,4 +134,3 @@
     </div>
 </div>
 <?= form_close(); ?>
-

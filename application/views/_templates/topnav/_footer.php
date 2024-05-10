@@ -19,6 +19,8 @@
 <script src="<?= base_url() ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
 <script src="<?= base_url() ?>assets/bower_components/pace/pace.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
 
 <script type="text/javascript">
 	function sisawaktu(t) {

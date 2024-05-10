@@ -15,7 +15,7 @@
 				<a href="<?= base_url('leccion/add') ?>" class="btn btn-sm bg-blue btn-flat"><i class="fa fa-plus"></i> Nueva Lección</a>
 			<?php } ?>
 			<button type="button" onclick="reload_ajax()" class="btn btn-sm bg-maroon btn-flat btn-default"><i class="fa fa-refresh"></i> Recargar</button>
-			
+
 		</div>
 		<?= form_open('leccion/view', array('id' => 'bulk')) ?>
 		<table id="leccion" class="w-100 table table-striped table-bordered table-hover">
@@ -30,13 +30,13 @@
 					<th>Acción</th>
 
 				</tr>
-				
+
 			</thead>
-			</table>
-			<script>
-					var esAdministrador = <?php echo $this->ion_auth->in_group('Lecturer') ? 'true' : 'false'; ?>;
-				</script>
-			<?= form_close() ?>
+		</table>
+		<script>
+			var esAdministrador = <?php echo $this->ion_auth->in_group('Lecturer') ? 'true' : 'false'; ?>;
+		</script>
+		<?= form_close() ?>
 	</div>
 </div>
 

@@ -127,18 +127,16 @@ class leccion extends CI_Controller
 		$fecha_inicial 		= $this->convert_tgl($this->input->post('fecha_inicial', 	true));
 		$fecha_disponible 		= $this->convert_tgl($this->input->post('fecha_disponible', 	true));
 		if ($method == 'add') {
-			$l_fecha_inicial = '|is_unique[lecciones.fecha_inicial]';
-			$l_fecha_disponible = '|is_unique[lecciones.fecha_disponible]';
+			
 		} else {
 			$dbdata 	= $this->master->getLeccionById($id_leccion);
-			// $u_nip		= $dbdata->nip === $nip ? "" : "|is_unique[profesor.nip]";
-			// $u_email	= $dbdata->email === $email ? "" : "|is_unique[profesor.email]";
+
 		}
 		$this->form_validation->set_rules('curso', 'Curso', 'required');
 		$this->form_validation->set_rules('titulo_leccion', 'Titulo', 'required|trim|min_length[3]|max_length[100]');
 		$this->form_validation->set_rules('video_leccion', 'Video', 'trim|min_length[0]|max_length[100]');
 		$this->form_validation->set_rules('contenido_leccion', 'Contenido', 'trim|min_length[0]');
-		$this->form_validation->set_rules('estado_leccion', 'Estado', 'required|trim|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('estado_leccion', 'Estado', 'required');
 		$this->form_validation->set_rules('fecha_inicial', 'Fecha Inicial', 'required');
 		$this->form_validation->set_rules('fecha_disponible', 'Fecha Disponible', 'required');
 
@@ -152,7 +150,7 @@ class leccion extends CI_Controller
 					'titulo_leccion' => form_error('titulo_leccion'),
 					'video' => form_error('video_leccion'),
 					'contenido' => form_error('contenido_leccion'),
-					'status' => form_error('estado_leccion'),
+					'estado_leccion' => form_error('estado_leccion'),
 					'fecha_inicial' 	=> form_error('fecha_inicial'),
 					'fecha_disponible' 	=> form_error('fecha_disponible'),
 				]
