@@ -36,7 +36,7 @@ class Settings extends CI_Controller
 
 	public function truncate()
 	{
-		$tables = ['h_prueba', 'm_prueba', 'tb_banco_preguntas', 'clase_profesor', 'profesor', 'estudiante', 'clase', 'grupo_curso', 'curso', 'grupo'];
+		$tables = ['h_prueba', 'm_prueba', 'tb_banco_preguntas', 'clase_profesor', 'profesor', 'estudiante', 'clase', 'grupo_curso', 'curso', 'grupo', 'lecciones'];
 		$this->settings->truncate($tables);
 
 		$this->output_json(['status' => true]);

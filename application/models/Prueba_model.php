@@ -14,15 +14,13 @@ class Prueba_model extends CI_Model {
         return $this->datatables->generate();
     }
     
-    public function getListPrueba($id, $clase)
+    public function getListPrueba($id, $curso)
     {
-        $this->datatables->select("a.id_prueba, e.nombre_profesor, d.nombre_clase, a.nombre_prueba, b.nombre_curso, a.cantidad_banco_preguntas, CONCAT(a.fecha_inicio, ' <br/> (', a.tiempo, ' Minute)') as tiempo,  (SELECT COUNT(id) FROM h_prueba h WHERE h.estudiante_id = {$id} AND h.prueba_id = a.id_prueba) AS ada");
+        $this->datatables->select("a.id_prueba, e.nombre_profesor, a.nombre_prueba, b.nombre_curso, a.cantidad_banco_preguntas, CONCAT(a.fecha_inicio, ' <br/> (', a.tiempo, ' Minute)') as tiempo,  (SELECT COUNT(id) FROM h_prueba h WHERE h.estudiante_id = {$id} AND h.prueba_id = a.id_prueba) AS ada");
         $this->datatables->from('m_prueba a');
         $this->datatables->join('curso b', 'a.curso_id = b.id_curso');
-        $this->datatables->join('clase_profesor c', "a.profesor_id = c.profesor_id");
-        $this->datatables->join('clase d', 'c.clase_id = d.id_clase');
-        $this->datatables->join('profesor e', 'e.id_profesor = c.profesor_id');
-        $this->datatables->where('d.id_clase', $clase);
+        $this->datatables->join('profesor e', 'e.id_profesor = a.profesor_id');
+        $this->datatables->where('b.id_curso', $curso);
         return $this->datatables->generate();
     }
 

@@ -256,7 +256,7 @@ class Prueba extends CI_Controller
 	{
 		$this->akses_estudiante();
 
-		$list = $this->prueba->getListPrueba($this->mhs->id_estudiante, $this->mhs->clase_id);
+		$list = $this->prueba->getListPrueba($this->mhs->id_estudiante, $this->mhs->curso_id);
 		$this->output_json($list, false);
 	}
 
