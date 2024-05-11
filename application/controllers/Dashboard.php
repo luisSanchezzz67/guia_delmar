@@ -73,6 +73,13 @@ class Dashboard extends CI_Controller
 				'text'      => 'Usuarios del Sistema',
 				'icon'		=> 'key'
 			],
+			[
+				'box' 		=> 'orange',
+				'total' 	=> $this->dashboard->total('lecciones'),
+				'title'		=> 'leccion',
+				'text'      => 'Lecciones',
+				'icon'		=> 'book'
+			],
 		];
 		$info_box = json_decode(json_encode($box), FALSE);
 		return $info_box;
