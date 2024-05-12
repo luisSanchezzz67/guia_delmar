@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                     <label for="contenido_leccion">Contenido</label>
-                    <textarea type="text" class="form-control" name="contenido_leccion"></textarea>
+                    <textarea type="text" class="text-area form-control" name="contenido_leccion"></textarea>
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">

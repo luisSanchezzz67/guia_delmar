@@ -83,8 +83,8 @@ class leccion extends CI_Controller
 		$leccion =  $this->master->getLeccionById($id_leccion);
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'titulo'		=> 'Editar Lección',
-			'subtitulo'	=> 'Editar datos de la lección ',
+			'titulo'		=> 'Detalles de Lección',
+			'subtitulo'	=> 'Ver datos de la lección ',
 			'curso'	=> $this->master->getAllCurso(),
 			'leccion'		=>$leccion,
 			'profesor'		=> $this->master->getProfesorById($leccion[0]->id_profesor),

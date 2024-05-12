@@ -10,7 +10,7 @@
     </div>
     <div class="box-body">
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-sm-10 col-sm-offset-1">
                 <?php
                 // var_dump($leccion);
                 $i = 1;
@@ -47,14 +47,20 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Video de la lección</div>
                             <div class="panel-body">
-                                <a href="<?= $lec->video ?>"><?= $lec->video ?></a>
+                                <?php $videoDividido = explode("=", $lec->video); 
+                                $videoDividido2 = explode("&", $videoDividido[1]);
+                                $video = "https://www.youtube.com/embed/" . $videoDividido2[0];
+                                ?>
+
+                                 <iframe width="1189" height="669" src="<?= $video?>" title="Los sistemas operativos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">Contenido</div>
-                            <div class="panel-body">
+
+                            <div class="panel-body contenido">
                                 <?= $lec->contenido ?>
                             </div>
                         </div>
@@ -97,7 +103,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Fecha máxima</div>
                             <div class="panel-body">
-                                
+
                                 <?php
                                 $fecha_original = $lec->fecha_disponible;
                                 $fecha = new DateTime($fecha_original);

@@ -1691,3 +1691,16 @@
     border: none !important;
     border-radius: 5% !important;
 }
+
+/** Texarea de add leccion*/
+.text-area{
+    height: 450px !important;
+    
+}
+
+/* view leccion*/
+.panel-default {
+}
+.contenido {
+overflow: hidden;
+}
