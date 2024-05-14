@@ -23,7 +23,8 @@ if (time() >= $banco_preguntas->tiempo_finalizado) {
             <div class="box-header with-border">
                 <h3 class="box-title"><span class="badge bg-blue"># de Pregunta<span id="preguntas"></span> </span></h3>
                 <div class="box-tools pull-right">
-                    <span class="badge bg-red">Tiempo Faltante <span class="sisawaktu" data-time="<?= $banco_preguntas->fecha_terminacion ?>"></span></span>
+                    <?= $banco_preguntas->fecha_terminacion ?>
+                    <span class="badge bg-red">Tiempo Faltante <span class="sisawaktu" data-time="<?= date('c', strtotime($banco_preguntas->fecha_terminacion)) ?>"></span></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
                 </div>
