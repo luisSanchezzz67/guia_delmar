@@ -355,4 +355,15 @@ class Master_model extends CI_Model
         $this->db->select('id_estudiante, nombre, clase_id')->from('estudiante')->where('nim', $nip);
         return $this->db->get()->row();
     }
+
+    /* Obtener cursos de profesor */
+    public function getCursoByProfesor($id)
+    {
+        $this->db->select('*');
+        $this->db->from('profesor');
+        $this->db->join('curso', 'curso.id_curso=profesor.curso_id');
+        $this->db->where('id_profesor', $id);
+        $query = $this->db->get()->result();
+        return $query;
+    }
 }

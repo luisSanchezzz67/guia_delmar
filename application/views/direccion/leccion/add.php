@@ -15,8 +15,7 @@
 
                 <div class="form-group">
                     <label for="curso">Curso</label>
-                    <select name="curso" id="curso" class="form-control select2" style="width: 100%!important">
-                        <option value="" disabled selected>Escoger Curso</option>
+                    <select disabled name="curso" id="curso" class="form-control select2" style="width: 100%!important">
                         <?php foreach ($curso as $row) : ?>
                             <option value="<?= $row->id_curso ?>"><?= $row->nombre_curso ?></option>
                         <?php endforeach; ?>

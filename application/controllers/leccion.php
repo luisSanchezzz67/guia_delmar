@@ -65,13 +65,14 @@ class leccion extends CI_Controller
 	public function add()
 	{
 		$user = $this->ion_auth->user()->row();
-
+		$profesor = $this->master->getIdProfesor($user->username);
+		$curso = $this->master->getCursoByProfesor($profesor->id_profesor);
 		$data = [
 			'user' => $user,
 			'titulo'	=> 'Nueva Lección',
 			'subtitulo' => 'Agregar nueva lección',
-			'curso'	=> $this->master->getAllCurso(),
-			'profesor' => $this->master->getIdProfesor($user->username),
+			'profesor' => $profesor,
+			'curso'	=> $curso,
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
 		$this->load->view('direccion/leccion/add');
