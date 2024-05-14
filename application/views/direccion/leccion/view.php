@@ -15,7 +15,7 @@
                 // var_dump($leccion);
                 $i = 1;
                 foreach ($leccion as $lec) : ?>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">Profesor</div>
                             <div class="panel-body">
@@ -34,7 +34,7 @@
                                 endforeach; ?>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">Título de la lección</div>
@@ -52,7 +52,7 @@
                                 $video = "https://www.youtube.com/embed/" . $videoDividido2[0];
                                 ?>
 
-                                 <iframe width="1189" height="669" src="<?= $video?>" title="Los sistemas operativos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                 <iframe width="100%" height="669" src="<?= $video?>" title="Los sistemas operativos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
@@ -65,15 +65,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">Estado</div>
                             <div class="panel-body">
                                 <?= $lec->status ?>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                    </div> -->
+                    <!-- <div class="form-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">Fecha inicial</div>
                             <div class="panel-body">
@@ -125,7 +125,7 @@
                                 ?>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 <?php $i++;
                 endforeach; ?>
